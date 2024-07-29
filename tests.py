@@ -15,47 +15,6 @@ class Field:
     def copying(self, field_copy, copyable_status):
         pass
 
-class Ship:
-    def __init__(self, Y, X, len_ship, direction) -> None:
-        self.Y = Y.upper()
-        self.X = X
-        self.len_ship = len_ship
-        if len_ship == 1:
-            self.direction = "one"
-        else:
-            self.direction = direction.lower()
-
-    def all_places(self):
-        pass
-
-    def test_near_ship(self):
-        pass
-    
-    def test_free_place(self):
-        pass
-
-    def death(self):
-        pass
-            
-def new_ship():
-    pass
-
-def test_all_cells():
-    pass
-
-def player_play():
-    pass
-
-def bot_play():
-    pass
-
-def test_death():
-    pass
-  
-def play():
-    pass
-
-
 
 
 
