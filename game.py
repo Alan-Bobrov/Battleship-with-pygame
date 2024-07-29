@@ -2,7 +2,7 @@ import pygame as pg
 
 pg.init()
 
-screen = pg.display.set_mode((1400, 800))
+screen = pg.display.set_mode((1024, 900))
 screen.fill((255, 255, 255))
 
 is_game = True
