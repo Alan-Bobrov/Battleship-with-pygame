@@ -1,23 +1,17 @@
 def new_ship():
     pass
-# хуйня
 def test_all_cells():
     pass
-# хуйня
 def player_play():
     pass
-# хуйня
 
 def bot_play():
-    # хуйня
     pass
 
 def test_death():
-    # хуйня
     pass
   
 def play():
-    # хуйня
     pass
 
 def fire_pg(screen, x, y, x_coords, y_coords, Img):
