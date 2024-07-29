@@ -1,0 +1,14 @@
+import pygame as pg
+
+pg.init()
+
+screen = pg.display.set_mode((1200, 800))
+
+is_game = True
+while is_game:
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            is_game = False
+    
+    pg.display.flip()
+
