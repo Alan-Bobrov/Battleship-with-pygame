@@ -10,11 +10,6 @@ class Field:
         else:
             self.field = given_field
 
-        self.live_ships = live_ships
-    
-    def copying(self, field_copy, copyable_status):
-        pass
-
 
 
 
