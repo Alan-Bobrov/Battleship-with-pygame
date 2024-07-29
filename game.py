@@ -8,6 +8,7 @@ screen.fill((255, 255, 255))
 
 screen.blit(FieldImg, (0, 0))
 screen.blit(SkipImg, (142, 476))
+screen.blit(HitImg, (110, 476))
 
 is_game = True
 while is_game:
