@@ -16,12 +16,16 @@ class Place:
         self.X = X
         self.Y = Y
 
+<<<<<<< HEAD
 class Skip:
     def __init__(self) -> None:
         self.image = "images/Skip.png"
 
 field = Field(110, 476)
 skip = Skip()
+=======
+field = Field(110, 476)
+>>>>>>> af339071a6ff6bffb602a88cc9bb07be3ddca182
 
 FieldImg = pg.image.load(field.image)
 SkipImg = pg.image.load(skip.image)
