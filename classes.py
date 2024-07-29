@@ -16,6 +16,6 @@ class Place:
         self.X = X
         self.Y = Y
 
-field = Field()
+field = Field(110, 476)
 
 FieldImg = pg.image.load(field.image)
