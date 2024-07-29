@@ -1,9 +1,12 @@
 import pygame as pg
+from classes import *
 
 pg.init()
 
 screen = pg.display.set_mode((1024, 900))
 screen.fill((255, 255, 255))
+
+screen.blit(FieldImg, (0, 0))
 
 is_game = True
 while is_game:
