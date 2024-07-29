@@ -14,9 +14,5 @@ def test_death():
     pass
   
 def play():
-<<<<<<< Updated upstream
-    pass
-=======
     pass
 
->>>>>>> Stashed changes
