@@ -20,8 +20,15 @@ class Skip:
     def __init__(self) -> None:
         self.image = "images/Skip.png"
 
+class Hit:
+    def __init__(self) -> None:
+        self.image = "images/Hit.png"
+
 field = Field(110, 476)
 skip = Skip()
+hit = Hit()
+
 
 FieldImg = pg.image.load(field.image)
 SkipImg = pg.image.load(skip.image)
+HitImg = pg.image.load(hit.image)
