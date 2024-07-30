@@ -12,12 +12,6 @@ user_field = create_field()
 class Ship:
     def __init__(self) -> None:
         self.length = 1
-        self.num_of_accepted_ships = {
-            4: 1,
-            3: 2,
-            2: 3,
-            1: 4
-        }
 
     def put_ship(self, comp_field, user_field, coords, is_bot=False):
         string, column = coords
