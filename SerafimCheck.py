@@ -6,6 +6,21 @@ def print_field(field):
     for i in range(len(field)):
         print(*field[i])
 
+def put_ship(field_for_user, field_for_comp, coords):
+    num_of_ships_around = 0
+    string, column = coords
+    for i in (1, -1):
+        if field_for_comp[string][column + i] == "*":
+            print(string, column + i)
+            num_of_ships_around += 1
+    for i in (1, -1):
+        if field_for_comp[string + i][column] == "*":
+            print(string + i, column)
+            num_of_ships_around += 1 
+
+    if num_of_ships_around <= 1:
+        field_for_comp[string][column] = "*"
+    return num_of_ships_around
 comp_field = create_field()
 user_field = create_field()
 

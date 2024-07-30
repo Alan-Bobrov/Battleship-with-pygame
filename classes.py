@@ -1,4 +1,5 @@
 import pygame as pg
+from random import randint
 
 class Field:
     def __init__(self, first_X, first_Y, live_ships=9) -> None: #110 476 - first field and 598 476 - second
@@ -9,9 +10,43 @@ class Field:
     def copying(self, field_copy, copyable_status):
         pass
 
+    def pr_all(self, screen, print_ships=False): #вроде написал функцию, которая рисует все скрины, кажется работает
+        status_list = ["skip", "hit"]
+        if print_ships:
+            status_list.append("part_ship")
+        
+        for i in self.field:
+            for j in i:
+                if j.status in status_list:
+                    for image in j.images:
+                        screen.blit(image, (j.X, j.Y))
+    
+    def bot_play(self): #эта функция типо расстановления ботом ходов, так-то это ход бота, но сейчас она врененно тавит корабли
+        while True:
+            X = randint(0, 9)
+            Y = randint(0, 9)
+            if self.field[Y][X].status == "free_place":
+                self.field[Y][X].status = "part_ship"
+                self.field[Y][X].images.append(pg.image.load("images/OneDeckShip.png"))
+                break
+    
+    def fire_pg(self, x, y):
+        for iy in range(10):
+            for jx in range(10):
+                X = self.field[iy][jx].X
+                Y = self.field[iy][jx].Y
+                if (X <= x < X + 32) and (Y <= y < Y + 32):
+                    if self.field[iy][jx].status == "free_place":
+                        self.field[iy][jx].status = "skip"
+                        self.field[iy][jx].images.append(pg.image.load("images/Skip.png"))
+                    elif self.field[iy][jx].status == "part_ship":
+                        self.field[iy][jx].status = "hit"
+                        self.field[iy][jx].images.append(pg.image.load("images/Hit.png"))
+
+
 class Place:
     def __init__(self, X, Y) -> None:
-        self.image = None
+        self.images = []
         self.status = "free_place"
         self.X = X
         self.Y = Y
