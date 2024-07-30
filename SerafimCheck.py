@@ -60,7 +60,8 @@ ship3 = Ship()
 
 ship1.put_ship(comp_field, user_field, (3, 4))
 ship2.put_ship(comp_field, user_field, (3, 5))
-ship3.put_ship(comp_field, user_field, (1, 5))
+ship3.put_ship(comp_field, user_field, (2, 6))
+
 
 print_field(user_field)
 
