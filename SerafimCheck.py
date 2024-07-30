@@ -14,12 +14,12 @@ def put_ship(field_for_user, field_for_comp, coords):
             print(string, column + i)
             num_of_ships_around += 1
     for i in (1, -1):
-        if field[string + i][column] == "*":
+        if field_for_comp[string + i][column] == "*":
             print(string + i, column)
             num_of_ships_around += 1 
 
     if num_of_ships_around <= 1:
-        field[string][column] = "*"
+        field_for_comp[string][column] = "*"
     return num_of_ships_around
 
 field_for_comp = create_field()
