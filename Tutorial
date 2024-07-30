@@ -1,0 +1,21 @@
+First of all u need to puy ur ships. 
+Click on some cell to put one-deck ship. 
+If u wanna continue ship, click around one-deck ship (only right, left, up, down). 
+On the field only:
+4 one-deck
+3 two-deck
+2 three-deck
+1 four-deck
+
+U can't to put another ship around ship.
+U can't to 'break' ship like:
+    *
+* * *
+
+If u put ship wrong, u can only clear all field by clicking on 'restart'
+
+After u put all ships start fire on the enemy field.
+Enemy - bot and he fire randomly, so it is easy to win.
+Good luck!
+
+
