@@ -11,6 +11,7 @@ user_field = create_field()
 
 class Ship:
     def __init__(self) -> None:
+        self.length = 1
         self.num_of_accepted_ships = {
             4: 1,
             3: 2,
@@ -18,7 +19,7 @@ class Ship:
             1: 4
         }
 
-    def put_ship(self, comp_field, user_field, coords):
+    def put_ship(self, comp_field, user_field, coords, is_bot=False):
         string, column = coords
 
         # check corners of ship
@@ -31,10 +32,18 @@ class Ship:
 
         # check num of ships around coords
         for i in (1, -1):
-            if isinstance(comp_field[string][column + i], Ship):
+            column_cell = comp_field[string][column + i] # there are change only column
+            string_cell = comp_field[string + i][column] # there are change only string
+
+            if isinstance(column_cell, Ship):
+                comp_field[string][column] = column_cell
+                if column_cell.length + 1 != comp_field[string].count(column_cell):
+                    comp_field[string][column] = "-"
+                    return False
+                column_cell.length += 1
                 num_of_ships_around += 1
 
-            if isinstance(comp_field[string + i][column], Ship):
+            if isinstance(string_cell, Ship):
                 num_of_ships_around += 1
         
         # if coords - continue of the ship or it is a one-deck ship
@@ -42,6 +51,7 @@ class Ship:
             comp_field[string][column] = self
             user_field[string][column] = "*"
             return True
+
         return False
 
 ship1 = Ship()
@@ -49,8 +59,8 @@ ship2 = Ship()
 ship3 = Ship()
 
 ship1.put_ship(comp_field, user_field, (3, 4))
-ship2.put_ship(comp_field, user_field, (3, 6))
-ship3.put_ship(comp_field, user_field, (3, 5))
+ship2.put_ship(comp_field, user_field, (3, 5))
+ship3.put_ship(comp_field, user_field, (1, 5))
 
 print_field(user_field)
 
