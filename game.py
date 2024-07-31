@@ -1,7 +1,6 @@
 import pygame as pg
 from classes import *
 from functions import *
-from random import randint
 
 pg.init()
 
@@ -13,9 +12,11 @@ pg.init()
 player_field = Field(110, 476)
 bot_field = Field(598, 476)
 
-# цикл под этим коментом отвечает за стартовые корабли бота, можешь его убрать, он так работает временно
+# цикл под этим коментом отвечает за стартовые корабли и бота и игрока, можешь его убрать, он так работает временно
 for _ in range(10):
     bot_field.bot_do_ships()
+for _ in range(10):
+    player_field.bot_do_ships()
 
 # пока что это не нужно, но я это не удалил, мб в будующем пригодится
 #for i in range(10):
@@ -32,19 +33,11 @@ screen.fill((255, 255, 255))
 #ShipContinueImg = pg.image.load("images/ShipContinue.png")
 #ShipEndImg = pg.image.load("images/ShipEnd.png")
 
-screen.blit(FieldImg, (0, 0))
-# screen.blit(SkipImg, (142, 476))
-# screen.blit(HitImg, (110, 476))
-
-#screen.blit(OneDeckShipImg, (110, 508))
-
-#screen.blit(ShipStartImg, (110, 604))
-#screen.blit(ShipContinueImg, (110, 570))
-#screen.blit(ShipEndImg, (110, 540))
+screen.blit(pg.image.load("images/Field.png"), (0, 0))
 
 is_game = True
 while is_game:
-    player_field.pr_all(screen)
+    player_field.pr_all(screen, print_ships=True)
     bot_field.pr_all(screen, print_ships=True)
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -52,7 +45,10 @@ while is_game:
         
         elif event.type == pg.MOUSEBUTTONDOWN:
             x, y = pg.mouse.get_pos() # 467, 560
-            if bot_field.fire_pg(x, y):
+            end_attack = bot_field.fire_pg(x, y)
+            if end_attack[0]:
                 player_field.bot_play()
+                if end_attack[1]:
+                    bot_field.death(x, y)
 
     pg.display.flip()
