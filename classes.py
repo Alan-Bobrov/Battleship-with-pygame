@@ -10,7 +10,7 @@ class Field:
     def copying(self, field_copy, copyable_status):
         pass
 
-    def pr_all(self, screen, print_ships=False): #вроде написал функцию, которая рисует все скрины, кажется работает
+    def pr_all(self, screen, print_ships=False):
         status_list = ["skip", "hit"]
         if print_ships:
             status_list.append("part_ship")
@@ -21,7 +21,14 @@ class Field:
                     for image in j.images:
                         screen.blit(image, (j.X, j.Y))
     
-    def bot_play(self): #эта функция типо расстановления ботом ходов, так-то это ход бота, но сейчас она врененно тавит корабли
+    def bot_play(self):
+        while True:
+            X = randint(0, 9) * 32 + 110
+            Y = randint(0, 9) * 32 + 476
+            if self.fire_pg(X, Y):
+                break
+    
+    def bot_do_ships(self): #эта функция расстановления ботом кораблей, она врененная
         while True:
             X = randint(0, 9)
             Y = randint(0, 9)
@@ -30,7 +37,7 @@ class Field:
                 self.field[Y][X].images.append(pg.image.load("images/OneDeckShip.png"))
                 break
     
-    def fire_pg(self, x, y):
+    def fire_pg(self, x, y) -> bool:
         for iy in range(10):
             for jx in range(10):
                 X = self.field[iy][jx].X
@@ -39,9 +46,12 @@ class Field:
                     if self.field[iy][jx].status == "free_place":
                         self.field[iy][jx].status = "skip"
                         self.field[iy][jx].images.append(pg.image.load("images/Skip.png"))
+                        return True
                     elif self.field[iy][jx].status == "part_ship":
                         self.field[iy][jx].status = "hit"
                         self.field[iy][jx].images.append(pg.image.load("images/Hit.png"))
+                        return True
+        return False
 
 
 class Place:
