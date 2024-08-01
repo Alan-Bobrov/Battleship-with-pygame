@@ -53,7 +53,7 @@ class Field:
                         self.field[iy][jx].status = "hit"
                         self.field[iy][jx].images.append(pg.image.load("images/Hit.png"))
                         self.death(jx, iy)
-                        return True, True, (iy, jx)
+                        return True, True, (jx, iy)
         return False, False
 
     def death(self, x, y):
@@ -65,9 +65,9 @@ class Field:
             if 0 <= i[0] <= 9 and 0 <= i[1] <= 9:
                 list_coords_2.append(i)
                 if self.field[i[1]][i[0]].status == "part_ship":
-                    list_live_ships.append(self.field[i[0]][i[1]])
+                    list_live_ships.append(self.field[i[1]][i[0]])
                 elif self.field[i[1]][i[0]].status == "hit":
-                    list_hit_ships.append(self.field[i[0]][i[1]])
+                    list_hit_ships.append(self.field[i[1]][i[0]])
 
         if len(list_hit_ships) == 0 and len(list_live_ships) == 0:
             for i in list_coords_2:
