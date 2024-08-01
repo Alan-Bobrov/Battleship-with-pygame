@@ -51,10 +51,6 @@ class Ship:
                 num_of_ships_around += 1
         
         # if coords - continue of the ship or it is a one-deck ship
-        if num_of_ships_around <= 1:
-            comp_field[string][column] = self
-            user_field[string][column] = "*"
-            return True
 
         return False
 
