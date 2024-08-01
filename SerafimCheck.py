@@ -51,7 +51,13 @@ class Ship:
             return False
         
         # check corners of ship
-        for i in (1, -1):
+
+        # то что ты написал проверяет только -> + - +
+        #                                       - - - 
+        #                                       + - +
+
+
+        for i in (1, -1): 
             for j in (1, -1):
                 try:
                     if isinstance(comp_field[string + i][column + j], Ship):
@@ -148,7 +154,7 @@ Ship.put_ship(Ship, comp_field, user_field, (2, 7))
 Ship.put_ship(Ship, comp_field, user_field, (0, 7))
 Ship.put_ship(Ship, comp_field, user_field, (5, 3))
 Ship.put_ship(Ship, comp_field, user_field, (9, 7))
-# ship5.put_ship(comp_field, user_field, (5, 9))
+ship5.put_ship(comp_field, user_field, (5, 9))
 
 print_field(user_field)
 # return_num_ships()
