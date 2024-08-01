@@ -45,10 +45,10 @@ while is_game:
         
         elif event.type == pg.MOUSEBUTTONDOWN:
             x, y = pg.mouse.get_pos() # 467, 560
-            end_attack = bot_field.fire_pg(x, y)
-            if end_attack[0]:
+            end_bots_attack = bot_field.fire_pg(x, y)
+            if end_bots_attack[0]:
                 player_field.bot_play()
-                if end_attack[1]:
-                    bot_field.death(x, y)
+                if end_bots_attack[1]:
+                    bot_field.death(end_bots_attack[2][0], end_bots_attack[2][1])
 
     pg.display.flip()
