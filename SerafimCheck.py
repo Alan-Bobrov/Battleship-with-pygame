@@ -21,10 +21,8 @@ def print_field(field):
 def update_num_of_ships(cell):
     with open("num_of_ships.json", "r", encoding="utf-8") as num_of_ships:
         num_of_ships = json.load(num_of_ships)
-        print(num_of_ships)
         try:
-            if num_of_ships[f"{cell.length}"] < 5 - cell.length:
-                print(8)
+            if num_of_ships[f"{cell.length}"] < 1:
                 return False
             num_of_ships[f"{cell.length - 1}"] += 1
             num_of_ships[f"{cell.length}"] -= 1
@@ -32,7 +30,7 @@ def update_num_of_ships(cell):
             pass
         else:
             with open("num_of_ships.json", "w", encoding="utf-8") as file:
-                json.dump(num_of_ships, file, ensure_ascii=False)
+                json.dump(num_of_ships, file, indent=4)
     return True
 
 comp_field = create_field()
@@ -105,8 +103,10 @@ class Ship:
                 if isinstance(column_cell, Ship):
                     comp_field[string][column] = column_cell
 
-                    if (column_cell.length + 1 == comp_field[string].count(column_cell)) and (column_cell.length + 1 <= 4) and update_num_of_ships(column_cell):
+                    if (column_cell.length + 1 == comp_field[string].count(column_cell)) and update_num_of_ships(column_cell) and (column_cell.length + 1 <= 4):
                         column_cell.length += 1
+                        if not update_num_of_ships(column_cell):
+                            column_cell.length -= 1
                         if not is_bot:
                             user_field[string][column] = "*"
                     else:
@@ -120,13 +120,15 @@ class Ship:
                         column_values.append(comp_field[i][column])
                     
                     comp_field[string][column] = string_cell
-                    if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4) and update_num_of_ships(string_cell):
+                    if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4):
                         string_cell.length += 1
                         if not is_bot:
                             user_field[string][column] = "*"
+                        if not update_num_of_ships(string_cell):
+                            string_cell.length -= 1
                     else:
                         comp_field[string][column] = "-"
-                        print(9)
+
 
         return False, None
 
@@ -141,6 +143,11 @@ ship1.put_ship(comp_field, user_field, (3, 0))
 ship2.put_ship(comp_field, user_field, (4, 0))
 ship3.put_ship(comp_field, user_field, (5, 0))
 ship4.put_ship(comp_field, user_field, (6, 0))
+Ship.put_ship(Ship, comp_field, user_field, (5, 7))
+Ship.put_ship(Ship, comp_field, user_field, (2, 7))
+Ship.put_ship(Ship, comp_field, user_field, (0, 7))
+Ship.put_ship(Ship, comp_field, user_field, (5, 3))
+Ship.put_ship(Ship, comp_field, user_field, (9, 7))
 # ship5.put_ship(comp_field, user_field, (5, 9))
 
 print_field(user_field)
