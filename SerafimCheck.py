@@ -51,12 +51,6 @@ class Ship:
             return False
         
         # check corners of ship
-
-        # то что ты написал проверяет только -> + - +
-        #                                       - - - 
-        #                                       + - +
-
-
         for i in (1, -1): 
             for j in (1, -1):
                 try:
