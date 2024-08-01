@@ -64,7 +64,8 @@ class Ship:
                     string_cell = comp_field[string + i][column] # there are change only string
                 except:
                     continue
-
+                
+                # if horizontal ship
                 if isinstance(column_cell, Ship):
                     comp_field[string][column] = column_cell
 
@@ -75,9 +76,19 @@ class Ship:
                     else:
                         comp_field[string][column] = "-"
 
-
+                # if vertical ship
                 if isinstance(string_cell, Ship):
-                    num_of_ships_around += 1
+                    column_values = list()
+                    for i in range(10):
+                        column_values.append(comp_field[i][column])
+                    
+                    comp_field[string][column] = string_cell
+                    if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4):
+                        string_cell.length += 1
+                        if not is_bot:
+                            user_field[string][column] = "*"
+                    else:
+                        comp_field[string][column] = "-"
 
         return False
 
@@ -89,14 +100,10 @@ ship5 = Ship()
 ship6 = Ship()
 
 ship1.put_ship(comp_field, user_field, (3, 4))
-ship2.put_ship(comp_field, user_field, (3, 5))
-ship3.put_ship(comp_field, user_field, (3, 6))
-ship4.put_ship(comp_field, user_field, (3, 7))
-
-ship6.put_ship(comp_field, user_field, (4, 6))
-ship5.put_ship(comp_field, user_field, (5, 6))
-
-
+ship2.put_ship(comp_field, user_field, (4, 4))
+ship3.put_ship(comp_field, user_field, (5, 4))
+ship4.put_ship(comp_field, user_field, (6, 4))
+ship5.put_ship(comp_field, user_field, (2, 3))
 
 print_field(user_field)
 
