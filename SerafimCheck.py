@@ -1,3 +1,15 @@
+import json
+
+def return_num_ships():
+    object = {
+        "4": 1,
+        "3": 2,
+        "2": 3,
+        "1": 4
+    }
+    with open("num_of_ships.json", "w", encoding="utf-8") as file:
+        json.dump(object, file, indent=4)
+
 def create_field(space_symbol="-"):
     field = [[space_symbol for _ in range(10)] for i in range(10)]
     return field
@@ -5,6 +17,23 @@ def create_field(space_symbol="-"):
 def print_field(field):
     for i in range(len(field)):
         print(*field[i])
+
+def update_num_of_ships(cell):
+    with open("num_of_ships.json", "r", encoding="utf-8") as num_of_ships:
+        num_of_ships = json.load(num_of_ships)
+        print(num_of_ships)
+        try:
+            if num_of_ships[f"{cell.length}"] < 5 - cell.length:
+                print(8)
+                return False
+            num_of_ships[f"{cell.length - 1}"] += 1
+            num_of_ships[f"{cell.length}"] -= 1
+        except:
+            pass
+        else:
+            with open("num_of_ships.json", "w", encoding="utf-8") as file:
+                json.dump(num_of_ships, file, ensure_ascii=False)
+    return True
 
 comp_field = create_field()
 user_field = create_field()
@@ -51,6 +80,13 @@ class Ship:
         # create new ship
         if num_of_ships_around == 0:
             comp_field[string][column] = self
+            with open("num_of_ships.json", "r", encoding="utf-8") as file:
+                num_of_ships = json.load(file)
+                if num_of_ships["1"] <= 0:
+                    return False, None
+                num_of_ships["1"] -= 1
+                with open("num_of_ships.json", "w", encoding="utf-8") as file1:
+                    json.dump(num_of_ships, file1, indent=4)
             if not is_bot:
                 user_field[string][column] = "*"
 
@@ -69,12 +105,13 @@ class Ship:
                 if isinstance(column_cell, Ship):
                     comp_field[string][column] = column_cell
 
-                    if (column_cell.length + 1 == comp_field[string].count(column_cell)) and (column_cell.length + 1 <= 4):
+                    if (column_cell.length + 1 == comp_field[string].count(column_cell)) and (column_cell.length + 1 <= 4) and update_num_of_ships(column_cell):
                         column_cell.length += 1
                         if not is_bot:
                             user_field[string][column] = "*"
                     else:
                         comp_field[string][column] = "-"
+
 
                 # if vertical ship
                 if isinstance(string_cell, Ship):
@@ -83,14 +120,15 @@ class Ship:
                         column_values.append(comp_field[i][column])
                     
                     comp_field[string][column] = string_cell
-                    if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4):
+                    if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4) and update_num_of_ships(string_cell):
                         string_cell.length += 1
                         if not is_bot:
                             user_field[string][column] = "*"
                     else:
                         comp_field[string][column] = "-"
+                        print(9)
 
-        return False
+        return False, None
 
 ship1 = Ship()
 ship2 = Ship()
@@ -99,11 +137,11 @@ ship4 = Ship()
 ship5 = Ship()
 ship6 = Ship()
 
-ship1.put_ship(comp_field, user_field, (3, 4))
-ship2.put_ship(comp_field, user_field, (4, 4))
-ship3.put_ship(comp_field, user_field, (5, 4))
-ship4.put_ship(comp_field, user_field, (6, 4))
-ship5.put_ship(comp_field, user_field, (2, 3))
+ship1.put_ship(comp_field, user_field, (3, 0))
+ship2.put_ship(comp_field, user_field, (4, 0))
+ship3.put_ship(comp_field, user_field, (5, 0))
+ship4.put_ship(comp_field, user_field, (6, 0))
+# ship5.put_ship(comp_field, user_field, (5, 9))
 
 print_field(user_field)
-
+# return_num_ships()
