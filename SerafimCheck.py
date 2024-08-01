@@ -30,6 +30,8 @@ class Ship:
             string_cell = comp_field[string + i][column] # there are change only string
 
             if isinstance(column_cell, Ship):
+                if column_cell.length == 4:
+                    return False
                 comp_field[string][column] = column_cell
                 if column_cell.length + 1 != comp_field[string].count(column_cell):
                     comp_field[string][column] = "-"
@@ -38,6 +40,14 @@ class Ship:
                 num_of_ships_around += 1
 
             if isinstance(string_cell, Ship):
+                column_value = list()
+                for i in range(10):
+                    column_value.append(comp_field[i][column])
+                comp_field[string][column] = string_cell
+                if string_cell.length + 1 != column_value.count(string_cell):
+                    comp_field[string][column] = "-"
+                    return False
+                string_cell.length += 1
                 num_of_ships_around += 1
         
         # if coords - continue of the ship or it is a one-deck ship
@@ -51,10 +61,14 @@ class Ship:
 ship1 = Ship()
 ship2 = Ship()
 ship3 = Ship()
+ship4 = Ship()
+ship5 = Ship()
 
 ship1.put_ship(comp_field, user_field, (3, 4))
-ship2.put_ship(comp_field, user_field, (3, 5))
-ship3.put_ship(comp_field, user_field, (2, 6))
+ship2.put_ship(comp_field, user_field, (4, 4))
+ship3.put_ship(comp_field, user_field, (5, 4))
+ship4.put_ship(comp_field, user_field, (3, 7))
+# ship5.put_ship(comp_field, user_field, (3, 8))
 
 
 print_field(user_field)
