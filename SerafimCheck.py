@@ -81,12 +81,14 @@ class Ship:
             with open("num_of_ships.json", "r", encoding="utf-8") as file:
                 num_of_ships = json.load(file)
                 if num_of_ships["1"] <= 0:
+                    print(9)
                     return False, None
                 num_of_ships["1"] -= 1
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
                     json.dump(num_of_ships, file1, indent=4)
             if not is_bot:
                 user_field[string][column] = "*"
+            return True, "new"
 
         # continue ship
         elif num_of_ships_around == 1:
@@ -111,6 +113,7 @@ class Ship:
                             user_field[string][column] = "*"
                     else:
                         comp_field[string][column] = "-"
+                    return True, ("Right" if i == 1 else "Left")
 
 
                 # if vertical ship
@@ -129,7 +132,6 @@ class Ship:
                     else:
                         print(1)
                         comp_field[string][column] = "-"
-
 
         return False, None
 
