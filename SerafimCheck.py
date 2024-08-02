@@ -127,28 +127,18 @@ class Ship:
                         if not update_num_of_ships(string_cell):
                             string_cell.length -= 1
                     else:
+                        print(1)
                         comp_field[string][column] = "-"
 
 
         return False, None
 
-ship1 = Ship()
-ship2 = Ship()
-ship3 = Ship()
-ship4 = Ship()
-ship5 = Ship()
-ship6 = Ship()
+ship = Ship()
 
-ship1.put_ship(comp_field, user_field, (3, 0))
-ship2.put_ship(comp_field, user_field, (4, 0))
-ship3.put_ship(comp_field, user_field, (5, 0))
-ship4.put_ship(comp_field, user_field, (6, 0))
-Ship.put_ship(Ship, comp_field, user_field, (5, 7))
-Ship.put_ship(Ship, comp_field, user_field, (2, 7))
-Ship.put_ship(Ship, comp_field, user_field, (0, 7))
-Ship.put_ship(Ship, comp_field, user_field, (5, 3))
-Ship.put_ship(Ship, comp_field, user_field, (9, 7))
-ship5.put_ship(comp_field, user_field, (5, 9))
+ship.put_ship(comp_field, user_field, (0, 0))
+ship.put_ship(comp_field, user_field, (1, 0))
+ship.put_ship(comp_field, user_field, (3, 0))
+ship.put_ship(comp_field, user_field, (4, 0))
 
 print_field(user_field)
-# return_num_ships()
+#return_num_ships()
