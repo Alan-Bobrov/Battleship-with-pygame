@@ -1,4 +1,5 @@
 import json
+from random import randint
 
 def return_num_ships():
     object = {
@@ -45,17 +46,18 @@ class Ship:
 
         # check coords 
         if isinstance(string, int) and isinstance(column, int):
-            if (string <= -1 or string >= 10) and (column <= -1 or column >= 10):
-                return False
+            if (string <= -1 or string >= 10) and (column <= -1 or column >= 10) and comp_field[string][column] != "-":
+                print(8)
+                return False, None
         else:
-            return False
+            return False, None
         
         # check corners of ship
         for i in (1, -1): 
             for j in (1, -1):
                 try:
                     if isinstance(comp_field[string + i][column + j], Ship):
-                        return False
+                        return False, None
                 except IndexError:
                     continue
 
@@ -81,7 +83,8 @@ class Ship:
             with open("num_of_ships.json", "r", encoding="utf-8") as file:
                 num_of_ships = json.load(file)
                 if num_of_ships["1"] <= 0:
-                    print(9)
+                    comp_field[string][column] = "-"
+                    # print(9)
                     return False, None
                 num_of_ships["1"] -= 1
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
@@ -113,6 +116,7 @@ class Ship:
                             user_field[string][column] = "*"
                     else:
                         comp_field[string][column] = "-"
+                        return False, None
                     return True, ("Right" if i == 1 else "Left")
 
 
@@ -130,17 +134,37 @@ class Ship:
                         if not update_num_of_ships(string_cell):
                             string_cell.length -= 1
                     else:
-                        print(1)
+                        # print(1)
                         comp_field[string][column] = "-"
+                        return False, None
 
         return False, None
 
-ship = Ship()
+def create_ship(comp_field, user_field, coords):
+    ship = Ship()
+    result = ship.put_ship(comp_field, user_field, coords)
+    return result
 
-ship.put_ship(comp_field, user_field, (0, 0))
-ship.put_ship(comp_field, user_field, (1, 0))
-ship.put_ship(comp_field, user_field, (3, 0))
-ship.put_ship(comp_field, user_field, (4, 0))
+num_of_ships = 0
+
+
+while num_of_ships < 10:
+    result = create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
+    if result[1] == "new":
+        num_of_ships += 1
+    # print_field(user_field)
+    # print("---------------------------------------")
+    print_field(comp_field)
+# for i in range(100):
+#     create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
+
+# create_ship(comp_field, user_field, (0, 4))
+# create_ship(comp_field, user_field, (1, 4))
+# create_ship(comp_field, user_field, (2, 4))
+# create_ship(comp_field, user_field, (3, 4))
+# create_ship(comp_field, user_field, (3, 5))
 
 print_field(user_field)
-#return_num_ships()
+print("---------------------------------------")
+print_field(comp_field)
+return_num_ships()
