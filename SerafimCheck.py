@@ -46,7 +46,7 @@ class Ship:
 
         # check coords 
         if isinstance(string, int) and isinstance(column, int):
-            if (string <= -1 or string >= 10) and (column <= -1 or column >= 10) and comp_field[string][column] != "-":
+            if (string <= -1 or string >= 10) and (column <= -1 or column >= 10) or comp_field[string][column] != "-":
                 print(8)
                 return False, None
         else:
@@ -108,12 +108,16 @@ class Ship:
                 if isinstance(column_cell, Ship):
                     comp_field[string][column] = column_cell
 
-                    if (column_cell.length + 1 == comp_field[string].count(column_cell)) and update_num_of_ships(column_cell) and (column_cell.length + 1 <= 4):
+                    if (column_cell.length + 1 == comp_field[string].count(column_cell)) and (column_cell.length + 1 <= 4):
                         column_cell.length += 1
-                        if not update_num_of_ships(column_cell):
-                            column_cell.length -= 1
                         if not is_bot:
                             user_field[string][column] = "*"
+                        if not update_num_of_ships(column_cell):
+                            column_cell.length -= 1
+                            comp_field[string][column] = "-"
+                            user_field[string][column] = "-"
+                            return False, None
+                        
                     else:
                         comp_field[string][column] = "-"
                         return False, None
@@ -133,12 +137,16 @@ class Ship:
                             user_field[string][column] = "*"
                         if not update_num_of_ships(string_cell):
                             string_cell.length -= 1
+                            comp_field[string][column] = "-"
+                            user_field[string][column] = "-"
                     else:
                         # print(1)
                         comp_field[string][column] = "-"
                         return False, None
 
         return False, None
+
+return_num_ships()
 
 def create_ship(comp_field, user_field, coords):
     ship = Ship()
@@ -154,7 +162,7 @@ while num_of_ships < 10:
         num_of_ships += 1
     # print_field(user_field)
     # print("---------------------------------------")
-    print_field(comp_field)
+    # print_field(comp_field)
 # for i in range(100):
 #     create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
 
@@ -167,4 +175,4 @@ while num_of_ships < 10:
 print_field(user_field)
 print("---------------------------------------")
 print_field(comp_field)
-return_num_ships()
+
