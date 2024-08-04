@@ -1,38 +1,6 @@
 import json
 from random import randint
-
-def return_num_ships():
-    object = {
-        "4": 1,
-        "3": 2,
-        "2": 3,
-        "1": 4
-    }
-    with open("num_of_ships.json", "w", encoding="utf-8") as file:
-        json.dump(object, file, indent=4)
-
-def create_field(space_symbol="-"):
-    field = [[space_symbol for _ in range(10)] for i in range(10)]
-    return field
-
-def print_field(field):
-    for i in range(len(field)):
-        print(*field[i])
-
-def update_num_of_ships(cell):
-    with open("num_of_ships.json", "r", encoding="utf-8") as num_of_ships:
-        num_of_ships = json.load(num_of_ships)
-        try:
-            if num_of_ships[f"{cell.length}"] < 1:
-                return False
-            num_of_ships[f"{cell.length - 1}"] += 1
-            num_of_ships[f"{cell.length}"] -= 1
-        except:
-            pass
-        else:
-            with open("num_of_ships.json", "w", encoding="utf-8") as file:
-                json.dump(num_of_ships, file, indent=4)
-    return True
+from functions import create_field, print_field, update_num_of_ships, return_num_ships
 
 comp_field = create_field()
 user_field = create_field()
@@ -166,13 +134,11 @@ class Ship:
 
 return_num_ships()
 
+
 def create_ship(comp_field, user_field, coords):
     ship = Ship()
     result = ship.put_ship(comp_field, user_field, coords)
     return result
-
-num_of_ships = 0
-
 
 def random_ship_gen(comp_field, user_field, num_of_ships):
     while num_of_ships < 10:
@@ -213,10 +179,6 @@ create_ship(comp_field, user_field, (2, 4))
 create_ship(comp_field, user_field, (2, 5))
 
 create_ship(comp_field, user_field, (7, 0))
-
-
-
-
 
 print_field(user_field)
 # print("---------------------------------------")
