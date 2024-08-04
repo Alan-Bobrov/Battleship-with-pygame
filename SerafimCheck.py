@@ -55,8 +55,9 @@ class Ship:
         for i in (1, -1): 
             for j in (1, -1):
                 try:
-                    if isinstance(comp_field[string + i][column + j], Ship):
-                        return False, None
+                    if (0 <= string + i <= 9) and (0 <= column + j <= 9):
+                        if isinstance(comp_field[string + i][column + j], Ship):
+                            return False, None
                 except IndexError:
                     continue
 
@@ -64,27 +65,30 @@ class Ship:
 
         # check num of ships around coords
         for i in (1, -1):
-
+            
+            # check cells sround ship
             try:
                 column_cell = comp_field[string][column + i] # there are change only column
-            except IndexError:
+            except:
                 if column + i >= 10:
                     column_cell = comp_field[string][column]
 
             try:
                 string_cell = comp_field[string + i][column] # there are change only string
-            except IndexError:
+            except:
                 if string + i >= 10:
                     string_cell = comp_field[string][column]
 
+            # check column cell and srtring cell
             if isinstance(column_cell, Ship):
-                if column + i > -1:
+                if column + i >= 0:
                     num_of_ships_around += 1
 
+
             if isinstance(string_cell, Ship):
-                if string + i > -1:
+                if string + i >= 0:
                     num_of_ships_around += 1
-        
+
         # create new ship
         if num_of_ships_around == 0:
             comp_field[string][column] = self
@@ -92,6 +96,7 @@ class Ship:
                 num_of_ships = json.load(file)
                 if num_of_ships["1"] <= 0:
                     comp_field[string][column] = "-"
+                    print(9)
                     return False, None
                 num_of_ships["1"] -= 1
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
@@ -107,15 +112,22 @@ class Ship:
             for i in (1, -1):
                 try:
                     column_cell = comp_field[string][column + i] # there are change only column
+                except IndexError:
+                    if (column + i >= 10) or (column + i <= -1):
+                        column_cell = comp_field[string][column]
+
+                try:
                     string_cell = comp_field[string + i][column] # there are change only string
-                except:
-                    continue
+                except IndexError:
+                    if (string + i >= 10) or (string + i <= -1):
+                        string_cell = comp_field[string][column]
+
                 
                 # if horizontal ship
                 if isinstance(column_cell, Ship):
                     comp_field[string][column] = column_cell
 
-                    if (column_cell.length + 1 == comp_field[string].count(column_cell)) and (column_cell.length + 1 <= 4) and (column + i > -1):
+                    if (column_cell.length + 1 == comp_field[string].count(column_cell)) and (column_cell.length + 1 <= 4):
                         column_cell.length += 1
                         if not is_bot:
                             user_field[string][column] = "*"
@@ -137,7 +149,7 @@ class Ship:
                         column_values.append(comp_field[i][column])
                     
                     comp_field[string][column] = string_cell
-                    if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4) and (string + i > -1):
+                    if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4):
                         string_cell.length += 1
                         if not is_bot:
                             user_field[string][column] = "*"
@@ -169,9 +181,44 @@ def random_ship_gen(comp_field, user_field, num_of_ships):
             num_of_ships += 1
     return num_of_ships
 
-random_ship_gen(comp_field, user_field, num_of_ships)
+# random_ship_gen(comp_field, user_field, num_of_ships)
+
+create_ship(comp_field, user_field, (0, 0))
+
+create_ship(comp_field, user_field, (5, 4))
+create_ship(comp_field, user_field, (5, 5))
+create_ship(comp_field, user_field, (5, 6))
+
+create_ship(comp_field, user_field, (9, 9))
+
+create_ship(comp_field, user_field, (0, 6))
+create_ship(comp_field, user_field, (0, 7))
+
+create_ship(comp_field, user_field, (2, 9))
+create_ship(comp_field, user_field, (3, 9))
+create_ship(comp_field, user_field, (4, 9))
+create_ship(comp_field, user_field, (5, 9))
+
+create_ship(comp_field, user_field, (7, 9))
+
+create_ship(comp_field, user_field, (9, 0))
+create_ship(comp_field, user_field, (9, 1))
+
+create_ship(comp_field, user_field, (9, 2))
+
+create_ship(comp_field, user_field, (2, 0))
+create_ship(comp_field, user_field, (2, 1))
+
+create_ship(comp_field, user_field, (2, 4))
+create_ship(comp_field, user_field, (2, 5))
+
+create_ship(comp_field, user_field, (7, 0))
+
+
+
+
 
 print_field(user_field)
-print("---------------------------------------")
-print_field(comp_field)
+# print("---------------------------------------")
+# print_field(comp_field)
 
