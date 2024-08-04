@@ -99,8 +99,6 @@ class Ship:
             # check continue of ship
             for i in (1, -1):
                 try:
-                    if (string + i <= -1) or (column + i <= -1):
-                        raise IndexError
                     column_cell = comp_field[string][column + i] # there are change only column
                     string_cell = comp_field[string + i][column] # there are change only string
                 except:
@@ -144,6 +142,7 @@ class Ship:
                     else:
                         comp_field[string][column] = "-"
                         return False, None
+                    return True, ("Down" if i == 1 else "Up")
 
         return False, None
 
