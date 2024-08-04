@@ -47,7 +47,6 @@ class Ship:
         # check coords 
         if isinstance(string, int) and isinstance(column, int):
             if (string <= -1 or string >= 10) and (column <= -1 or column >= 10) or comp_field[string][column] != "-":
-                print(8)
                 return False, None
         else:
             return False, None
@@ -72,10 +71,12 @@ class Ship:
                 continue
 
             if isinstance(column_cell, Ship):
-                num_of_ships_around += 1
+                if column + i > -1:
+                    num_of_ships_around += 1
 
             if isinstance(string_cell, Ship):
-                num_of_ships_around += 1
+                if string + i > -1:
+                    num_of_ships_around += 1
         
         # create new ship
         if num_of_ships_around == 0:
@@ -99,6 +100,8 @@ class Ship:
             # check continue of ship
             for i in (1, -1):
                 try:
+                    if (string + i <= -1) or (column + i <= -1):
+                        raise IndexError
                     column_cell = comp_field[string][column + i] # there are change only column
                     string_cell = comp_field[string + i][column] # there are change only string
                 except:
@@ -154,23 +157,42 @@ def create_ship(comp_field, user_field, coords):
     return result
 
 num_of_ships = 0
+count = 0
 
+def random_ship_gen(comp_field, user_field, num_of_ships):
+    while num_of_ships < 10:
+        result = create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
+        if result[1] == "new":
+            num_of_ships += 1
+    return num_of_ships
 
-while num_of_ships < 10:
-    result = create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
-    if result[1] == "new":
-        num_of_ships += 1
-    # print_field(user_field)
-    # print("---------------------------------------")
-    # print_field(comp_field)
-# for i in range(100):
-#     create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
+random_ship_gen(comp_field, user_field, num_of_ships)
 
 # create_ship(comp_field, user_field, (0, 4))
 # create_ship(comp_field, user_field, (1, 4))
 # create_ship(comp_field, user_field, (2, 4))
 # create_ship(comp_field, user_field, (3, 4))
-# create_ship(comp_field, user_field, (3, 5))
+
+# create_ship(comp_field, user_field, (0, 0))
+# create_ship(comp_field, user_field, (0, 1))
+# create_ship(comp_field, user_field, (2, 0))
+# create_ship(comp_field, user_field, (2, 1))
+# create_ship(comp_field, user_field, (4, 0))
+# create_ship(comp_field, user_field, (4, 1))
+# create_ship(comp_field, user_field, (6, 0))
+
+# create_ship(comp_field, user_field, (6, 1))
+# create_ship(comp_field, user_field, (8, 5))
+# create_ship(comp_field, user_field, (0, 9))
+# create_ship(comp_field, user_field, (9, 9))
+# create_ship(comp_field, user_field, (7, 7))
+
+# create_ship(comp_field, user_field, (0, 2))
+
+# create_ship(comp_field, user_field, (8, 9))
+# create_ship(comp_field, user_field, (7, 9))
+
+
 
 print_field(user_field)
 print("---------------------------------------")
