@@ -64,11 +64,18 @@ class Ship:
 
         # check num of ships around coords
         for i in (1, -1):
+
             try:
                 column_cell = comp_field[string][column + i] # there are change only column
+            except IndexError:
+                if column + i >= 10:
+                    column_cell = comp_field[string][column]
+
+            try:
                 string_cell = comp_field[string + i][column] # there are change only string
-            except:
-                continue
+            except IndexError:
+                if string + i >= 10:
+                    string_cell = comp_field[string][column]
 
             if isinstance(column_cell, Ship):
                 if column + i > -1:
@@ -117,7 +124,6 @@ class Ship:
                             comp_field[string][column] = "-"
                             user_field[string][column] = "-"
                             return False, None
-                        
                     else:
                         comp_field[string][column] = "-"
                         return False, None
