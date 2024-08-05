@@ -80,7 +80,7 @@ class Ship:
     def __init__(self) -> None:
         self.length = 1
 
-    def put_ship(self, comp_field, user_field, coords, is_bot=False):
+    def put_ship(self, comp_field, coords) -> tuple:
         string, column = coords
 
         # check coords 
@@ -140,8 +140,6 @@ class Ship:
                 num_of_ships["1"] -= 1
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
                     json.dump(num_of_ships, file1, indent=4)
-            if not is_bot:
-                user_field[string][column] = "*"
             return True, "new"
 
         # continue ship
@@ -168,12 +166,9 @@ class Ship:
 
                     if (column_cell.length + 1 == comp_field[string].count(column_cell)) and (column_cell.length + 1 <= 4):
                         column_cell.length += 1
-                        if not is_bot:
-                            user_field[string][column] = "*"
                         if not update_num_of_ships(column_cell):
                             column_cell.length -= 1
                             comp_field[string][column] = "-"
-                            user_field[string][column] = "-"
                             return False, None
                     else:
                         comp_field[string][column] = "-"
@@ -189,12 +184,9 @@ class Ship:
                     comp_field[string][column] = string_cell
                     if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4):
                         string_cell.length += 1
-                        if not is_bot:
-                            user_field[string][column] = "*"
                         if not update_num_of_ships(string_cell):
                             string_cell.length -= 1
                             comp_field[string][column] = "-"
-                            user_field[string][column] = "-"
                     else:
                         comp_field[string][column] = "-"
                         return False, None
