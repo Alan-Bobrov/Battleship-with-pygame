@@ -2,8 +2,6 @@ import json
 from random import randint
 from functions import create_field, print_field, update_num_of_ships, return_num_ships
 
-comp_field = create_field()
-user_field = create_field()
 
 class Ship:
     def __init__(self) -> None:
@@ -64,7 +62,7 @@ class Ship:
                 num_of_ships = json.load(file)
                 if num_of_ships["1"] <= 0:
                     comp_field[string][column] = "-"
-                    print(9)
+                    #print(9)
                     return False, None
                 num_of_ships["1"] -= 1
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
@@ -143,42 +141,19 @@ class Ship:
             result = Ship.create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
             if result[1] == "new":
                 num_of_ships += 1
+                
         return num_of_ships
-
 return_num_ships()
 
-Ship.create_ship(comp_field, user_field, (0, 0))
 
-Ship.create_ship(comp_field, user_field, (5, 4))
-Ship.create_ship(comp_field, user_field, (5, 5))
-Ship.create_ship(comp_field, user_field, (5, 6))
 
-Ship.create_ship(comp_field, user_field, (9, 9))
-
-Ship.create_ship(comp_field, user_field, (0, 6))
-Ship.create_ship(comp_field, user_field, (0, 7))
-
-Ship.create_ship(comp_field, user_field, (2, 9))
-Ship.create_ship(comp_field, user_field, (3, 9))
-Ship.create_ship(comp_field, user_field, (4, 9))
-Ship.create_ship(comp_field, user_field, (5, 9))
-
-Ship.create_ship(comp_field, user_field, (7, 9))
-
-Ship.create_ship(comp_field, user_field, (9, 0))
-Ship.create_ship(comp_field, user_field, (9, 1))
-
-Ship.create_ship(comp_field, user_field, (9, 2))
-
-Ship.create_ship(comp_field, user_field, (2, 0))
-Ship.create_ship(comp_field, user_field, (2, 1))
-
-Ship.create_ship(comp_field, user_field, (2, 4))
-Ship.create_ship(comp_field, user_field, (2, 5))
-
-Ship.create_ship(comp_field, user_field, (7, 0))
-
-print_field(user_field)
 # print("---------------------------------------")
 # print_field(comp_field)
+
+comp_field = create_field()
+user_field = create_field()
+
+
+Ship.random_ship_gen(comp_field, user_field, 0)
+print_field(user_field)
 
