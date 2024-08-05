@@ -28,8 +28,8 @@ for _ in range(10):
 screen = pg.display.set_mode((1024, 900))
 screen.fill((255, 255, 255))
 
-screen.blit(pg.image.load("images/Field.png"), (0, 0))
-
+screen.blit(FieldImg, (0, 0))
+is_again = False
 is_putting = True
 is_game = True
 while is_game:
