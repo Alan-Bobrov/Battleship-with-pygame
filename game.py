@@ -28,23 +28,22 @@ for _ in range(10):
 screen = pg.display.set_mode((1024, 900))
 screen.fill((255, 255, 255))
 
-#OneDeckShipImg = pg.image.load("images/OneDeckShip.png")
-#ShipStartImg = pg.image.load("images/ShipStart.png")
-#ShipContinueImg = pg.image.load("images/ShipContinue.png")
-#ShipEndImg = pg.image.load("images/ShipEnd.png")
-
 screen.blit(pg.image.load("images/Field.png"), (0, 0))
 
+is_putting = True
 is_game = True
 while is_game:
     player_field.pr_all(screen, print_ships=True)
     bot_field.pr_all(screen, print_ships=True)
+    SetClearButton(screen, is_putting)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             is_game = False
         
         elif event.type == pg.MOUSEBUTTONDOWN:
             x, y = pg.mouse.get_pos() # 467, 560
+            if (81 <= x <= 941) and (55 <= y <= 189) and is_putting:
+                clear_field(screen)
             end_bots_attack = bot_field.fire_pg(x, y)
             if end_bots_attack[0]:
                 player_field.bot_play()
