@@ -202,13 +202,13 @@ class Place:
         self.X = X
         self.Y = Y
 
-class Skip:
-    def __init__(self) -> None:
-        self.image = "images/Skip.png"
+# class Skip:
+#     def __init__(self) -> None:
+#         self.image = "images/Skip.png"
 
-class Hit:
-    def __init__(self) -> None:
-        self.image = "images/Hit.png"
+# class Hit:
+#     def __init__(self) -> None:
+#         self.image = "images/Hit.png"
 
 #field = Field(110, 476)
 #skip = Skip()
