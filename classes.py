@@ -243,15 +243,15 @@ class Place:
         self.X = X
         self.Y = Y
 
-<<<<<<< HEAD
-
+#Do not delete!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def random_ship_gen(comp_field, user_field, num_of_ships):
         while num_of_ships < 10:
             result = Ship.create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
             if result[1] == "new":
-                num_of_ships += 1       
+                num_of_ships += 1
+                
         return num_of_ships
-=======
+
 # class Skip:
 #     def __init__(self) -> None:
 #         self.image = "images/Skip.png"
@@ -268,4 +268,3 @@ def random_ship_gen(comp_field, user_field, num_of_ships):
 #FieldImg = pg.image.load(field.image)
 #SkipImg = pg.image.load(skip.image)
 #HitImg = pg.image.load(hit.image)
->>>>>>> bf4315c31f8c78d1c28b8d8073eb66dc35d7732c
