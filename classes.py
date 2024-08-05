@@ -79,8 +79,12 @@ class Field:
 class Ship:
     def __init__(self) -> None:
         self.length = 1
+        self.hp = 1
+        self.direction = None
+        self.start_coords = None
 
     def put_ship(self, comp_field, coords) -> tuple:
+    
         string, column = coords
 
         # check coords 
@@ -138,6 +142,7 @@ class Ship:
                     print(9)
                     return False, None
                 num_of_ships["1"] -= 1
+                self.start_coords = coords
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
                     json.dump(num_of_ships, file1, indent=4)
             return True, "new"
@@ -166,8 +171,10 @@ class Ship:
 
                     if (column_cell.length + 1 == comp_field[string].count(column_cell)) and (column_cell.length + 1 <= 4):
                         column_cell.length += 1
+                        column_cell.hp += 1
                         if not update_num_of_ships(column_cell):
                             column_cell.length -= 1
+                            column_cell.hp -= 1
                             comp_field[string][column] = "-"
                             return False, None
                     else:
@@ -184,8 +191,10 @@ class Ship:
                     comp_field[string][column] = string_cell
                     if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4):
                         string_cell.length += 1
+                        string_cell.hp += 1
                         if not update_num_of_ships(string_cell):
                             string_cell.length -= 1
+                            string_cell.hp -= 1
                             comp_field[string][column] = "-"
                     else:
                         comp_field[string][column] = "-"
@@ -193,7 +202,23 @@ class Ship:
                     return True, ("Down" if i == 1 else "Up")
 
         return False, None
-        
+    
+    def death(self, comp_field):
+        pass
+
+    def fire(self, comp_field, coords):
+
+        string, col = coords
+        fired_cell = comp_field[string][col]
+
+        if isinstance(fired_cell, Ship):
+            if fired_cell.length >= 1:
+                comp_field[string][col] = "*"
+                fired_cell.length -= 1
+                if fired_cell.length <= 0:
+                    fired_cell.death()
+
+
 
 class Place:
     def __init__(self, X, Y) -> None:
