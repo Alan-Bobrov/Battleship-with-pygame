@@ -1,14 +1,13 @@
 import pygame as pg
 from random import randint
 from functions import *
+from images import *
+import json
 
 class Field:
     def __init__(self, first_X, first_Y, live_ships=9) -> None: #110 476 - first field and 598 476 - second
         self.live_ships = live_ships
         self.field = [[Place(first_X + j * 32, first_Y + i * 32) for j in range(10)] for i in range(10)]
-
-    def copying(self, field_copy, copyable_status):
-        pass
 
     def pr_all(self, screen, print_ships=False):
         status_list = ["skip", "hit"]
@@ -19,7 +18,14 @@ class Field:
             for j in i:
                 if j.status in status_list:
                     for image in j.images:
-                        screen.blit(image, (j.X, j.Y))
+                        if image == ShipStartImg:
+                            screen.blit(image, (j.X, j.Y - 2))
+                        elif image == ShipEndImg: 
+                            screen.blit(image, (j.X, j.Y + 2))
+                        elif type(image) == tuple:
+                                screen.blit(image[0], (j.X + 2, j.Y))
+                        else:
+                            screen.blit(image, (j.X, j.Y))
     
     def bot_play(self):
         while True:
@@ -31,15 +37,46 @@ class Field:
                     self.death(end[2][0], end[2][1])
                 break
     
-    def bot_do_ships(self): #эта функция расстановления ботом кораблей, она врененная
-        while True:
-            X = randint(0, 9)
-            Y = randint(0, 9)
-            if self.field[Y][X].status == "free_place":
-                self.field[Y][X].status = "part_ship"
-                self.field[Y][X].images.append(pg.image.load("images/OneDeckShip.png"))
-                break
-    
+    def bot_do_ships(self): 
+        comp_field = create_field()
+        user_field = create_field()
+        return_num_ships()
+        random_ship_gen(comp_field, user_field, 0)
+        for i in range(len(user_field)):
+            for j in range(len(user_field[0])):
+                if user_field[i][j] == "*":
+                    self.field[i][j].status = "part_ship"
+                    self.field[i][j].images.append(ShipContinueImg)
+
+    def normal_ships_image(self):
+        for i in range(len(self.field)):
+            for j in range(len(self.field[0])):
+                if self.field[i][j].status == "part_ship":
+                    up, down, right, left = Place(0, 0), Place(0, 0), Place(0, 0), Place(0, 0)
+                    if i - 1 >= 0:
+                        up = self.field[i - 1][j]
+                    if i + 1 <= 9:
+                        down = self.field[i + 1][j]
+                    if j + 1 <= 9:
+                        right = self.field[i][j + 1]
+                    if j - 1 >= 0:
+                        left = self.field[i][j - 1]
+                    
+                    if up.status == "part_ship" and down.status == "part_ship":
+                        continue
+                    elif up.status == "part_ship" and down.status != "part_ship":
+                        self.field[i][j].images[0] = ShipStartImg
+                    elif up.status != "part_ship" and down.status == "part_ship":
+                        self.field[i][j].images[0] = ShipEndImg
+                    elif right.status == "part_ship" and left.status == "part_ship":
+                        self.field[i][j].images[0] = pg.transform.rotate(ShipContinueImg, 90.0)
+                    elif right.status == "part_ship" and left.status != "part_ship":
+                        self.field[i][j].images[0] = (pg.transform.rotate(ShipEndImg, 90.0),)
+                    elif right.status != "part_ship" and left.status == "part_ship":
+                        self.field[i][j].images[0] = pg.transform.rotate(ShipStartImg, 90.0)
+                    else:
+                        self.field[i][j].images[0] = OneDeckShipImg
+            
     def fire_pg(self, x, y) -> tuple:
         for iy in range(10):
             for jx in range(10):
@@ -48,11 +85,11 @@ class Field:
                 if (X <= x < X + 32) and (Y <= y < Y + 32):
                     if self.field[iy][jx].status == "free_place":
                         self.field[iy][jx].status = "skip"
-                        self.field[iy][jx].images.append(pg.image.load("images/Skip.png"))
+                        self.field[iy][jx].images.append(SkipImg)
                         return True, False
                     elif self.field[iy][jx].status == "part_ship":
                         self.field[iy][jx].status = "hit"
-                        self.field[iy][jx].images.append(pg.image.load("images/Hit.png"))
+                        self.field[iy][jx].images.append(HitImg)
                         self.death(jx, iy)
                         return True, True, (jx, iy)
         return False, False
@@ -135,7 +172,7 @@ class Ship:
                 num_of_ships = json.load(file)
                 if num_of_ships["1"] <= 0:
                     comp_field[string][column] = "-"
-                    print(9)
+                    #print(9)
                     return False, None
                 num_of_ships["1"] -= 1
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
@@ -178,7 +215,7 @@ class Ship:
                     else:
                         comp_field[string][column] = "-"
                         return False, None
-                    return True, ("Right" if i == 1 else "Left")
+                    return True, None
 
                 # if vertical ship
                 if isinstance(string_cell, Ship):
@@ -198,10 +235,14 @@ class Ship:
                     else:
                         comp_field[string][column] = "-"
                         return False, None
-                    return True, ("Down" if i == 1 else "Up")
+                    return True, None
 
         return False, None
-        
+
+    def create_ship(comp_field, user_field, coords):
+        ship = Ship()
+        result = ship.put_ship(comp_field, user_field, coords)
+        return result
 
 class Place:
     def __init__(self, X, Y) -> None:
@@ -210,19 +251,10 @@ class Place:
         self.X = X
         self.Y = Y
 
-class Skip:
-    def __init__(self) -> None:
-        self.image = "images/Skip.png"
 
-class Hit:
-    def __init__(self) -> None:
-        self.image = "images/Hit.png"
-
-#field = Field(110, 476)
-#skip = Skip()
-#hit = Hit()
-
-
-#FieldImg = pg.image.load(field.image)
-#SkipImg = pg.image.load(skip.image)
-#HitImg = pg.image.load(hit.image)
+def random_ship_gen(comp_field, user_field, num_of_ships):
+        while num_of_ships < 10:
+            result = Ship.create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
+            if result[1] == "new":
+                num_of_ships += 1       
+        return num_of_ships
