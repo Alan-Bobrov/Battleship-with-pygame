@@ -1,3 +1,4 @@
+import pygame as pg
 from images import *
 import json
 
@@ -53,8 +54,8 @@ def clear_field(screen):
     screen.blit(FieldImg, (0, 0))
     return_num_ships()
 
-def SetClearButton(screen, is_clear):
-    screen.blit(ClearImg, (81, 55))
-    is_clear = True
-    return is_clear
+def SetClearButton(screen, is_putting):
+    if is_putting:
+        screen.blit(ClearImg, (0, 0))
+
 
