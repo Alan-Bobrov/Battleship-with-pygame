@@ -39,12 +39,11 @@ class Field:
     
     def bot_do_ships(self): 
         comp_field = create_field()
-        user_field = create_field()
         return_num_ships()
-        random_ship_gen(comp_field, user_field, 0)
-        for i in range(len(user_field)):
-            for j in range(len(user_field[0])):
-                if user_field[i][j] == "*":
+        random_ship_gen(comp_field, 0)
+        for i in range(len(comp_field)):
+            for j in range(len(comp_field[0])):
+                if type(comp_field[i][j]) == Ship:
                     self.field[i][j].status = "part_ship"
                     self.field[i][j].images.append(ShipContinueImg)
 
@@ -240,9 +239,9 @@ class Ship:
 
         return False, None
 
-    def create_ship(comp_field, user_field, coords):
+    def create_ship(comp_field, coords):
         ship = Ship()
-        result = ship.put_ship(comp_field, user_field, coords)
+        result = ship.put_ship(comp_field, coords)
         return result
     
     def death(self, comp_field):
@@ -270,9 +269,9 @@ class Place:
         self.Y = Y
 
 #Do not delete!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def random_ship_gen(comp_field, user_field, num_of_ships):
+def random_ship_gen(comp_field, num_of_ships):
         while num_of_ships < 10:
-            result = Ship.create_ship(comp_field, user_field, (randint(0, 9), randint(0, 9)))
+            result = Ship.create_ship(comp_field, (randint(0, 9), randint(0, 9)))
             if result[1] == "new":
                 num_of_ships += 1
                 
