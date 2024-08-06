@@ -178,6 +178,7 @@ class Ship:
                     return False, None
                 num_of_ships["1"] -= 1
                 self.start_coords = coords
+                self.direction = (2, 2)
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
                     json.dump(num_of_ships, file1, indent=4)
             return True, "new"
@@ -221,8 +222,8 @@ class Ship:
                 # if vertical ship
                 if isinstance(string_cell, Ship):
                     column_values = list()
-                    for i in range(10):
-                        column_values.append(comp_field[i][column])
+                    for _ in range(10):
+                        column_values.append(comp_field[_][column])
                     
                     comp_field[string][column] = string_cell
                     if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4):
@@ -249,13 +250,24 @@ class Ship:
         string, col = coords
         fired_cell = comp_field[string][col]
 
+        if fired_cell.length == 1:
+            for i in (1, -1):
+                for j in (1, -1):
+                    if (0 <= string + i <= 9) and (0 <= col + j <= 9):
+                        comp_field[string + i][col + j] = "*"
+                if (0 <= col + i <= 9):
+                    comp_field[string][col + i] = "*"
+                
+                if (0 <= string + i <= 9):
+                    comp_field[string + i][col] = "*"
+
         start_string = fired_cell.start_coords[0]
         start_col = fired_cell.start_coords[1]
 
         str_dire = fired_cell.direction[0]
         col_dire = fired_cell.direction[1]
 
-        var = (fired_cell.length, 0, fired_cell.length)
+        var = (fired_cell.length - 1, -1, fired_cell.length - 1)
 
         if str_dire:
             for i in range(var[str_dire], var[str_dire - 1], str_dire):
@@ -278,14 +290,14 @@ class Ship:
         string, col = coords
         fired_cell = comp_field[string][col]
 
-        comp_field[string][col] = "*"
-
         if isinstance(fired_cell, Ship):
             if fired_cell.hp >= 1:
                 fired_cell.hp -= 1
 
                 if fired_cell.hp <= 0:
                     fired_cell.death(comp_field, coords)
+        
+        comp_field[string][col] = "o"
 
 
 
