@@ -239,13 +239,11 @@ class Ship:
                     return True, None
 
         return False, None
-<<<<<<< HEAD
 
     def create_ship(comp_field, user_field, coords):
         ship = Ship()
         result = ship.put_ship(comp_field, user_field, coords)
         return result
-=======
     
     def death(self, comp_field):
         pass
@@ -263,7 +261,6 @@ class Ship:
                     fired_cell.death()
 
 
->>>>>>> e79765f1eac292bdd9f375291f7ea8b450eca993
 
 class Place:
     def __init__(self, X, Y) -> None:
