@@ -2,21 +2,6 @@ import pygame as pg
 from images import *
 import json
 
-def new_ship():
-    pass
-
-def test_all_cells():
-    pass
-
-def player_play():
-    pass
-
-def test_death():
-    pass
-  
-def play():
-    pass
-
 def return_num_ships():
     object = {
         "4": 1,
@@ -69,5 +54,6 @@ def SetRestartButton(screen, is_again):
     '''
     if is_again:
         screen.blit(RestartImg, (0, 0))
+
 
 
