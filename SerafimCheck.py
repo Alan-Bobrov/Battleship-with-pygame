@@ -23,9 +23,19 @@ return_num_ships()
 
 num_of_ships = 0
 
-random_ship_gen(comp_field, num_of_ships)
+# random_ship_gen(comp_field, num_of_ships)
 
-Ship.fire(Ship, comp_field, (0, 7))
+create_ship(comp_field, (3, 4))
+create_ship(comp_field, (4, 4))
+create_ship(comp_field, (5, 4))
+
+create_ship(comp_field, (9, 9))
+
+Ship.fire(Ship, comp_field, (3, 4))
+Ship.fire(Ship, comp_field, (4, 4))
+Ship.fire(Ship, comp_field, (5, 4))
+
+Ship.fire(Ship, comp_field, (9, 9))
 
 print_field(comp_field)
 
