@@ -40,8 +40,20 @@ def clear_field(screen):
     return_num_ships()
 
 def SetClearButton(screen, is_putting):
+    '''
+    Function put button for clear field
+    is_putting - is it time when we are putting ships on the field 
+    '''
     if is_putting:
         screen.blit(ClearImg, (0, 0))
+
+def SetRestartButton(screen, is_again):
+    '''
+    Function put button for restart game
+    is_again - is it end of rhe game
+    '''
+    if is_again:
+        screen.blit(RestartImg, (0, 0))
 
 
 
