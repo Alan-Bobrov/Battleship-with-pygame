@@ -139,7 +139,6 @@ class Ship:
                 num_of_ships = json.load(file)
                 if num_of_ships["1"] <= 0:
                     comp_field[string][column] = "-"
-                    print(9)
                     return False, None
                 num_of_ships["1"] -= 1
                 self.start_coords = coords
@@ -177,6 +176,7 @@ class Ship:
                             column_cell.hp -= 1
                             comp_field[string][column] = "-"
                             return False, None
+                        column_cell.direction = (0, i)
                     else:
                         comp_field[string][column] = "-"
                         return False, None
@@ -196,6 +196,7 @@ class Ship:
                             string_cell.length -= 1
                             string_cell.hp -= 1
                             comp_field[string][column] = "-"
+                        string_cell.direction = (i, 0)
                     else:
                         comp_field[string][column] = "-"
                         return False, None
@@ -203,20 +204,47 @@ class Ship:
 
         return False, None
     
-    def death(self, comp_field):
-        pass
-
-    def fire(self, comp_field, coords):
-
+    def death(self, comp_field, coords):
         string, col = coords
         fired_cell = comp_field[string][col]
 
+        start_string = fired_cell.start_coords[0]
+        start_col = fired_cell.start_coords[1]
+
+        str_dire = fired_cell.direction[0]
+        col_dire = fired_cell.direction[1]
+
+        var = (fired_cell.length, 0, fired_cell.length)
+
+        if str_dire:
+            for i in range(var[str_dire], var[str_dire - 1], str_dire):
+                if col + 1 <= 9:
+                    comp_field[start_string + i][start_col + 1] = "*"
+
+                if col - 1 >= 0:
+                    comp_field[start_string + i][start_col - 1] = "*"
+        
+        elif col_dire:
+            for i in range(var[col_dire], var[col_dire - 1], col_dire):
+                if string + 1 <= 9:
+                    comp_field[start_string + 1][start_col + i] = "*"
+                
+                if string - 1 >= 0:
+                    comp_field[start_string - 1][start_col + i] = "*"
+
+
+    def fire(self, comp_field, coords):
+        string, col = coords
+        fired_cell = comp_field[string][col]
+
+        comp_field[string][col] = "*"
+
         if isinstance(fired_cell, Ship):
-            if fired_cell.length >= 1:
-                comp_field[string][col] = "*"
-                fired_cell.length -= 1
-                if fired_cell.length <= 0:
-                    fired_cell.death()
+            if fired_cell.hp >= 1:
+                fired_cell.hp -= 1
+
+                if fired_cell.hp <= 0:
+                    fired_cell.death(comp_field, coords)
 
 
 
