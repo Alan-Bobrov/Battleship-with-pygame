@@ -175,10 +175,6 @@ class Ship:
                 num_of_ships = json.load(file)
                 if num_of_ships["1"] <= 0:
                     comp_field[string][column] = "-"
-<<<<<<< HEAD
-=======
-                    #print(9)
->>>>>>> bfdddeb30d86aca895f955c62daa26e63f85e733
                     return False, None
                 num_of_ships["1"] -= 1
                 self.start_coords = coords
