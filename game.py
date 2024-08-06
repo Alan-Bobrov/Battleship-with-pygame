@@ -16,12 +16,16 @@ screen = pg.display.set_mode((1024, 900))
 screen.fill((255, 255, 255))
 
 screen.blit(FieldImg, (0, 0))
-is_again = False
+
+
+is_again = False # is it end of the game
 is_putting = True
 is_game = True
 while is_game:
     player_field.pr_all(screen, print_ships=True)
     bot_field.pr_all(screen, print_ships=True)
+
+    # put clear button on the screen
     SetClearButton(screen, is_putting)
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -29,8 +33,11 @@ while is_game:
         
         elif event.type == pg.MOUSEBUTTONDOWN:
             x, y = pg.mouse.get_pos() # 467, 560
+
+            # if user click on the button and it time when we r putting ships
             if (81 <= x <= 941) and (55 <= y <= 189) and is_putting:
                 clear_field(screen)
+            
             end_bots_attack = bot_field.fire_pg(x, y)
             if end_bots_attack[0]:
                 player_field.bot_play()
