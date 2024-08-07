@@ -8,6 +8,7 @@ import pygame as pg
 from classes import *
 from functions import *
 from images import *
+from time import sleep
 import subprocess
 import sys
 
@@ -79,6 +80,7 @@ def game():
                                 print("-----------------------------------------------------------------------------")
                                 print_field(bot_comp_field)
                                 print("-----------------------------------------------------------------------------")
+                                sleep(0.25)
                                 bot_move = s.fire(player_comp_field, (coords[0], coords[1]))
                                 player_field.synchronize(coords[1], coords[0])
                                 player_field.synchronize(coords[1], coords[0], player_comp_field)
