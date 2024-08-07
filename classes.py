@@ -246,7 +246,7 @@ class Ship:
 
         return False, None
 
-    def create_ship(comp_field, coords):
+    def create_ship(comp_field, coords) -> tuple:
         ship = Ship()
         result = ship.put_ship(comp_field, coords)
         return result
@@ -335,7 +335,10 @@ class Ship:
 
                 if fired_cell.hp <= 0:
                     fired_cell.death(comp_field, coords)
+                    comp_field[string][col] = "o"
                     return True, "Death"
+                
+                comp_field[string][col] = "o"
                 return True, "Hit"
         
         comp_field[string][col] = "o"
