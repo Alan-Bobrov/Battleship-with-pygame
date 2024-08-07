@@ -17,13 +17,9 @@ pg.init()
 player_field = Field(110, 476)
 bot_field = Field(598, 476)
 
-<<<<<<< Updated upstream
-bot_field.do_ships(None, 0, True)
-=======
 
 bot_comp_field = create_field()
 bot_field.do_ships(None, 0, True, bot_comp_field)
->>>>>>> Stashed changes
 bot_field.normal_ships_image()
 return_num_ships()
 screen = pg.display.set_mode((1024, 900))
@@ -79,7 +75,9 @@ while is_game:
                                 coords = (randint(0, 9), randint(0, 9)) # y x
                                 if type(player_comp_field[coords[0]][coords[1]]) == Ship or player_comp_field[coords[0]][coords[1]] == "-":
                                     break
+                            print("-----------------------------------------------------------------------------")
                             print_field(bot_comp_field)
+                            print("-----------------------------------------------------------------------------")
                             bot_move = s.fire(player_comp_field, (coords[0], coords[1]))
                             player_field.synchronize(coords[1], coords[0])
                             player_field.synchronize(coords[1], coords[0], player_comp_field)
