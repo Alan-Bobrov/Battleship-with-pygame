@@ -1,13 +1,21 @@
+# automaticly pip install pygame
+try:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "pygame"])
+except:
+    pass
+
 import pygame as pg
 from classes import *
 from functions import *
 from images import *
+import subprocess
+import sys
+
 
 pg.init()
 
 player_field = Field(110, 476)
 bot_field = Field(598, 476)
-
 
 bot_field.do_ships(None, 0, True)
 bot_field.normal_ships_image()
@@ -17,7 +25,6 @@ screen = pg.display.set_mode((1024, 900))
 screen.fill((255, 255, 255))
 
 screen.blit(FieldImg, (0, 0))
-
 
 is_again = False # is it end of the game
 is_putting = True
