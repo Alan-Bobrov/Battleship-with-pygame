@@ -25,15 +25,17 @@ num_of_ships = 0
 
 # random_ship_gen(comp_field, num_of_ships)
 
-create_ship(comp_field, (3, 4))
-create_ship(comp_field, (4, 4))
-create_ship(comp_field, (5, 4))
+col = 0
+var = 1
+ship_len = 4
+
+for i in range(ship_len):
+    create_ship(comp_field, (i + var, col))
+
+for i in range(ship_len):
+    Ship.fire(Ship, comp_field, (i + var, col))
 
 create_ship(comp_field, (9, 9))
-
-Ship.fire(Ship, comp_field, (3, 4))
-Ship.fire(Ship, comp_field, (4, 4))
-Ship.fire(Ship, comp_field, (5, 4))
 
 Ship.fire(Ship, comp_field, (9, 9))
 
