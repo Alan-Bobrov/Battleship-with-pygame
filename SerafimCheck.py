@@ -18,11 +18,11 @@ def random_ship_gen(comp_field, num_of_ships):
     num_of_errors = 0
     while num_of_ships < 10:
 
-        # if num_of_errors >= 200:
-        #     num_of_errors = 0
-        #     comp_field = create_field()
-        #     num_of_ships = 0
-        #     return_num_ships()
+        if num_of_errors >= 300:
+            num_of_errors = 0
+            comp_field = create_field()
+            num_of_ships = 0
+            return_num_ships()
 
         result = create_ship(comp_field, (randint(0, 9), randint(0, 9)))
         if not result[0]:
