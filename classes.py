@@ -22,8 +22,10 @@ class Field:
                             screen.blit(image, (j.X, j.Y - 2))
                         elif image == ShipEndImg: 
                             screen.blit(image, (j.X, j.Y + 2))
-                        elif type(image) == tuple:
-                                screen.blit(image[0], (j.X + 2, j.Y))
+                        elif len(j.images) == 2 and j.images[1] == "end":
+                                screen.blit(j.images[0], (j.X + 2, j.Y))
+                        elif len(j.images) == 2 and j.images[1] == "start":
+                            screen.blit(j.images[0], (j.X - 2, j.Y))
                         else:
                             screen.blit(image, (j.X, j.Y))
     
@@ -37,15 +39,21 @@ class Field:
                     self.death(end[2][0], end[2][1])
                 break
     
-    def bot_do_ships(self): 
-        comp_field = create_field()
-        return_num_ships()
-        random_ship_gen(comp_field, 0)
+    def do_ships(self, coords, num_of_ships, bot, *args): 
+        if len(args) == 0:
+            comp_field = create_field()
+        else:
+            comp_field = args[0]
+        if bot:
+            return_num_ships()
+        num_of_ships = ship_gen(comp_field, num_of_ships, bot, coords)
         for i in range(len(comp_field)):
             for j in range(len(comp_field[0])):
-                if type(comp_field[i][j]) == Ship:
+                if type(comp_field[i][j]) == Ship and self.field[i][j].status != "part_ship":
                     self.field[i][j].status = "part_ship"
                     self.field[i][j].images.append(ShipContinueImg)
+        
+        return num_of_ships
 
     def normal_ships_image(self):
         for i in range(len(self.field)):
@@ -62,19 +70,19 @@ class Field:
                         left = self.field[i][j - 1]
                     
                     if up.status == "part_ship" and down.status == "part_ship":
-                        continue
+                        self.field[i][j].images = [ShipContinueImg]
                     elif up.status == "part_ship" and down.status != "part_ship":
-                        self.field[i][j].images[0] = ShipStartImg
+                        self.field[i][j].images = [ShipStartImg]
                     elif up.status != "part_ship" and down.status == "part_ship":
-                        self.field[i][j].images[0] = ShipEndImg
+                        self.field[i][j].images = [ShipEndImg]
                     elif right.status == "part_ship" and left.status == "part_ship":
-                        self.field[i][j].images[0] = pg.transform.rotate(ShipContinueImg, 90.0)
+                        self.field[i][j].images = [pg.transform.rotate(ShipContinueImg, 90.0)]
                     elif right.status == "part_ship" and left.status != "part_ship":
-                        self.field[i][j].images[0] = (pg.transform.rotate(ShipEndImg, 90.0),)
+                        self.field[i][j].images = [pg.transform.rotate(ShipEndImg, 90.0), "end"]
                     elif right.status != "part_ship" and left.status == "part_ship":
-                        self.field[i][j].images[0] = pg.transform.rotate(ShipStartImg, 90.0)
+                        self.field[i][j].images = [pg.transform.rotate(ShipStartImg, 90.0), "start"]
                     else:
-                        self.field[i][j].images[0] = OneDeckShipImg
+                        self.field[i][j].images = [OneDeckShipImg]
             
     def fire_pg(self, x, y) -> tuple:
         for iy in range(10):
@@ -355,12 +363,20 @@ class Place:
         self.Y = Y
 
 #Do not delete!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def random_ship_gen(comp_field, num_of_ships):
-        while num_of_ships < 10:
-            result = Ship.create_ship(comp_field, (randint(0, 9), randint(0, 9)))
+def ship_gen(comp_field, num_of_ships, bot, coords):
+        if bot:
+            while num_of_ships < 10:
+                coords = (randint(0, 9), randint(0, 9))
+                result = Ship.create_ship(comp_field, coords)
+                if result[1] == "new":
+                    num_of_ships += 1      
+
+            return num_of_ships
+
+        else:
+            result = Ship.create_ship(comp_field, coords)
             if result[1] == "new":
-                num_of_ships += 1
-                
+                num_of_ships += 1        
         return num_of_ships
 
 # class Skip:
