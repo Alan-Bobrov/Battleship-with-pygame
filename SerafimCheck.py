@@ -25,7 +25,7 @@ num_of_ships = 0
 
 # random_ship_gen(comp_field, num_of_ships)
 
-col = 0
+col = 9
 var = 1
 ship_len = 4
 
