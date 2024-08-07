@@ -17,10 +17,11 @@ pg.init()
 player_field = Field(110, 476)
 bot_field = Field(598, 476)
 
-bot_field.do_ships(None, 0, True)
+
+bot_comp_field = create_field()
+bot_field.do_ships(None, 0, True, bot_comp_field)
 bot_field.normal_ships_image()
 return_num_ships()
-
 screen = pg.display.set_mode((1024, 900))
 screen.fill((255, 255, 255))
 
@@ -31,7 +32,7 @@ is_putting = True
 is_game = True
 num_of_ships = 0
 do_ship = True
-field_for_ships = create_field()
+player_comp_field = create_field()
 
 while is_game:
     screen.blit(FieldImg, (0, 0))
@@ -48,23 +49,37 @@ while is_game:
             x, y = pg.mouse.get_pos() # 467, 560
 
             if do_ship:
-                changed, x, y = change_coords(x, y)
+                changed, x, y = change_coords(x, y, 110, 476)
                 if changed:
-                    num_of_ships = player_field.do_ships((y, x), num_of_ships, False, field_for_ships)
+                    num_of_ships = player_field.do_ships((y, x), num_of_ships, False, player_comp_field)
                     player_field.normal_ships_image()
 
                 if num_of_ships == 10:
                     do_ship = False
 
             else:
+                changed, x, y = change_coords(x, y, 598, 476)
                 # if user click on the button and it time when we r putting ships
                 if (81 <= x <= 941) and (55 <= y <= 189) and is_putting:
                     clear_field(screen)
                 
-                end_bots_attack = bot_field.fire_pg(x, y)
-                if end_bots_attack[0]:
-                    player_field.bot_play()
-                    if end_bots_attack[1]:
-                        bot_field.death(end_bots_attack[2][0], end_bots_attack[2][1])
+                if changed and bot_field.field[y][x].status in ("free_place", "part_ship"):
+                    s = Ship()
+                    players_attack_result = s.fire(bot_comp_field, (y, x))
+                    bot_field.synchronize(x, y)
+                    bot_field.synchronize(x, y, bot_comp_field)
+                    if players_attack_result[0] == False:
+                        bot_move = (True,)
+                        while bot_move[0]:
+                            while True:
+                                coords = (randint(0, 9), randint(0, 9)) # y x
+                                if type(player_comp_field[coords[0]][coords[1]]) == Ship or player_comp_field[coords[0]][coords[1]] == "-":
+                                    break
+                            print("-----------------------------------------------------------------------------")
+                            print_field(bot_comp_field)
+                            print("-----------------------------------------------------------------------------")
+                            bot_move = s.fire(player_comp_field, (coords[0], coords[1]))
+                            player_field.synchronize(coords[1], coords[0])
+                            player_field.synchronize(coords[1], coords[0], player_comp_field)
 
     pg.display.flip()

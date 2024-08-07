@@ -18,32 +18,9 @@ class Field:
             for j in i:
                 if j.status in status_list:
                     for image in j.images:
-                        if image == ShipStartImg:
-                            screen.blit(image, (j.X, j.Y - 2))
-                        elif image == ShipEndImg: 
-                            screen.blit(image, (j.X, j.Y + 2))
-                        elif len(j.images) == 2 and j.images[1] == "end":
-                                screen.blit(j.images[0], (j.X + 2, j.Y))
-                        elif len(j.images) == 2 and j.images[1] == "start":
-                            screen.blit(j.images[0], (j.X - 2, j.Y))
-                        else:
-                            screen.blit(image, (j.X, j.Y))
+                        screen.blit(image, (j.X, j.Y))
     
-    def bot_play(self):
-        while True:
-            X = randint(0, 9) * 32 + 110
-            Y = randint(0, 9) * 32 + 476
-            end = self.fire_pg(X, Y)
-            if end[0]:
-                if end[1]:
-                    self.death(end[2][0], end[2][1])
-                break
-    
-    def do_ships(self, coords, num_of_ships, bot, *args): 
-        if len(args) == 0:
-            comp_field = create_field()
-        else:
-            comp_field = args[0]
+    def do_ships(self, coords, num_of_ships, bot, comp_field): 
         if bot:
             return_num_ships()
         num_of_ships = ship_gen(comp_field, num_of_ships, bot, coords)
@@ -70,55 +47,37 @@ class Field:
                         left = self.field[i][j - 1]
                     
                     if up.status == "part_ship" and down.status == "part_ship":
-                        self.field[i][j].images = [ShipContinueImg]
+                        self.field[i][j].images[0] = ShipContinueImg
                     elif up.status == "part_ship" and down.status != "part_ship":
-                        self.field[i][j].images = [ShipStartImg]
+                        self.field[i][j].images[0] = ShipStartImg
                     elif up.status != "part_ship" and down.status == "part_ship":
-                        self.field[i][j].images = [ShipEndImg]
+                        self.field[i][j].images[0] = ShipEndImg
                     elif right.status == "part_ship" and left.status == "part_ship":
-                        self.field[i][j].images = [pg.transform.rotate(ShipContinueImg, 90.0)]
+                        self.field[i][j].images[0] = pg.transform.rotate(ShipContinueImg, 90.0)
                     elif right.status == "part_ship" and left.status != "part_ship":
-                        self.field[i][j].images = [pg.transform.rotate(ShipEndImg, 90.0), "end"]
+                        self.field[i][j].images[0] = pg.transform.rotate(ShipEndImg, 90.0)
                     elif right.status != "part_ship" and left.status == "part_ship":
-                        self.field[i][j].images = [pg.transform.rotate(ShipStartImg, 90.0), "start"]
+                        self.field[i][j].images[0] = pg.transform.rotate(ShipStartImg, 90.0)
                     else:
-                        self.field[i][j].images = [OneDeckShipImg]
+                        self.field[i][j].images[0] = OneDeckShipImg
             
-    def fire_pg(self, x, y) -> tuple:
-        for iy in range(10):
-            for jx in range(10):
-                X = self.field[iy][jx].X
-                Y = self.field[iy][jx].Y
-                if (X <= x < X + 32) and (Y <= y < Y + 32):
-                    if self.field[iy][jx].status == "free_place":
-                        self.field[iy][jx].status = "skip"
-                        self.field[iy][jx].images.append(SkipImg)
-                        return True, False
-                    elif self.field[iy][jx].status == "part_ship":
-                        self.field[iy][jx].status = "hit"
-                        self.field[iy][jx].images.append(HitImg)
-                        self.death(jx, iy)
-                        return True, True, (jx, iy)
-        return False, False
+    def synchronize(self, x, y, field=None):
+        if field == None:
+            if self.field[y][x].status == "free_place":
+                self.field[y][x].status = "skip"
+                self.field[y][x].images.append(SkipImg)
+            elif self.field[y][x].status == "part_ship":
+                self.field[y][x].status = "hit"
+                self.field[y][x].images.append(HitImg)
+        else:
+            for i in range(10):
+                for j in range(10):
+                    if field[i][j] == "*":
+                        self.field[i][j].status = "skip"
+                        self.field[i][j].images.append(SkipImg)
 
-    def death(self, x, y):
-        list_coords = [(x - 1, y - 1), (x, y - 1), (x + 1, y - 1), (x - 1, y), (x + 1, y), (x - 1, y + 1), (x, y + 1), (x + 1, y + 1)]
-        list_coords_2 = []
-        list_live_ships = []
-        list_hit_ships = []
-        for i in list_coords:
-            if 0 <= i[0] <= 9 and 0 <= i[1] <= 9:
-                list_coords_2.append(i)
-                if self.field[i[1]][i[0]].status == "part_ship":
-                    list_live_ships.append(self.field[i[1]][i[0]])
-                elif self.field[i[1]][i[0]].status == "hit":
-                    list_hit_ships.append(self.field[i[1]][i[0]])
+        
 
-        if len(list_hit_ships) == 0 and len(list_live_ships) == 0:
-            for i in list_coords_2:
-                self.field[i[1]][i[0]].status = "skip"
-                self.field[i[1]][i[0]].images.append(pg.image.load("images/Skip.png"))
-                self.live_ships -= 1
 
 class Ship:
     def __init__(self) -> None:
@@ -274,6 +233,7 @@ class Ship:
                 
                 if (0 <= string + i <= 9):
                     comp_field[string + i][col] = "*"
+             
             return None
 
         start_string = fired_cell.start_coords[0]
@@ -330,8 +290,9 @@ class Ship:
             for i in (-1, fired_cell.length):
                 for j in (-1, 1):
                     if (0 <= (start_string + j) <= 9) and (0 <= (start_col + i) <= 9):
-                        comp_field[start_string + j][start_col + i] = "*"          
-        
+                        comp_field[start_string + j][start_col + i] = "*"  
+
+
 
     def fire(self, comp_field, coords) -> tuple: # tuple - (is hit, Death/Hit/None)
         string, col = coords
@@ -378,20 +339,3 @@ def ship_gen(comp_field, num_of_ships, bot, coords):
             if result[1] == "new":
                 num_of_ships += 1        
         return num_of_ships
-
-# class Skip:
-#     def __init__(self) -> None:
-#         self.image = "images/Skip.png"
-
-# class Hit:
-#     def __init__(self) -> None:
-#         self.image = "images/Hit.png"
-
-#field = Field(110, 476)
-#skip = Skip()
-#hit = Hit()
-
-
-#FieldImg = pg.image.load(field.image)
-#SkipImg = pg.image.load(skip.image)
-#HitImg = pg.image.load(hit.image)
