@@ -35,6 +35,29 @@ def update_num_of_ships(cell):
                 json.dump(num_of_ships, file, indent=4)
     return True
 
+def change_coords(x, y):
+    count = 0
+    new_x, new_y = 0, 0
+
+    for i in range(10):
+        num = 110 + (32 * i)
+        if num <= x < num + 32:
+            new_x = i
+            count += 1
+            break
+
+    for j in range(10):
+        num = 476 + (32 * j)
+        if num <= y < num + 32:
+            new_y = j
+            count += 1
+            break
+                        
+    if count == 2:
+        return True, new_x, new_y
+    else:
+        return False, new_x, new_y
+
 def clear_field(screen):
     screen.blit(FieldImg, (0, 0))
     return_num_ships()
