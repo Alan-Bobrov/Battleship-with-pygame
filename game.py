@@ -18,27 +18,26 @@ def game():
     player_field = Field(110, 476)
     bot_field = Field(598, 476)
 
-
+    # bot arranges ships
     bot_comp_field = create_field()
     bot_field.do_ships(None, 0, True, bot_comp_field)
     bot_field.normal_ships_image()
     return_num_ships()
+
     screen = pg.display.set_mode((1024, 900))
     screen.fill((255, 255, 255))
-
-    screen.blit(FieldImg, (0, 0))
 
     is_again = False # is it end of the game
     is_putting = True
     is_game = True
-    num_of_ships = 0
-    do_ship = True
-    player_comp_field = create_field()
+    num_of_ships = 0 # number of ships the player has placed
+    do_ship = True # is the player currently placing ships
+    player_comp_field = create_field() 
 
     while is_game:
         screen.blit(FieldImg, (0, 0))
         player_field.pr_all(screen, print_ships=True)
-        bot_field.pr_all(screen, print_ships=True)
+        bot_field.pr_all(screen, print_ships=False)
 
         # put clear button on the screen
         if is_putting:
@@ -48,8 +47,8 @@ def game():
                 is_game = False
             
             elif (event.type == pg.MOUSEBUTTONDOWN) and (pg.mouse.get_pressed(num_buttons=3)[0]):
-                x, y = pg.mouse.get_pos() # 467, 560
-
+                x, y = pg.mouse.get_pos()
+                 # player arranges ships
                 if do_ship:
                     changed, x, y = change_coords(x, y, 110, 476)
                     if changed:
@@ -57,6 +56,7 @@ def game():
                         player_field.normal_ships_image()
 
                     if num_of_ships == 10:
+                        # the player completes the placement of ships
                         do_ship = False
 
                 else:
@@ -65,22 +65,24 @@ def game():
                     if (81 <= x <= 941) and (55 <= y <= 189) and is_putting:
                         clear_field(screen)
                     
+                    
                     if changed and bot_field.field[y][x].status in ("free_place", "part_ship"):
                         s = Ship()
+                        # the player makes a move
                         players_attack_result = s.fire(bot_comp_field, (y, x))
                         bot_field.synchronize(x, y)
                         bot_field.synchronize(x, y, bot_comp_field)
+                        # if the player misses, then the bot's turn begins
                         if players_attack_result[0] == False:
                             bot_move = (True,)
                             while bot_move[0]:
-                                while True:
+                                # the bot chooses the place where it goes
+                                while True: 
                                     coords = (randint(0, 9), randint(0, 9)) # y x
                                     if type(player_comp_field[coords[0]][coords[1]]) == Ship or player_comp_field[coords[0]][coords[1]] == "-":
                                         break
-                                print("-----------------------------------------------------------------------------")
-                                print_field(bot_comp_field)
-                                print("-----------------------------------------------------------------------------")
                                 sleep(0.25)
+                                # the bot makes a move on the place that he has chosen in advance
                                 bot_move = s.fire(player_comp_field, (coords[0], coords[1]))
                                 player_field.synchronize(coords[1], coords[0])
                                 player_field.synchronize(coords[1], coords[0], player_comp_field)
