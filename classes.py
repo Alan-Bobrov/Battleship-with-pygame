@@ -291,13 +291,14 @@ class Ship:
             if 0 <= start_string + fired_cell.length <= 9:
                 comp_field[start_string + fired_cell.length][start_col] = "*"
             
+            # corners of ship
             for i in (-1, fired_cell.length):
                 for j in (-1, 1):
                     if (0 <= (start_string - (i * str_dire)) <= 9) and (0 <= (start_col + j) <= 9):
                         comp_field[start_string - (i * str_dire)][start_col + j] = "*"
 
             
-        
+        # horizontal ship death
         elif col_dire:
 
             # sides of ship
@@ -308,15 +309,13 @@ class Ship:
                 if string - 1 >= 0:
                     comp_field[start_string - 1][start_col + i] = "*"
 
+            # top and end of ship
             if 0 <= start_col + col_dire <= 9:
                 comp_field[start_string][start_col + col_dire] = "*"
             
             if 0 <= start_col + fired_cell.length <= 9:
                 comp_field[start_string][start_col + fired_cell.length] = "*"
         
-
-
-
 
     def fire(self, comp_field, coords):
         string, col = coords
