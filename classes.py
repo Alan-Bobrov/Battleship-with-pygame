@@ -116,8 +116,8 @@ class Ship:
     def __init__(self) -> None:
         self.length = 1
         self.hp = 1
-        self.direction = None
-        self.start_coords = None
+        self.direction = None # tuple like (-1, 0)
+        self.start_coords = None # tuple like (0, 0)
 
     def put_ship(self, comp_field, coords) -> tuple:
     
@@ -178,7 +178,6 @@ class Ship:
                     return False, None
                 num_of_ships["1"] -= 1
                 self.start_coords = coords
-                self.direction = (2, 2)
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
                     json.dump(num_of_ships, file1, indent=4)
             return True, "new"
@@ -188,6 +187,8 @@ class Ship:
 
             # check continue of ship
             for i in (1, -1):
+
+                # we will check cells around coords
                 try:
                     column_cell = comp_field[string][column + i] # there are change only column
                 except IndexError:
@@ -250,6 +251,7 @@ class Ship:
         string, col = coords
         fired_cell = comp_field[string][col]
 
+        # death for one-deck ship
         if fired_cell.length == 1:
             for i in (1, -1):
                 for j in (1, -1):
@@ -260,6 +262,7 @@ class Ship:
                 
                 if (0 <= string + i <= 9):
                     comp_field[string + i][col] = "*"
+            return None
 
         start_string = fired_cell.start_coords[0]
         start_col = fired_cell.start_coords[1]
@@ -269,21 +272,50 @@ class Ship:
 
         var = (fired_cell.length - 1, -1, fired_cell.length - 1)
 
+        # vertical ship death
         if str_dire:
+
+            # sides of ship 
             for i in range(var[str_dire], var[str_dire - 1], str_dire):
                 if col + 1 <= 9:
                     comp_field[start_string + i][start_col + 1] = "*"
 
                 if col - 1 >= 0:
                     comp_field[start_string + i][start_col - 1] = "*"
+            
+            # top and end of ship
+            # idk why '+' -------\/
+            if 0 <= start_string + str_dire <= 9:
+                comp_field[start_string + str_dire][start_col] = "*"
+
+            if 0 <= start_string + fired_cell.length <= 9:
+                comp_field[start_string + fired_cell.length][start_col] = "*"
+            
+            for i in (-1, fired_cell.length):
+                for j in (-1, 1):
+                    if (0 <= (start_string - (i * str_dire)) <= 9) and (0 <= (start_col + j) <= 9):
+                        comp_field[start_string - (i * str_dire)][start_col + j] = "*"
+
+            
         
         elif col_dire:
+
+            # sides of ship
             for i in range(var[col_dire], var[col_dire - 1], col_dire):
                 if string + 1 <= 9:
                     comp_field[start_string + 1][start_col + i] = "*"
                 
                 if string - 1 >= 0:
                     comp_field[start_string - 1][start_col + i] = "*"
+
+            if 0 <= start_col + col_dire <= 9:
+                comp_field[start_string][start_col + col_dire] = "*"
+            
+            if 0 <= start_col + fired_cell.length <= 9:
+                comp_field[start_string][start_col + fired_cell.length] = "*"
+        
+
+
 
 
     def fire(self, comp_field, coords):
