@@ -214,7 +214,9 @@ class Ship:
                             column_cell.hp -= 1
                             comp_field[string][column] = "-"
                             return False, None
-                        column_cell.direction = (0, i)
+                        column_cell.direction = (0, 1)
+                        if (column < column_cell.start_coords[1]):
+                            column_cell.start_coords = (string, column)
                     else:
                         comp_field[string][column] = "-"
                         return False, None
@@ -234,7 +236,9 @@ class Ship:
                             string_cell.length -= 1
                             string_cell.hp -= 1
                             comp_field[string][column] = "-"
-                        string_cell.direction = (i, 0)
+                        string_cell.direction = (1, 0)
+                        if (string < string_cell.start_coords[0]):
+                            string_cell.start_coords = (string, column)
                     else:
                         comp_field[string][column] = "-"
                         return False, None
@@ -270,13 +274,11 @@ class Ship:
         str_dire = fired_cell.direction[0]
         col_dire = fired_cell.direction[1]
 
-        var = (fired_cell.length - 1, -1, fired_cell.length - 1)
-
         # vertical ship death
         if str_dire:
 
             # sides of ship 
-            for i in range(var[str_dire], var[str_dire - 1], str_dire):
+            for i in range(fired_cell.length):
                 if col + 1 <= 9:
                     comp_field[start_string + i][start_col + 1] = "*"
 
@@ -285,8 +287,8 @@ class Ship:
             
             # top and end of ship
             # idk why '+' -------\/
-            if 0 <= start_string + str_dire <= 9:
-                comp_field[start_string + str_dire][start_col] = "*"
+            if 0 <= start_string - str_dire <= 9:
+                comp_field[start_string - str_dire][start_col] = "*"
 
             if 0 <= start_string + fired_cell.length <= 9:
                 comp_field[start_string + fired_cell.length][start_col] = "*"
@@ -294,15 +296,15 @@ class Ship:
             # corners of ship
             for i in (-1, fired_cell.length):
                 for j in (-1, 1):
-                    if (0 <= (start_string - (i * str_dire)) <= 9) and (0 <= (start_col + j) <= 9):
-                        comp_field[start_string - (i * str_dire)][start_col + j] = "*"
+                    if (0 <= (start_string + i) <= 9) and (0 <= (start_col + j) <= 9):
+                        comp_field[start_string + i][start_col + j] = "*"
 
             
         # horizontal ship death
         elif col_dire:
 
             # sides of ship
-            for i in range(var[col_dire], var[col_dire - 1], col_dire):
+            for i in range(fired_cell.length):
                 if string + 1 <= 9:
                     comp_field[start_string + 1][start_col + i] = "*"
                 
@@ -310,14 +312,20 @@ class Ship:
                     comp_field[start_string - 1][start_col + i] = "*"
 
             # top and end of ship
-            if 0 <= start_col + col_dire <= 9:
-                comp_field[start_string][start_col + col_dire] = "*"
+            if 0 <= start_col - col_dire <= 9:
+                comp_field[start_string][start_col - col_dire] = "*"
             
             if 0 <= start_col + fired_cell.length <= 9:
                 comp_field[start_string][start_col + fired_cell.length] = "*"
+            
+            # corners of ship
+            for i in (-1, fired_cell.length):
+                for j in (-1, 1):
+                    if (0 <= (start_string + j) <= 9) and (0 <= (start_col + i) <= 9):
+                        comp_field[start_string + j][start_col + i] = "*"          
         
 
-    def fire(self, comp_field, coords):
+    def fire(self, comp_field, coords) -> tuple: # tuple - (is hit, Death/Hit/None)
         string, col = coords
         fired_cell = comp_field[string][col]
 
@@ -327,8 +335,12 @@ class Ship:
 
                 if fired_cell.hp <= 0:
                     fired_cell.death(comp_field, coords)
+                    return True, "Death"
+                return True, "Hit"
         
         comp_field[string][col] = "o"
+
+        return False, None
 
 
 
