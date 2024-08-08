@@ -42,7 +42,7 @@ def game():
         bot_field.pr_all(screen, print_ships=True)
 
         # put clear button on the screen
-        screen.blit(ClearImg, (0, 0))
+        screen.blit(RestartImg, (0, 0))
 
         for i in player_field.field:
             for j in i:
