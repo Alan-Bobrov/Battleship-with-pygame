@@ -109,11 +109,7 @@ def game():
                         players_attack_result = s.fire(bot_comp_field, (y, x))
                         bot_field.synchronize(x, y)
                         bot_field.synchronize(x, y, bot_comp_field)
-<<<<<<< HEAD
                         first_move = True
-=======
-
->>>>>>> 18152b9fce0022562dc422d7088a4f174e8f7938
                         # if the player misses, then the bot's turn begins
                         if players_attack_result[0] == False:
                             bot_move = (True,)
