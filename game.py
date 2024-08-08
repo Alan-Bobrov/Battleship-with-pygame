@@ -40,7 +40,7 @@ def game():
 
         # put clear button on the screen
         screen.blit(ClearImg, (0, 0))
-        
+
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 is_game = False
@@ -50,7 +50,6 @@ def game():
 
                 # restart the game
                 if (81 <= x <= 941) and (55 <= y <= 189):
-                        #clear_field(screen)
                         player_field = Field(110, 476)
                         bot_field = Field(598, 476)
                         bot_comp_field = create_field()
