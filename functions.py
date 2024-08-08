@@ -58,6 +58,12 @@ def change_coords(x, y, first_x, first_y):
     else:
         return False, new_x, new_y
 
+def restart_game(screen):
+    screen.blit(FieldImg, (0, 0))
+    return_num_ships()
+    
+
+
 def clear_field(screen):
     screen.blit(FieldImg, (0, 0))
     return_num_ships()
@@ -70,13 +76,12 @@ def SetClearButton(screen, is_putting):
     if is_putting:
         screen.blit(ClearImg, (0, 0))
 
-def SetRestartButton(screen, is_again):
+def SetRestartButton(screen):
     '''
     Function put button for restart game
     is_again - is it end of rhe game
     '''
-    if is_again:
-        screen.blit(RestartImg, (0, 0))
+    screen.blit(RestartImg, (0, 0))
 
 
 
