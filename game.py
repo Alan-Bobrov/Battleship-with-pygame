@@ -34,6 +34,9 @@ def game():
     do_ship = True
     player_comp_field = create_field()
 
+    num_of_user_ships = 0
+    num_of_comp_ships = 0
+
     while is_game:
         screen.blit(FieldImg, (0, 0))
         player_field.pr_all(screen, print_ships=True)
