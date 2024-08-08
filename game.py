@@ -32,8 +32,9 @@ def game():
     num_of_ships = 0 # number of ships the player has placed
     do_ship = True # is the player currently placing ships
     player_comp_field = create_field()
-    player_ship_count = 0 
+    player_ship_count = 0
     bot_ship_count = 0
+    first_move = False
 
     num_of_user_ships = 0
     num_of_comp_ships = 0
@@ -46,7 +47,7 @@ def game():
         bot_field.pr_all(screen, print_ships=True)
 
         # put clear button on the screen
-        screen.blit(ClearImg, (0, 0))
+        screen.blit(RestartImg, (0, 0))
 
         for i in player_field.field:
             for j in i:
@@ -57,12 +58,11 @@ def game():
                 if j.status == "part_ship":
                     bot_ship_count += 1
 
-
-        if player_ship_count == 0:
+        if  player_ship_count == 0 and first_move:
             # the message "You lose!" appears here
             # screen.blit(LoseImg or another name, (0, 0))
             pass
-        elif bot_comp_field == 0:
+        if  bot_ship_count == 0  and first_move:
             # the message "You win!" appears here
             # screen.blit(WinImg or another name, (0, 0))
             pass
@@ -100,8 +100,7 @@ def game():
                         # the player completes the placement of ships
                         do_ship = False
 
-                else:
-                    
+                else:           
                     changed, x, y = change_coords(x, y, 598, 476)
                     if changed and bot_field.field[y][x].status in ("free_place", "part_ship"):
                         s = Ship()
@@ -110,7 +109,7 @@ def game():
                         players_attack_result = s.fire(bot_comp_field, (y, x))
                         bot_field.synchronize(x, y)
                         bot_field.synchronize(x, y, bot_comp_field)
-
+                        first_move = True
                         # if the player misses, then the bot's turn begins
                         if players_attack_result[0] == False:
                             bot_move = (True,)
