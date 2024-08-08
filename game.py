@@ -35,8 +35,6 @@ def game():
     player_ship_count = 0
     bot_ship_count = 0
     first_move = False
-    can_end = True
-
     while is_game:
         
         # field print
@@ -56,14 +54,12 @@ def game():
                 if j.status == "part_ship":
                     bot_ship_count += 1
 
-        if  player_ship_count == 0 and first_move and can_end:
+        if  player_ship_count == 0 and first_move:
             # the message "You lose!" appears here
             screen.blit(YouLoseImg, (0, 0))
-            can_end = False
-        if  bot_ship_count == 0  and first_move and can_end:
+        if  bot_ship_count == 0  and first_move:
             # the message "You win!" appears here
             screen.blit(YouWinImg, (0, 0))
-            can_end = False
 
         player_ship_count = 0    
         bot_ship_count = 0
@@ -86,7 +82,6 @@ def game():
                         num_of_ships = 0
                         do_ship = True
                         player_comp_field = create_field()
-                        can_end = True
 
                  # player arranges ships
                 if do_ship:
