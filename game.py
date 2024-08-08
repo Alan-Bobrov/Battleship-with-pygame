@@ -36,9 +36,6 @@ def game():
     bot_ship_count = 0
     first_move = False
 
-    num_of_user_ships = 0
-    num_of_comp_ships = 0
-
     while is_game:
         
         # field print
@@ -64,8 +61,7 @@ def game():
             pass
         if  bot_ship_count == 0  and first_move:
             # the message "You win!" appears here
-            # screen.blit(WinImg or another name, (0, 0))
-            pass
+            screen.blit(YouWinImg, (0, 0))
 
         player_ship_count = 0    
         bot_ship_count = 0
@@ -87,7 +83,7 @@ def game():
                         return_num_ships()
                         num_of_ships = 0
                         do_ship = True
-                        player_comp_field = create_field()   
+                        player_comp_field = create_field()
 
                  # player arranges ships
                 if do_ship:
@@ -100,7 +96,7 @@ def game():
                         # the player completes the placement of ships
                         do_ship = False
 
-                else:           
+                else:
                     changed, x, y = change_coords(x, y, 598, 476)
                     if changed and bot_field.field[y][x].status in ("free_place", "part_ship"):
                         s = Ship()
