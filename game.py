@@ -119,7 +119,7 @@ def game():
                                 bot_move = s.fire(player_comp_field, (coords[0], coords[1]))
                                 player_field.synchronize(coords[1], coords[0])
                                 player_field.synchronize(coords[1], coords[0], player_comp_field)
-                                sleep(0.25)
+                                sleep(0.125)
 
         pg.display.flip()
 
