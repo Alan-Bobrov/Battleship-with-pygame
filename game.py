@@ -31,7 +31,9 @@ def game():
     is_game = True
     num_of_ships = 0 # number of ships the player has placed
     do_ship = True # is the player currently placing ships
-    player_comp_field = create_field() 
+    player_comp_field = create_field()
+    player_ship_count = 0 
+    bot_ship_count = 0
 
     while is_game:
         screen.blit(FieldImg, (0, 0))
@@ -40,6 +42,28 @@ def game():
 
         # put clear button on the screen
         screen.blit(ClearImg, (0, 0))
+
+        for i in player_field.field:
+            for j in i:
+                if j.status == "part_ship":
+                    player_ship_count += 1
+        for i in bot_field.field:
+            for j in i:
+                if j.status == "part_ship":
+                    bot_ship_count += 1
+
+
+        if player_ship_count == 0:
+            # the message "You lose!" appears here
+            # screen.blit(LoseImg or another name, (0, 0))
+            pass
+        elif bot_comp_field == 0:
+            # the message "You win!" appears here
+            # screen.blit(WinImg or another name, (0, 0))
+            pass
+
+        player_ship_count = 0    
+        bot_ship_count = 0
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -58,7 +82,7 @@ def game():
                         return_num_ships()
                         num_of_ships = 0
                         do_ship = True
-                        player_comp_field = create_field()       
+                        player_comp_field = create_field()   
 
                  # player arranges ships
                 if do_ship:
