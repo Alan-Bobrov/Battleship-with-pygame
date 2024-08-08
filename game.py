@@ -36,7 +36,12 @@ def game():
     bot_ship_count = 0
     first_move = False
 
+    num_of_user_ships = 0
+    num_of_comp_ships = 0
+
     while is_game:
+        
+        # field print
         screen.blit(FieldImg, (0, 0))
         player_field.pr_all(screen, print_ships=True)
         bot_field.pr_all(screen, print_ships=True)
@@ -99,11 +104,16 @@ def game():
                     changed, x, y = change_coords(x, y, 598, 476)
                     if changed and bot_field.field[y][x].status in ("free_place", "part_ship"):
                         s = Ship()
+
                         # the player makes a move
                         players_attack_result = s.fire(bot_comp_field, (y, x))
                         bot_field.synchronize(x, y)
                         bot_field.synchronize(x, y, bot_comp_field)
+<<<<<<< HEAD
                         first_move = True
+=======
+
+>>>>>>> 18152b9fce0022562dc422d7088a4f174e8f7938
                         # if the player misses, then the bot's turn begins
                         if players_attack_result[0] == False:
                             bot_move = (True,)
@@ -113,11 +123,12 @@ def game():
                                     coords = (randint(0, 9), randint(0, 9)) # y x
                                     if type(player_comp_field[coords[0]][coords[1]]) == Ship or player_comp_field[coords[0]][coords[1]] == "-":
                                         break
-                                sleep(0.25)
+
                                 # the bot makes a move on the place that he has chosen in advance
                                 bot_move = s.fire(player_comp_field, (coords[0], coords[1]))
                                 player_field.synchronize(coords[1], coords[0])
                                 player_field.synchronize(coords[1], coords[0], player_comp_field)
+                                sleep(0.25)
 
         pg.display.flip()
 
