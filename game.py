@@ -94,6 +94,7 @@ def game():
 
                     if num_of_ships == 10:
                         # the player completes the placement of ships
+                        return_num_ships()
                         do_ship = False
 
                 else:
