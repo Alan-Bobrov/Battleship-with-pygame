@@ -28,7 +28,6 @@ def game():
     screen.fill((255, 255, 255))
 
     is_again = False # is it end of the game
-    is_putting = True
     is_game = True
     num_of_ships = 0 # number of ships the player has placed
     do_ship = True # is the player currently placing ships
@@ -37,17 +36,31 @@ def game():
     while is_game:
         screen.blit(FieldImg, (0, 0))
         player_field.pr_all(screen, print_ships=True)
-        bot_field.pr_all(screen, print_ships=False)
+        bot_field.pr_all(screen, print_ships=True)
 
         # put clear button on the screen
-        if is_putting:
-            SetClearButton(screen, is_putting)
+        screen.blit(ClearImg, (0, 0))
+        
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 is_game = False
             
             elif (event.type == pg.MOUSEBUTTONDOWN) and (pg.mouse.get_pressed(num_buttons=3)[0]):
                 x, y = pg.mouse.get_pos()
+
+                # restart the game
+                if (81 <= x <= 941) and (55 <= y <= 189):
+                        #clear_field(screen)
+                        player_field = Field(110, 476)
+                        bot_field = Field(598, 476)
+                        bot_comp_field = create_field()
+                        bot_field.do_ships(None, 0, True, bot_comp_field)
+                        bot_field.normal_ships_image()
+                        return_num_ships()
+                        num_of_ships = 0
+                        do_ship = True
+                        player_comp_field = create_field()       
+
                  # player arranges ships
                 if do_ship:
                     changed, x, y = change_coords(x, y, 110, 476)
@@ -60,12 +73,8 @@ def game():
                         do_ship = False
 
                 else:
+                    
                     changed, x, y = change_coords(x, y, 598, 476)
-                    # if user click on the button and it time when we r putting ships
-                    if (81 <= x <= 941) and (55 <= y <= 189) and is_putting:
-                        clear_field(screen)
-                    
-                    
                     if changed and bot_field.field[y][x].status in ("free_place", "part_ship"):
                         s = Ship()
                         # the player makes a move
