@@ -61,8 +61,6 @@ def change_coords(x, y, first_x, first_y):
 def restart_game(screen):
     screen.blit(FieldImg, (0, 0))
     return_num_ships()
-    
-
 
 def clear_field(screen):
     screen.blit(FieldImg, (0, 0))
