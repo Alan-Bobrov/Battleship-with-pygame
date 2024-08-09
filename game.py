@@ -83,7 +83,7 @@ def game():
                         do_ship = True
                         player_comp_field = create_field()
 
-                 # player arranges ships
+                # player arranges ships
                 if do_ship:
                     changed, x, y = change_coords(x, y, 110, 476)
                     if changed:
