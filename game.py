@@ -88,7 +88,7 @@ def game():
                         first_move = False
                         can_go = True
 
-                 # player arranges ships
+                # player arranges ships
                 if do_ship:
                     changed, x, y = change_coords(x, y, 110, 476)
                     if changed:
