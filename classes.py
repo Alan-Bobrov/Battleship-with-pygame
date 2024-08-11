@@ -23,7 +23,7 @@ class Field:
     def do_ships(self, coords, num_of_ships, bot, comp_field): 
         if bot:
             return_num_ships()
-        num_of_ships = ship_gen(comp_field, num_of_ships, bot, coords)
+        num_of_ships = Ship.ship_gen(comp_field, num_of_ships, bot, coords)
         for i in range(len(comp_field)):
             for j in range(len(comp_field[0])):
                 if type(comp_field[i][j]) == Ship and self.field[i][j].status != "part_ship":
@@ -75,8 +75,6 @@ class Field:
                     if field[i][j] == "*":
                         self.field[i][j].status = "skip"
                         self.field[i][j].images.append(SkipImg)
-
-        
 
 
 class Ship:
@@ -292,8 +290,6 @@ class Ship:
                     if (0 <= (start_string + j) <= 9) and (0 <= (start_col + i) <= 9):
                         comp_field[start_string + j][start_col + i] = "*"  
 
-
-
     def fire(self, comp_field, coords) -> tuple: # tuple - (is hit, Death/Hit/None)
         string, col = coords
         fired_cell = comp_field[string][col]
@@ -314,23 +310,28 @@ class Ship:
 
         return False, None
 
-
-
-class Place:
-    def __init__(self, X, Y) -> None:
-        self.images = []
-        self.status = "free_place"
-        self.X = X
-        self.Y = Y
-
-#Do not delete!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def ship_gen(comp_field, num_of_ships, bot, coords):
+    def create_ship(comp_field, coords):
+        ship = Ship()
+        result = ship.put_ship(comp_field, coords)
+        return result
+    
+    def ship_gen(comp_field, num_of_ships, bot, coords):
         if bot:
+            num_of_errors = 0
             while num_of_ships < 10:
-                coords = (randint(0, 9), randint(0, 9))
-                result = Ship.create_ship(comp_field, coords)
-                if result[1] == "new":
-                    num_of_ships += 1      
+
+                if num_of_errors >= 300:
+                    num_of_errors = 0
+                    comp_field = create_field()
+                    num_of_ships = 0
+                    return_num_ships()
+
+                result = Ship.create_ship(comp_field, (randint(0, 9), randint(0, 9)))
+                if not result[0]:
+                    num_of_errors += 1
+
+                elif result[1] == "new":
+                    num_of_ships += 1
 
             return num_of_ships
 
@@ -339,3 +340,10 @@ def ship_gen(comp_field, num_of_ships, bot, coords):
             if result[1] == "new":
                 num_of_ships += 1        
         return num_of_ships
+
+class Place:
+    def __init__(self, X, Y) -> None:
+        self.images = []
+        self.status = "free_place"
+        self.X = X
+        self.Y = Y
