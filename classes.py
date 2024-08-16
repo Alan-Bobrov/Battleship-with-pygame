@@ -10,15 +10,18 @@ class Field:
         self.field = [[Place(first_X + j * 32, first_Y + i * 32) for j in range(10)] for i in range(10)]
 
     def pr_all(self, screen, print_ships=False):
-        status_list = ["skip", "hit"]
-        if print_ships:
-            status_list.append("part_ship")
-        
+        tuple_ships_images = (OneDeckShipImg, ShipContinueImg, ShipEndImg, ShipStartImg, TransformShipContinueImg, TransformShipEndImg, TransformShipStartImg)
+
         for i in self.field:
             for j in i:
-                if j.status in status_list:
-                    for image in j.images:
+                for image in j.images:
+                    if print_ships:
                         screen.blit(image, (j.X, j.Y))
+                    else:
+                        if image in tuple_ships_images:
+                            continue    
+                        else:
+                            screen.blit(image, (j.X, j.Y))
     
     def do_ships(self, coords, num_of_ships, bot, comp_field): 
         if bot:
@@ -53,11 +56,11 @@ class Field:
                     elif up.status != "part_ship" and down.status == "part_ship":
                         self.field[i][j].images[0] = ShipEndImg
                     elif right.status == "part_ship" and left.status == "part_ship":
-                        self.field[i][j].images[0] = pg.transform.rotate(ShipContinueImg, 90.0)
+                        self.field[i][j].images[0] = TransformShipContinueImg
                     elif right.status == "part_ship" and left.status != "part_ship":
-                        self.field[i][j].images[0] = pg.transform.rotate(ShipEndImg, 90.0)
+                        self.field[i][j].images[0] = TransformShipEndImg
                     elif right.status != "part_ship" and left.status == "part_ship":
-                        self.field[i][j].images[0] = pg.transform.rotate(ShipStartImg, 90.0)
+                        self.field[i][j].images[0] = TransformShipStartImg
                     else:
                         self.field[i][j].images[0] = OneDeckShipImg
             
