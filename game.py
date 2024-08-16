@@ -63,6 +63,9 @@ def game():
             screen.blit(YouWinImg, (0, 0))
             can_go = False
 
+        if can_go and not do_ship:
+            screen.blit(GameStart, (0, 0))
+
         player_ship_count = 0    
         bot_ship_count = 0
 
