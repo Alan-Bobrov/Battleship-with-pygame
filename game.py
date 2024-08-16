@@ -34,11 +34,7 @@ def game():
     player_ship_count = 0
     bot_ship_count = 0
     first_move = False
-<<<<<<< HEAD
     can_go = True
-=======
-
->>>>>>> fa2da064c4dfcfd47f38599736d8b13d487faf11
     while is_game:
 
         # field print
@@ -61,11 +57,7 @@ def game():
         if  player_ship_count == 0 and first_move:
             # the message "You lose!" appears here
             screen.blit(YouLoseImg, (0, 0))
-<<<<<<< HEAD
             can_go = False
-=======
-
->>>>>>> fa2da064c4dfcfd47f38599736d8b13d487faf11
         if  bot_ship_count == 0  and first_move:
             # the message "You win!" appears here
             screen.blit(YouWinImg, (0, 0))
