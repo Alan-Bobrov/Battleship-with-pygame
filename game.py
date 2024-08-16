@@ -15,8 +15,8 @@ import sys
 def game():
     pg.init()
 
-    player_field = Field(110, 476)
-    bot_field = Field(598, 476)
+    player_field = Field(108, 474)
+    bot_field = Field(596, 474)
 
     # bot arranges ships
     bot_comp_field = create_field()
@@ -27,7 +27,6 @@ def game():
     screen = pg.display.set_mode((1024, 900))
     screen.fill((255, 255, 255))
 
-    is_again = False # is it end of the game
     is_game = True
     num_of_ships = 0 # number of ships the player has placed
     do_ship = True # is the player currently placing ships
@@ -35,9 +34,13 @@ def game():
     player_ship_count = 0
     bot_ship_count = 0
     first_move = False
+<<<<<<< HEAD
     can_go = True
+=======
+
+>>>>>>> fa2da064c4dfcfd47f38599736d8b13d487faf11
     while is_game:
-        
+
         # field print
         screen.blit(FieldImg, (0, 0))
         player_field.pr_all(screen, print_ships=True)
@@ -58,7 +61,11 @@ def game():
         if  player_ship_count == 0 and first_move:
             # the message "You lose!" appears here
             screen.blit(YouLoseImg, (0, 0))
+<<<<<<< HEAD
             can_go = False
+=======
+
+>>>>>>> fa2da064c4dfcfd47f38599736d8b13d487faf11
         if  bot_ship_count == 0  and first_move:
             # the message "You win!" appears here
             screen.blit(YouWinImg, (0, 0))
@@ -70,14 +77,15 @@ def game():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 is_game = False
+                break
             
             elif (event.type == pg.MOUSEBUTTONDOWN) and (pg.mouse.get_pressed(num_buttons=3)[0]):
                 x, y = pg.mouse.get_pos()
 
                 # restart the game
                 if (81 <= x <= 941) and (55 <= y <= 189):
-                        player_field = Field(110, 476)
-                        bot_field = Field(598, 476)
+                        player_field = Field(108, 474)
+                        bot_field = Field(596, 474)
                         bot_comp_field = create_field()
                         bot_field.do_ships(None, 0, True, bot_comp_field)
                         bot_field.normal_ships_image()
@@ -90,7 +98,7 @@ def game():
 
                 # player arranges ships
                 if do_ship:
-                    changed, x, y = change_coords(x, y, 110, 476)
+                    changed, x, y = change_coords(x, y, 108, 474)
                     if changed:
                         num_of_ships = player_field.do_ships((y, x), num_of_ships, False, player_comp_field)
                         player_field.normal_ships_image()
@@ -127,5 +135,3 @@ def game():
                                 sleep(0.125)
 
         pg.display.flip()
-
-game()
