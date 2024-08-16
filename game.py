@@ -126,5 +126,3 @@ def game():
                                 sleep(0.125)
 
         pg.display.flip()
-
-game()
