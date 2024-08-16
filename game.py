@@ -85,13 +85,8 @@ def game():
                         num_of_ships = 0
                         do_ship = True
                         player_comp_field = create_field()
-<<<<<<< HEAD
                         first_move = False
                         can_go = True
-=======
-                        screen = pg.display.set_mode((1024, 900))
-                        screen.fill((255, 255, 255))
->>>>>>> 447d008331c803370b22e8b8312de3440d3ee0e0
 
                 # player arranges ships
                 if do_ship:
