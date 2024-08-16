@@ -34,7 +34,7 @@ def game():
     player_ship_count = 0
     bot_ship_count = 0
     first_move = False
-
+    can_go = True
     while is_game:
 
         # field print
@@ -57,10 +57,11 @@ def game():
         if  player_ship_count == 0 and first_move:
             # the message "You lose!" appears here
             screen.blit(YouLoseImg, (0, 0))
-
+            can_go = False
         if  bot_ship_count == 0  and first_move:
             # the message "You win!" appears here
             screen.blit(YouWinImg, (0, 0))
+            can_go = False
 
         player_ship_count = 0    
         bot_ship_count = 0
@@ -84,8 +85,8 @@ def game():
                         num_of_ships = 0
                         do_ship = True
                         player_comp_field = create_field()
-                        screen = pg.display.set_mode((1024, 900))
-                        screen.fill((255, 255, 255))
+                        first_move = False
+                        can_go = True
 
                 # player arranges ships
                 if do_ship:
@@ -99,7 +100,7 @@ def game():
                         return_num_ships()
                         do_ship = False
 
-                else:
+                elif can_go:
                     changed, x, y = change_coords(x, y, 598, 476)
                     if changed and bot_field.field[y][x].status in ("free_place", "part_ship"):
                         s = Ship()
