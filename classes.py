@@ -350,3 +350,27 @@ class Place:
         self.status = "free_place"
         self.X = X
         self.Y = Y
+
+class Bot:
+    def __init__(self) -> None:
+        # (((2, 3), destroyed), ((7, 9), hit))
+        self.last_hits = list()
+        # (1, 0)
+        self.changes = ()
+
+    def fire(self, comp_field):
+        if len(self.last_hits) >= 2:
+            col_change = self.changes[1]
+            str_change = self.changes[0]
+
+
+
+        else:
+            coords = randint(0, 9), randint(0, 9)
+        result = Ship.fire(Ship, comp_field, coords)
+
+        is_hit = result[0]
+        is_death = result[1]
+
+        if self.last_hits:
+            pass
