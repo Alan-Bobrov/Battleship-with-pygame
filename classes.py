@@ -359,7 +359,7 @@ class Bot:
         self.changes = tuple()
         self.last_fire = None
 
-    def fire(self, comp_field):
+    def fire(self, comp_field) -> tuple:
 
         # if hit >= 2 time in row
         if len(self.last_hits) >= 2:
