@@ -406,7 +406,7 @@ class Bot:
         # if hit only 1 time
         elif len(self.last_hits) == 1:
 
-            # choose "random" cell around last hit cell
+            # choose random cell around last hit cell
             for i in (-1, 1):
                 if 0 <= self.last_hits[0][0][0] + i <= 9:
                     fire_cell = comp_field[self.last_hits[0][0][0] + i][self.last_hits[0][0][1]]
