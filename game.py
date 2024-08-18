@@ -35,6 +35,7 @@ def game():
     bot_ship_count = 0
     first_move = False
     can_go = True
+    bot_ob = Bot()
     while is_game:
 
         # field print
@@ -93,7 +94,7 @@ def game():
 
                 # player arranges ships
                 if do_ship:
-                    if ("first_x_coords" <= x <= "second_x_coords") and ("first_y_coords" <= y <= "second_y_coords"):
+                    if False and ("first_x_coords" <= x <= "second_x_coords") and ("first_y_coords" <= y <= "second_y_coords"):
                         return_num_ships()
                         player_field = Field(108, 474)
                         player_comp_field = create_field()
@@ -127,15 +128,12 @@ def game():
                             bot_move = (True,)
                             while bot_move[0]:
                                 # the bot chooses the place where it goes
-                                while True: 
-                                    coords = (randint(0, 9), randint(0, 9)) # y x
-                                    if type(player_comp_field[coords[0]][coords[1]]) == Ship or player_comp_field[coords[0]][coords[1]] == "-":
-                                        break
+                                coords = bot_ob.fire(player_comp_field) # x y
 
                                 # the bot makes a move on the place that he has chosen in advance
-                                bot_move = s.fire(player_comp_field, (coords[0], coords[1]))
-                                player_field.synchronize(coords[1], coords[0])
-                                player_field.synchronize(coords[1], coords[0], player_comp_field)
+                                bot_move = s.fire(player_comp_field, (coords[1], coords[0]))
+                                player_field.synchronize(coords[0], coords[1])
+                                player_field.synchronize(coords[0], coords[1], player_comp_field)
                                 sleep(0.125)
 
         pg.display.flip()
