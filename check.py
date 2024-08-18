@@ -2,8 +2,6 @@ from classes import *
 from functions import *
 from time import sleep
 
-return_num_ships()
-
 field = create_field()
 
 Ship.ship_gen(field, 0, True, 0)
@@ -19,6 +17,8 @@ for i in range(50):
     print_field(field)
     print("--------------------------------")
 #     # sleep(1)
+
+return_num_ships()
 
 
 
