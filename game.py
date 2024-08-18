@@ -41,7 +41,7 @@ def game():
         # field print
         screen.blit(FieldImg, (0, 0))
         player_field.pr_all(screen, print_ships=True)
-        bot_field.pr_all(screen, print_ships=False)
+        bot_field.pr_all(screen, print_ships=True)
 
         # put clear button on the screen
         screen.blit(RestartImg, (0, 0))
@@ -131,7 +131,7 @@ def game():
                                 coords = bot_ob.fire(player_comp_field) # x y
 
                                 # the bot makes a move on the place that he has chosen in advance
-                                bot_move = s.fire(player_comp_field, (coords[1], coords[0]))
+                                bot_move = s.fire(player_comp_field, (coords[0], coords[1]))
                                 player_field.synchronize(coords[0], coords[1])
                                 player_field.synchronize(coords[0], coords[1], player_comp_field)
                                 sleep(0.125)
