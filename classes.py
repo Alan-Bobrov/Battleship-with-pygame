@@ -369,17 +369,22 @@ class Bot:
             # if horizontal ship
             if col_change:
 
-                # fire in -1 cell after last hit
+                # is valid coords
                 if self.last_hits[0][0][1] - 1 >= 0:
                     fire_cell = comp_field[self.last_hits[0][0][0]][self.last_hits[0][0][1] - 1]
-                    if fire_cell == "-" or isinstance(fire_cell, Ship):
+                    if isinstance(fire_cell, Ship) or fire_cell == "-":
                         coords = (self.last_hits[0][0][0], self.last_hits[0][0][1] - 1)
+
+                    elif self.last_hits[-1][0][1] + 1 <= 9:
+                        fire_cell = comp_field[self.last_hits[-1][0][0]][self.last_hits[-1][0][1] + 1]
+                        if isinstance(fire_cell, Ship) or fire_cell == "-":
+                            coords = (self.last_hits[-1][0][0], self.last_hits[-1][0][1] + 1)
+                    
+                    else:
+                        coords = coords = randint(0, 9), randint(0, 9)
                 
-                # fire in +1 cell after first hit
-                elif self.last_hits[-1][0][1] + 1 <= 9:
-                    fire_cell = comp_field[self.last_hits[0][0][0]][self.last_hits[0][0][1] + 1]
-                    if fire_cell == "-" or isinstance(fire_cell, Ship):
-                        coords = (self.last_hits[0][0][0], self.last_hits[0][0][1] + 1)
+                else:
+                    coords = randint(0, 9), randint(0, 9)
             
             # if vertical ship
             elif str_change:
@@ -390,7 +395,7 @@ class Bot:
                     if isinstance(fire_cell, Ship) or fire_cell == "-":
                         coords = (self.last_hits[0][0][0] - 1, self.last_hits[0][0][1])
 
-                    elif self.last_hits[-1][0][1] + 1 <= 9:
+                    elif self.last_hits[-1][0][0] + 1 <= 9:
                         fire_cell = comp_field[self.last_hits[-1][0][0] + 1][self.last_hits[-1][0][1]]
                         if isinstance(fire_cell, Ship) or fire_cell == "-":
                             coords = (self.last_hits[-1][0][0] + 1, self.last_hits[-1][0][1])
@@ -400,8 +405,6 @@ class Bot:
                 
                 else:
                     coords = randint(0, 9), randint(0, 9)
-                        
-            print(9)
 
         # if hit only 1 time
         elif len(self.last_hits) == 1:
@@ -414,12 +417,11 @@ class Bot:
                         coords = (self.last_hits[0][0][0] + i, self.last_hits[0][0][1])
                         break
 
-                elif 0 <= self.last_hits[0][0][1] + i <= 9:
+                if 0 <= self.last_hits[0][0][1] + i <= 9:
                     fire_cell = comp_field[self.last_hits[0][0][0]][self.last_hits[0][0][1] + i]
                     if fire_cell == "-" or isinstance(fire_cell, Ship):
                         coords = (self.last_hits[0][0][0], self.last_hits[0][0][1] + i)
                         break
-            print(8)
 
         # if no hit 
         else:
@@ -443,12 +445,12 @@ class Bot:
             
             self.last_hits.insert(0, (coords, result_of_fire))
             self.last_hits.sort()
-            if len(self.last_hits) == 2:
+            if len(self.last_hits) >= 2:
                 first_x, first_y = self.last_hits[0][0]
                 second_x, second_y = self.last_hits[1][0]
                 if max(first_x, second_x) - min(first_x, second_x) == 1:
                     self.changes = (1, 0)
-                elif max(first_y, second_y) - max(first_y, second_y) == 1:
+                elif max(first_y, second_y) - min(first_y, second_y) == 1:
                     self.changes = (0, 1)
 
         return coords
