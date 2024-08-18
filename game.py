@@ -93,15 +93,24 @@ def game():
 
                 # player arranges ships
                 if do_ship:
-                    changed, x, y = change_coords(x, y, 108, 474)
-                    if changed:
-                        num_of_ships = player_field.do_ships((y, x), num_of_ships, False, player_comp_field)
-                        player_field.normal_ships_image()
-
-                    if num_of_ships == 10:
-                        # the player completes the placement of ships
+                    if ("first_x_coords" <= x <= "second_x_coords") and ("first_y_coords" <= y <= "second_y_coords"):
                         return_num_ships()
+                        player_field = Field(108, 474)
+                        player_comp_field = create_field()
+                        player_field.do_ships(None, 0, True, player_comp_field)
+                        player_field.normal_ships_image()
                         do_ship = False
+
+                    else:
+                        changed, x, y = change_coords(x, y, 108, 474)
+                        if changed:
+                            num_of_ships = player_field.do_ships((y, x), num_of_ships, False, player_comp_field)
+                            player_field.normal_ships_image()
+
+                        if num_of_ships == 10:
+                            # the player completes the placement of ships
+                            return_num_ships()
+                            do_ship = False
 
                 elif can_go:
                     changed, x, y = change_coords(x, y, 598, 476)
