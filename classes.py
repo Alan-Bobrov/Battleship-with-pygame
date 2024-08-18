@@ -360,13 +360,9 @@ class Bot:
         self.last_fire = None
 
     def fire(self, comp_field):
-        # if last fire destroyed ship
-        if self.last_hits and self.last_hits[0][1] == "Death":
-            self.last_hits = list()
-            self.changes = tuple()
 
         # if hit >= 2 time in row
-        if len(self.last_hits) >= 2 and self.last_hits[0][1] == "Hit":
+        if len(self.last_hits) >= 2:
             col_change = self.changes[1]
             str_change = self.changes[0]
 
@@ -387,40 +383,51 @@ class Bot:
             
             # if vertical ship
             elif str_change:
-                for j in (-1, 1):
 
-                    if 0 <= (self.last_hits[0][0][0] + j) <= 9:
-                        print("a")
-                        fire_coords = (self.last_hits[0][0][0] + j, self.last_hits[0][0][1])
-                        fire_cell = comp_field[self.last_hits[0][0][0] + j][self.last_hits[0][0][1]]
+                # is valid coords
+                if self.last_hits[0][0][0] - 1 >= 0:
+                    fire_cell = comp_field[self.last_hits[0][0][0] - 1][self.last_hits[0][0][1]]
+                    if isinstance(fire_cell, Ship) or fire_cell == "-":
+                        coords = (self.last_hits[0][0][0] - 1, self.last_hits[0][0][1])
 
-                        if fire_coords != self.last_fire:
-                            print("b")
-                            if (fire_cell == "-" or isinstance(fire_cell, Ship)):
-                                print("d")
-                                coords = (self.last_hits[0][0][0] + j, self.last_hits[0][0][1])
-                        else:
-                            print("c")
-                            coords = (self.last_hits[-1][0][0] - j, self.last_hits[0][0][1])
+                    elif self.last_hits[-1][0][1] + 1 <= 9:
+                        fire_cell = comp_field[self.last_hits[-1][0][0] + 1][self.last_hits[-1][0][1]]
+                        if isinstance(fire_cell, Ship) or fire_cell == "-":
+                            coords = (self.last_hits[-1][0][0] + 1, self.last_hits[-1][0][1])
+                    
+                    else:
+                        coords = coords = randint(0, 9), randint(0, 9)
+                
+                else:
+                    coords = randint(0, 9), randint(0, 9)
                         
             print(9)
 
         # if hit only 1 time
-        elif len(self.last_hits) == 1 and self.last_hits[0][1] == "Hit":
+        elif len(self.last_hits) == 1:
 
             # choose "random" cell around last hit cell
             for i in (-1, 1):
                 if 0 <= self.last_hits[0][0][0] + i <= 9:
-                    coords = (self.last_hits[0][0][0] + i, self.last_hits[0][0][1])
-                    break
+                    fire_cell = comp_field[self.last_hits[0][0][0] + i][self.last_hits[0][0][1]]
+                    if fire_cell == "-" or isinstance(fire_cell, Ship):
+                        coords = (self.last_hits[0][0][0] + i, self.last_hits[0][0][1])
+                        break
+
                 elif 0 <= self.last_hits[0][0][1] + i <= 9:
-                    coords = (self.last_hits[0][0][0], self.last_hits[0][0][1] + i)
-                    break
+                    fire_cell = comp_field[self.last_hits[0][0][0]][self.last_hits[0][0][1] + i]
+                    if fire_cell == "-" or isinstance(fire_cell, Ship):
+                        coords = (self.last_hits[0][0][0], self.last_hits[0][0][1] + i)
+                        break
             print(8)
 
         # if no hit 
         else:
-            coords = randint(0, 9), randint(0, 9)
+            while True:
+                coords = randint(0, 9), randint(0, 9)
+                fire_cell = comp_field[coords[0]][coords[1]]
+                if fire_cell == "-" or isinstance(fire_cell, Ship):
+                    break
 
         result = Ship.fire(Ship, comp_field, coords)
 
@@ -429,6 +436,11 @@ class Bot:
         self.last_fire = coords
 
         if is_hit:
+            if result_of_fire == "Death":
+                self.last_hits = list()
+                self.changes = tuple()
+                return coords
+            
             self.last_hits.insert(0, (coords, result_of_fire))
             self.last_hits.sort()
             if len(self.last_hits) == 2:
