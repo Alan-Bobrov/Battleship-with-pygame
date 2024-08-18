@@ -11,7 +11,7 @@ Ship.create_ship(field, (6, 5))
 Ship.create_ship(field, (7, 5))
 print_field(field)
 print("--------------------")
-sleep(5)
+# sleep(5)
 
 bot = Bot()
 
@@ -20,7 +20,7 @@ for i in range(20):
     bot.fire(field)
     print_field(field)
     print("--------------------------------")
-    sleep(1)
+    # sleep(1)
 
 
 
