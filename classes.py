@@ -375,10 +375,10 @@ class Bot:
                     if isinstance(fire_cell, Ship) or fire_cell == "-":
                         coords = (self.last_hits[0][0][0], self.last_hits[0][0][1] - 1)
 
-                    elif self.last_hits[-1][0][1] + 1 <= 9:
-                        fire_cell = comp_field[self.last_hits[-1][0][0]][self.last_hits[-1][0][1] + 1]
-                        if isinstance(fire_cell, Ship) or fire_cell == "-":
-                            coords = (self.last_hits[-1][0][0], self.last_hits[-1][0][1] + 1)
+                elif self.last_hits[-1][0][1] + 1 <= 9:
+                    fire_cell = comp_field[self.last_hits[-1][0][0]][self.last_hits[-1][0][1] + 1]
+                    if isinstance(fire_cell, Ship) or fire_cell == "-":
+                        coords = (self.last_hits[-1][0][0], self.last_hits[-1][0][1] + 1)
                     
                     else:
                         coords = coords = randint(0, 9), randint(0, 9)
@@ -395,10 +395,10 @@ class Bot:
                     if isinstance(fire_cell, Ship) or fire_cell == "-":
                         coords = (self.last_hits[0][0][0] - 1, self.last_hits[0][0][1])
 
-                    elif self.last_hits[-1][0][0] + 1 <= 9:
-                        fire_cell = comp_field[self.last_hits[-1][0][0] + 1][self.last_hits[-1][0][1]]
-                        if isinstance(fire_cell, Ship) or fire_cell == "-":
-                            coords = (self.last_hits[-1][0][0] + 1, self.last_hits[-1][0][1])
+                elif self.last_hits[-1][0][0] + 1 <= 9:
+                    fire_cell = comp_field[self.last_hits[-1][0][0] + 1][self.last_hits[-1][0][1]]
+                    if isinstance(fire_cell, Ship) or fire_cell == "-":
+                        coords = (self.last_hits[-1][0][0] + 1, self.last_hits[-1][0][1])
                     
                     else:
                         coords = coords = randint(0, 9), randint(0, 9)
