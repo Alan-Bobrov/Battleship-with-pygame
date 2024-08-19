@@ -78,6 +78,9 @@ class Field:
                     if field[i][j] == "*":
                         self.field[i][j].status = "skip"
                         self.field[i][j].images.append(SkipImg)
+                    elif field[i][j] == "*":
+                        self.field[i][j].status = "hit"
+                        self.field[i][j].images.append(HitImg)
 
 
 class Ship:
