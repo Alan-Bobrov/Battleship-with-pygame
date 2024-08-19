@@ -2,13 +2,9 @@ from classes import *
 from functions import *
 from time import sleep
 
-return_num_ships()
-
 field = create_field()
 
-Ship.create_ship(field, (5, 5))
-Ship.create_ship(field, (5, 6))
-Ship.create_ship(field, (5, 7))
+Ship.ship_gen(field, 0, True, 0)
 print_field(field)
 print("--------------------")
 # sleep(5)
@@ -16,11 +12,13 @@ print("--------------------")
 bot = Bot()
 
 
-for i in range(20):
+for i in range(50):
     bot.fire(field)
     print_field(field)
     print("--------------------------------")
-    # sleep(1)
+#     # sleep(1)
+
+return_num_ships()
 
 
 
