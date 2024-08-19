@@ -363,7 +363,8 @@ class Bot:
         self.last_fire = None
 
     def cell_selection(self, comp_field) -> tuple:
-
+        
+        is_coord = False
         # if hit >= 2 time in row
         if len(self.last_hits) >= 2:
             col_change = self.changes[1]
@@ -377,17 +378,15 @@ class Bot:
                     fire_cell = comp_field[self.last_hits[0][0][0]][self.last_hits[0][0][1] - 1]
                     if isinstance(fire_cell, Ship) or fire_cell == "-":
                         coords = (self.last_hits[0][0][0], self.last_hits[0][0][1] - 1)
+                        is_coord = True
 
-                elif self.last_hits[-1][0][1] + 1 <= 9:
+                if (self.last_hits[-1][0][1] + 1 <= 9) and not is_coord:
                     fire_cell = comp_field[self.last_hits[-1][0][0]][self.last_hits[-1][0][1] + 1]
                     if isinstance(fire_cell, Ship) or fire_cell == "-":
                         coords = (self.last_hits[-1][0][0], self.last_hits[-1][0][1] + 1)
                     
                     else:
                         coords = coords = randint(0, 9), randint(0, 9)
-                
-                else:
-                    coords = randint(0, 9), randint(0, 9)
             
             # if vertical ship
             elif str_change:
@@ -397,17 +396,15 @@ class Bot:
                     fire_cell = comp_field[self.last_hits[0][0][0] - 1][self.last_hits[0][0][1]]
                     if isinstance(fire_cell, Ship) or fire_cell == "-":
                         coords = (self.last_hits[0][0][0] - 1, self.last_hits[0][0][1])
+                        is_coord = True
 
-                elif self.last_hits[-1][0][0] + 1 <= 9:
+                if (self.last_hits[-1][0][0] + 1 <= 9) and not is_coord:
                     fire_cell = comp_field[self.last_hits[-1][0][0] + 1][self.last_hits[-1][0][1]]
                     if isinstance(fire_cell, Ship) or fire_cell == "-":
                         coords = (self.last_hits[-1][0][0] + 1, self.last_hits[-1][0][1])
                     
                     else:
                         coords = coords = randint(0, 9), randint(0, 9)
-                
-                else:
-                    coords = randint(0, 9), randint(0, 9)
 
         # if hit only 1 time
         elif len(self.last_hits) == 1:
