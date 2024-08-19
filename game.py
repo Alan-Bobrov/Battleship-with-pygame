@@ -128,12 +128,15 @@ def game():
                             bot_move = (True,)
                             while bot_move[0]:
                                 # the bot chooses the place where it goes
-                                coords = bot_ob.cell_selection(player_comp_field) # y x
+                                y, x = bot_ob.cell_selection(player_comp_field) # y x
 
                                 # the bot makes a move on the place that he has chosen in advance
-                                bot_move = s.fire(player_comp_field, (coords[0], coords[1]))
-                                player_field.synchronize(coords[0], coords[1])
-                                player_field.synchronize(coords[0], coords[1], player_comp_field)
+                                bot_move = s.fire(player_comp_field, (y, x))
+                                player_field.synchronize(x, y)
+                                player_field.synchronize(x, y, player_comp_field)
                                 sleep(0.125)
+
+                                player_field.pr_all(screen, print_ships=True)
+                                bot_field.pr_all(screen, print_ships=True)
 
         pg.display.flip()
