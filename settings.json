@@ -1,0 +1,6 @@
+{
+    "Show Enemy Ships": true,
+    "Show Your Ships": true,
+    "Infinity Your Moves": false, // You move first
+    "Infinity Enemy Moves": true // You move first
+}

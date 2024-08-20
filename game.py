@@ -12,6 +12,7 @@ from time import sleep
 import subprocess
 import sys
 
+
 def game():
     pg.init()
 
@@ -27,6 +28,13 @@ def game():
     screen = pg.display.set_mode((1024, 900))
     screen.fill((255, 255, 255))
 
+    with open("settings.json", "r", encoding="utf-8") as settings:
+        settings = json.load(settings)
+        ShowEnemyShips = settings["Show Enemy Ships"]
+        ShowYourShips = settings["Show Your Ships"]
+        InfinityYourMoves = settings["Infinity Your Moves"]
+        InfinityEnemyMoves = settings["Infinity Enemy Moves"]
+
     is_game = True
     num_of_ships = 0 # number of ships the player has placed
     do_ship = True # is the player currently placing ships
@@ -40,8 +48,8 @@ def game():
 
         # field print
         screen.blit(FieldImg, (0, 0))
-        player_field.pr_all(screen, print_ships=True)
-        bot_field.pr_all(screen, print_ships=True)
+        player_field.pr_all(screen, print_ships=ShowYourShips)
+        bot_field.pr_all(screen, print_ships=ShowEnemyShips)
 
         # put clear button on the screen
         screen.blit(RestartImg, (0, 0))
@@ -59,6 +67,7 @@ def game():
             # the message "You lose!" appears here
             screen.blit(YouLoseImg, (0, 0))
             can_go = False
+
         if  bot_ship_count == 0  and first_move:
             # the message "You win!" appears here
             screen.blit(YouWinImg, (0, 0))
@@ -123,6 +132,9 @@ def game():
                         bot_field.synchronize(x, y)
                         bot_field.synchronize(x, y, bot_comp_field)
                         first_move = True
+                        bot_field.pr_all(screen, print_ships=ShowEnemyShips)
+                        if InfinityYourMoves:
+                            players_attack_result = (True,)
                         # if the player misses, then the bot's turn begins
                         if players_attack_result[0] == False:
                             bot_move = (True,)
@@ -131,12 +143,17 @@ def game():
                                 y, x = bot_ob.cell_selection(player_comp_field) # y x
 
                                 # the bot makes a move on the place that he has chosen in advance
-                                bot_move = s.fire(player_comp_field, (y, x))
                                 player_field.synchronize(x, y)
                                 player_field.synchronize(x, y, player_comp_field)
-                                sleep(0.125)
+                                # sleep(0.125)
 
-                                player_field.pr_all(screen, print_ships=True)
-                                bot_field.pr_all(screen, print_ships=True)
+                                player_field.pr_all(screen, print_ships=ShowYourShips)
+                                bot_field.pr_all(screen, print_ships=ShowEnemyShips)
+
+                                if InfinityEnemyMoves:
+                                    if num_of_ships == 0:
+                                        bot_move = (False,)
+                                        break   
+                                    bot_move = (True,)
 
         pg.display.flip()
