@@ -139,19 +139,27 @@ def game():
                         if players_attack_result[0] == False:
                             bot_move = (True,)
                             while bot_move[0]:
+                                sleep(0.125)
+                                print(1)
                                 # the bot chooses the place where it goes
                                 y, x = bot_ob.cell_selection(player_comp_field) # y x
 
                                 # the bot makes a move on the place that he has chosen in advance
                                 player_field.synchronize(x, y)
                                 player_field.synchronize(x, y, player_comp_field)
-                                # sleep(0.125)
 
+                                screen.blit(FieldImg, (0, 0))
                                 player_field.pr_all(screen, print_ships=ShowYourShips)
                                 bot_field.pr_all(screen, print_ships=ShowEnemyShips)
+                                
+                                player_ship_count = 0
+                                for i in player_field.field:
+                                    for j in i:
+                                        if j.status == "part_ship":
+                                            player_ship_count += 1
 
                                 if InfinityEnemyMoves:
-                                    if num_of_ships == 0:
+                                    if player_ship_count == 0:
                                         bot_move = (False,)
                                         break   
                                     bot_move = (True,)
