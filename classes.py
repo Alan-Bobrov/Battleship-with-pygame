@@ -362,7 +362,7 @@ class Bot:
         self.changes = tuple()
         self.last_fire = None
 
-    def cell_selection(self, comp_field) -> tuple:
+    def fire(self, comp_field) -> tuple:
         
         is_coord = False
         # if hit >= 2 time in row
