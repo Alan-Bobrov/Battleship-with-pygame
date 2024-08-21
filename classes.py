@@ -326,6 +326,9 @@ class Ship:
         return result
     
     def ship_gen(comp_field, num_of_ships, bot, coords):
+        '''
+        function randomly (for comp) put ships on the field OR 
+        '''
         if bot:
             num_of_errors = 0
             while num_of_ships < 10:
@@ -360,15 +363,13 @@ class Place:
 
 class Bot:
     def __init__(self) -> None:
-        # (((2, 3), "Death"), ((7, 9), "Hit")))
-        self.last_hits = list()
-        # (1, 0)
-        self.changes = tuple()
-        self.last_fire = None
+        self.last_hits = list() # (((2, 3), "Death"), ((7, 9), "Hit")))
+        self.changes = tuple()  # (1, 0)
 
-    def cell_selection(self, comp_field) -> tuple: # return coords of fire 
+    def cell_selection(self, comp_field) -> tuple: # return (status of fire (is hit)) and (coords of fire) 
         
-        is_coord = False
+        is_coord = False # is coords was created 
+
         # if hit >= 2 time in row
         if len(self.last_hits) >= 2:
             col_change = self.changes[1]
@@ -453,6 +454,7 @@ class Bot:
             self.last_hits.insert(0, (coords, result_of_fire))
             self.last_hits.sort()
 
+            # change direction of ship
             if len(self.last_hits) >= 2:
                 first_str, first_col = self.last_hits[0][0]
                 second_str, second_col = self.last_hits[1][0]
