@@ -448,7 +448,7 @@ class Bot:
             if result_of_fire == "Death":
                 self.last_hits = list()
                 self.changes = tuple()
-                return coords
+                return is_hit, coords
             
             self.last_hits.insert(0, (coords, result_of_fire))
             self.last_hits.sort()
@@ -457,6 +457,6 @@ class Bot:
                 first_str, first_col = self.last_hits[0][0]
                 second_str, second_col = self.last_hits[1][0]
 
-                self.changes =(abs(first_str - second_str), abs(first_col - second_col))
+                self.changes = (abs(first_str - second_str), abs(first_col - second_col))
 
-        return coords
+        return is_hit, coords
