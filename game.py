@@ -28,12 +28,17 @@ def game():
     screen = pg.display.set_mode((1024, 900))
     screen.fill((255, 255, 255))
 
+    # import values of settings
     with open("settings.json", "r", encoding="utf-8") as settings:
         settings = json.load(settings)
+
         ShowEnemyShips = settings["Show Enemy Ships"]
         ShowYourShips = settings["Show Your Ships"]
         InfinityYourMoves = settings["Infinity Your Moves"]
         InfinityEnemyMoves = settings["Infinity Enemy Moves"]
+        RandomShipGen = settings["Random Ship Generation"]
+        PrintUserCompField = settings["Print User Comp Field"]
+        PrintCompCompField = settings["Print Comp Comp Field"]
 
     is_game = True
     num_of_ships = 0 # number of ships the player has placed
@@ -106,7 +111,7 @@ def game():
 
                 # player arranges ships
                 if do_ship:
-                    if (92 <= x <= 932) and (222 <= y <= 369):
+                    if RandomShipGen or ((92 <= x <= 932) and (222 <= y <= 369)):
                         return_num_ships()
                         player_field = Field(108, 474)
                         player_comp_field = create_field()
@@ -128,6 +133,7 @@ def game():
                 elif can_go:
                     changed, x, y = change_coords(x, y, 598, 476)
                     if changed and bot_field.field[y][x].status in ("free_place", "part_ship"):
+
                         s = Ship()
 
                         # the player makes a move
@@ -136,6 +142,12 @@ def game():
                         bot_field.synchronize(x, y, bot_comp_field)
                         first_move = True
                         bot_field.pr_all(screen, print_ships=ShowEnemyShips)
+
+                        # print user field for comp
+                        if PrintCompCompField:
+                            print("Bot Field")
+                            print_field(bot_comp_field)
+                            print("------------------------------------")
 
                         if InfinityYourMoves:
                             players_attack_result = (True,)
@@ -146,11 +158,16 @@ def game():
                             
                             while bot_move:
                                 sleep(0.125)
-                                print(1)
                                 
                                 # the bot chooses the place where it goes
                                 bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
                                 y, x = coords
+
+                                # print bot field for comp
+                                if PrintUserCompField:
+                                    print("User Field")
+                                    print_field(player_comp_field)
+                                    print("-----------------------------------------")
 
                                 # the bot makes a move on the place that he has chosen in advance
                                 player_field.synchronize(x, y)
