@@ -91,6 +91,10 @@ class Ship:
         self.start_coords = None # tuple like (0, 0)
 
     def put_ship(self, comp_field, coords) -> tuple:
+        '''
+        return status of ship create (is it was created)
+        if ship was created return is it new ship or continueof another ship 
+        '''
     
         string, column = coords
 
@@ -217,7 +221,7 @@ class Ship:
 
         return False, None
 
-    def create_ship(comp_field, coords) -> tuple:
+    def create_ship(comp_field, coords) -> tuple: # put ship on the field (only 1 segment)
         ship = Ship()
         result = ship.put_ship(comp_field, coords)
         return result
@@ -362,7 +366,7 @@ class Bot:
         self.changes = tuple()
         self.last_fire = None
 
-    def cell_selection(self, comp_field) -> tuple:
+    def cell_selection(self, comp_field) -> tuple: # return coords of fire 
         
         is_coord = False
         # if hit >= 2 time in row
@@ -433,11 +437,14 @@ class Bot:
 
         result = Ship.fire(Ship, comp_field, coords)
 
+        # get result of fire
         is_hit = result[0]
         result_of_fire = result[1]
         self.last_fire = coords
 
         if is_hit:
+
+            # if ship destroyed
             if result_of_fire == "Death":
                 self.last_hits = list()
                 self.changes = tuple()
@@ -445,12 +452,11 @@ class Bot:
             
             self.last_hits.insert(0, (coords, result_of_fire))
             self.last_hits.sort()
+
             if len(self.last_hits) >= 2:
-                first_x, first_y = self.last_hits[0][0]
-                second_x, second_y = self.last_hits[1][0]
-                if max(first_x, second_x) - min(first_x, second_x) == 1:
-                    self.changes = (1, 0)
-                elif max(first_y, second_y) - min(first_y, second_y) == 1:
-                    self.changes = (0, 1)
+                first_str, first_col = self.last_hits[0][0]
+                second_str, second_col = self.last_hits[1][0]
+
+                self.changes =(abs(first_str - second_str), abs(first_col - second_col))
 
         return coords
