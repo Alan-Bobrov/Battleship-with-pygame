@@ -133,11 +133,14 @@ def game():
                         bot_field.synchronize(x, y, bot_comp_field)
                         first_move = True
                         bot_field.pr_all(screen, print_ships=ShowEnemyShips)
+
                         if InfinityYourMoves:
                             players_attack_result = (True,)
+
                         # if the player misses, then the bot's turn begins
                         if players_attack_result[0] == False:
                             bot_move = (True,)
+                            
                             while bot_move[0]:
                                 sleep(0.125)
                                 print(1)
@@ -158,7 +161,7 @@ def game():
                                         if j.status == "part_ship":
                                             player_ship_count += 1
 
-                                if InfinityEnemyMoves:
+                                if InfinityEnemyMoves == "snfsss":
                                     if player_ship_count == 0:
                                         bot_move = (False,)
                                         break   
