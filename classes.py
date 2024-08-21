@@ -1,7 +1,7 @@
 import pygame as pg
 from random import randint
 from functions import *
-from images import *
+from image.images import *
 import json
 
 class Field:
@@ -142,14 +142,14 @@ class Ship:
         # create new ship
         if num_of_ships_around == 0:
             comp_field[string][column] = self
-            with open("num_of_ships.json", "r", encoding="utf-8") as file:
+            with open("json files/num_of_ships.json", "r", encoding="utf-8") as file:
                 num_of_ships = json.load(file)
                 if num_of_ships["1"] <= 0:
                     comp_field[string][column] = "-"
                     return False, None
                 num_of_ships["1"] -= 1
                 self.start_coords = coords
-                with open("num_of_ships.json", "w", encoding="utf-8") as file1:
+                with open("json files/num_of_ships.json", "w", encoding="utf-8") as file1:
                     json.dump(num_of_ships, file1, indent=4)
             return True, "new"
 
