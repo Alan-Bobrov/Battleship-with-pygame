@@ -1,4 +1,4 @@
-All settings:
+All settings: \
 `Show Enemy Ships` - is enemy`s ships will visible \
 `Show Your Ships` - is your`s ships will visible \
 `Infinity Your Moves` - is you will move infinity time (bot will not move)\
