@@ -7,7 +7,7 @@ except:
 import pygame as pg
 from classes import *
 from functions import *
-from image.images import *
+from images import *
 from time import sleep
 import subprocess
 import sys
@@ -28,7 +28,7 @@ def game():
     screen = pg.display.set_mode((1024, 900))
     screen.fill((255, 255, 255))
 
-    with open("json files/settings.json", "r", encoding="utf-8") as settings:
+    with open("settings.json", "r", encoding="utf-8") as settings:
         settings = json.load(settings)
         ShowEnemyShips = settings["Show Enemy Ships"]
         ShowYourShips = settings["Show Your Ships"]
