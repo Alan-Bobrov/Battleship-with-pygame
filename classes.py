@@ -327,7 +327,7 @@ class Ship:
     
     def ship_gen(comp_field, num_of_ships, bot, coords):
         '''
-        function randomly (for comp) put ships on the field OR 
+        function randomly (for comp) put ships on the field OR put ship on the coords (for user)
         '''
         if bot:
             num_of_errors = 0
