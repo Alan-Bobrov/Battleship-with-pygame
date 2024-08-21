@@ -1,4 +1,3 @@
-import pygame as pg
 from random import randint
 from functions import *
 from images import *
@@ -100,7 +99,7 @@ class Ship:
 
         # check coords 
         if isinstance(string, int) and isinstance(column, int):
-            if (string <= -1 or string >= 10) and (column <= -1 or column >= 10) or comp_field[string][column] != "-":
+            if (string <= -1 or string >= 10) or (column <= -1 or column >= 10) or comp_field[string][column] != "-":
                 return False, None
         else:
             return False, None
@@ -124,24 +123,22 @@ class Ship:
             try:
                 column_cell = comp_field[string][column + i] # there are change only column
             except:
-                if column + i >= 10:
+                if column + i >= 10 or column + i <= -1:
                     column_cell = comp_field[string][column]
 
             try:
                 string_cell = comp_field[string + i][column] # there are change only string
             except:
-                if string + i >= 10:
+                if string + i >= 10 or string <= -1:
                     string_cell = comp_field[string][column]
 
             # check column cell and srtring cell
             if isinstance(column_cell, Ship):
-                if column + i >= 0:
-                    num_of_ships_around += 1
+                num_of_ships_around += 1
 
 
             if isinstance(string_cell, Ship):
-                if string + i >= 0:
-                    num_of_ships_around += 1
+                num_of_ships_around += 1
 
         # create new ship
         if num_of_ships_around == 0:
@@ -198,7 +195,7 @@ class Ship:
                     return True, None
 
                 # if vertical ship
-                if isinstance(string_cell, Ship):
+                elif isinstance(string_cell, Ship):
                     column_values = list()
                     for _ in range(10):
                         column_values.append(comp_field[_][column])
@@ -220,11 +217,6 @@ class Ship:
                     return True, None
 
         return False, None
-
-    def create_ship(comp_field, coords) -> tuple: # put ship on the field (only 1 segment)
-        ship = Ship()
-        result = ship.put_ship(comp_field, coords)
-        return result
     
     def death(self, comp_field, coords):
         string, col = coords
@@ -338,8 +330,21 @@ class Ship:
                     comp_field = create_field()
                     num_of_ships = 0
                     return_num_ships()
+                    continue
+                
+                string, col = (randint(0, 9), randint(0, 9))
+                result = Ship.create_ship(comp_field, (string, col))
+                
 
-                result = Ship.create_ship(comp_field, (randint(0, 9), randint(0, 9)))
+                print(string, col)
+                for i in range(len(comp_field)):
+                    for j in range(len(comp_field)):
+                        if isinstance(comp_field[i][j], Ship):
+                            comp_field[i][j] = "o"
+                print_field(comp_field)
+                print("----------------------")
+                input()
+
                 if not result[0]:
                     num_of_errors += 1
 
