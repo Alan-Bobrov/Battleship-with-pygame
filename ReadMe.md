@@ -1,6 +1,7 @@
-The tutorial on the game is in `/Battleship-with-pygame/tutorial.txt`
-Folder _**"images"**_ consist of some images like image of ship and other. 
-File _**"functions"**_ consists of functions, that we were use in this game. 
-File _**"game"**_ consist of functions, that 'create' a game. 
-File _**"classes"**_ consist of classes that we were use in game. 
-File _**"main"**_ run this game.
+`/images` - folder of all images \
+`/images.py` - loading all images as sprites
+`/game.py` - function that start the game (for more info check: `/tutorials/Tutorial To Game.md`)\
+`/num_of_ships.json` - info about count of every ships \
+`/settings.json` - setting for game (for more info check: `/tutorials/Settings Tutorial.md`)
+`/classes.py` - all classes
+
