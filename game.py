@@ -142,7 +142,7 @@ def game():
                                 sleep(0.125)
                                 print(1)
                                 # the bot chooses the place where it goes
-                                y, x = bot_ob.fire(player_comp_field) # y x
+                                y, x = bot_ob.cell_selection(player_comp_field) # y x
 
                                 # the bot makes a move on the place that he has chosen in advance
                                 player_field.synchronize(x, y)
