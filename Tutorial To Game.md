@@ -4,7 +4,7 @@ On the field only:
 2 three-deck
 1 four-deck
 
-To `create` ship just click on the field cell
+To `create` ship just click on the field cell /n
 To `continue` ship - click around existing ship
 
 You can`t to put two and more ships nearby (distant between ships is 1 cell)
