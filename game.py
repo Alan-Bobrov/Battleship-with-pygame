@@ -139,13 +139,14 @@ def game():
 
                         # if the player misses, then the bot's turn begins
                         if players_attack_result[0] == False:
-                            bot_move = (True,)
+                            bot_move = True
                             
-                            while bot_move[0]:
+                            while bot_move:
                                 sleep(0.125)
                                 print(1)
                                 # the bot chooses the place where it goes
-                                y, x = bot_ob.cell_selection(player_comp_field) # y x
+                                bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
+                                y, x = coords
 
                                 # the bot makes a move on the place that he has chosen in advance
                                 player_field.synchronize(x, y)
@@ -163,8 +164,8 @@ def game():
 
                                 if InfinityEnemyMoves == "snfsss":
                                     if player_ship_count == 0:
-                                        bot_move = (False,)
+                                        bot_move = False
                                         break   
-                                    bot_move = (True,)
+                                    bot_move = True
 
         pg.display.flip()
