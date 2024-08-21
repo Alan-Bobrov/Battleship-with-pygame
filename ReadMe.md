@@ -1,4 +1,4 @@
-The tutorial on the game is in _**/tutorial.txt**_ 
+The tutorial on the game is in /Battleship-with-pygame/tutorial.txt
 Folder _**"images"**_ consist of some images like image of ship and other. 
 File _**"functions"**_ consists of functions, that we were use in this game. 
 File _**"game"**_ consist of functions, that 'create' a game. 
