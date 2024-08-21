@@ -1,7 +1,7 @@
-On the field only:
-4 one-deck
-3 two-deck
-2 three-deck
+On the field only: \
+4 one-deck \
+3 two-deck \
+2 three-deck \
 1 four-deck
 
 To `create` ship just click on the field cell \
