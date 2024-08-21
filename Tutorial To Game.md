@@ -9,9 +9,10 @@ To continue ship - click around existing ship
 
 You can`t to put two and more ships nearby (distant between ships is 1 cell)
 
-You can't to 'break' ship like:
-    *
-* * *
+                                    *
+You can't to 'break' ship like: * * *
+
+
 
 You can `restart` game if somethink went wrong by clicking on **Restart** (Your field will clear and bot field will update)
 You can to put ship ~randomly~
