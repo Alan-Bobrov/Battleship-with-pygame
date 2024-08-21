@@ -75,6 +75,9 @@ def game():
 
         if can_go and not do_ship:
             screen.blit(GameStart, (0, 0))
+        
+        if can_go and do_ship:
+            screen.blit(RandomShipGenImg, (0, 0))
 
         player_ship_count = 0    
         bot_ship_count = 0
@@ -103,7 +106,7 @@ def game():
 
                 # player arranges ships
                 if do_ship:
-                    if False and ("first_x_coords" <= x <= "second_x_coords") and ("first_y_coords" <= y <= "second_y_coords"):
+                    if (92 <= x <= 932) and (222 <= y <= 369):
                         return_num_ships()
                         player_field = Field(108, 474)
                         player_comp_field = create_field()
