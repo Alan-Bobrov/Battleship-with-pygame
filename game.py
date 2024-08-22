@@ -111,7 +111,7 @@ def game():
 
                 # player arranges ships
                 if do_ship:
-                    if RandomShipGen or ((92 <= x <= 932) and (222 <= y <= 369)):
+                    if (92 <= x <= 932) and (222 <= y <= 369) or RandomShipGen:
                         return_num_ships()
                         player_field = Field(108, 474)
                         player_comp_field = create_field()
@@ -141,12 +141,12 @@ def game():
                         bot_field.synchronize(x, y)
                         bot_field.synchronize(x, y, bot_comp_field)
                         first_move = True
-                        
-                        # print user field for comp
+                        bot_field.pr_all(screen, print_ships=ShowEnemyShips)
+
                         if PrintCompCompField:
-                            print("Bot Field")
+                            print("Comp Field")
                             print_field(bot_comp_field)
-                            print("------------------------------------")
+                            print("--------------------------")
 
 
                         if InfinityYourMoves:
@@ -158,7 +158,6 @@ def game():
                             
                             while bot_move:
                                 sleep(0.125)
-
                                 # the bot chooses the place where it goes
                                 bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
                                 y, x = coords

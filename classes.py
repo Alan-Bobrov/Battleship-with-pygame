@@ -159,7 +159,7 @@ class Ship:
                     return False, None
                 
                 num_of_ships["1"] -= 1
-                self.start_coords = coords
+                self.start_coords = list(coords)
 
                 # update num_of_ships.json
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
@@ -207,7 +207,7 @@ class Ship:
                         column_cell.direction = (0, 1)
 
                         if (column < column_cell.start_coords[1]):
-                            column_cell.start_coords = (string, column)
+                            column_cell.start_coords[1] = column
 
                     else:
                         comp_field[string][column] = "-"
@@ -239,7 +239,7 @@ class Ship:
                         string_cell.direction = (1, 0)
 
                         if (string < string_cell.start_coords[0]):
-                            string_cell.start_coords = (string, column)
+                            string_cell.start_coords[0] = string
 
                     else:
                         comp_field[string][column] = "-"
@@ -278,10 +278,10 @@ class Ship:
 
             # sides of ship 
             for i in range(fired_cell.length):
-                if col + 1 <= 9:
+                if start_col + 1 <= 9:
                     comp_field[start_string + i][start_col + 1] = "*"
 
-                if col - 1 >= 0:
+                if start_col - 1 >= 0:
                     comp_field[start_string + i][start_col - 1] = "*"
             
             # top and end of ship
