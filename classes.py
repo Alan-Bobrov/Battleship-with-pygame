@@ -343,11 +343,6 @@ class Ship:
         comp_field[string][col] = "o"
 
         return False, None
-
-    def create_ship(comp_field, coords):
-        ship = Ship()
-        result = ship.put_ship(comp_field, coords)
-        return result
     
     def ship_gen(comp_field, num_of_ships, bot, coords):
         '''
@@ -359,20 +354,21 @@ class Ship:
 
                 if num_of_errors >= 300:
                     num_of_errors = 0
-                    comp_field = create_field()
                     num_of_ships = 0
+                    field = create_field()
                     return_num_ships()
                 
-                string, col = (randint(0, 9), randint(0, 9))
-                result = Ship.create_ship(comp_field, (string, col))
+                ship = Ship()
+                result = ship.put_ship(comp_field, (randint(0, 9), randint(0, 9)))
 
                 if not result[0]:
                     num_of_errors += 1
-
-                elif result[1] == "new":
+                
+                if result[1] == "new":
                     num_of_ships += 1
 
             return num_of_ships
+
 
         else:
             result = Ship.create_ship(comp_field, coords)
