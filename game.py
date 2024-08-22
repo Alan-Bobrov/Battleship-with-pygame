@@ -141,13 +141,13 @@ def game():
                         bot_field.synchronize(x, y)
                         bot_field.synchronize(x, y, bot_comp_field)
                         first_move = True
-                        bot_field.pr_all(screen, print_ships=ShowEnemyShips)
-
+                        
                         # print user field for comp
                         if PrintCompCompField:
                             print("Bot Field")
                             print_field(bot_comp_field)
                             print("------------------------------------")
+
 
                         if InfinityYourMoves:
                             players_attack_result = (True,)
@@ -158,24 +158,20 @@ def game():
                             
                             while bot_move:
                                 sleep(0.125)
-                                
+
                                 # the bot chooses the place where it goes
                                 bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
                                 y, x = coords
+
+                                # the bot makes a move on the place that he has chosen in advance
+                                player_field.synchronize(x, y)
+                                player_field.synchronize(x, y, player_comp_field)
 
                                 # print bot field for comp
                                 if PrintUserCompField:
                                     print("User Field")
                                     print_field(player_comp_field)
                                     print("-----------------------------------------")
-
-                                # the bot makes a move on the place that he has chosen in advance
-                                player_field.synchronize(x, y)
-                                player_field.synchronize(x, y, player_comp_field)
-
-                                screen.blit(FieldImg, (0, 0))
-                                player_field.pr_all(screen, print_ships=ShowYourShips)
-                                bot_field.pr_all(screen, print_ships=ShowEnemyShips)
                                 
                                 player_ship_count = 0
                                 for i in player_field.field:
