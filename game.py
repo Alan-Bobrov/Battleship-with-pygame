@@ -84,9 +84,6 @@ def game():
         if can_go and do_ship:
             screen.blit(RandomShipGenImg, (0, 0))
 
-        if can_go and do_ship:
-            screen.blit(RandomShipGenImg, (0, 0))
-
         player_ship_count = 0    
         bot_ship_count = 0
 
@@ -99,26 +96,22 @@ def game():
                 x, y = pg.mouse.get_pos()
 
                 # restart the game
-                if (81 <= x <= 941) and (55 <= y <= 189):
-                        player_field = Field(108, 474)
-                        bot_field = Field(596, 474)
-                        bot_comp_field = create_field()
-                        bot_field.do_ships(None, 0, True, bot_comp_field)
-                        bot_field.normal_ships_image()
-                        return_num_ships()
-                        num_of_ships = 0
-                        do_ship = True
-                        player_comp_field = create_field()
-                        first_move = False
-                        can_go = True
+                if (158 <= x <= 866) and (55 <= y <= 167):
+                    player_field = Field(108, 474)
+                    bot_field = Field(596, 474)
+                    bot_comp_field = create_field()
+                    bot_field.do_ships(None, 0, True, bot_comp_field)
+                    bot_field.normal_ships_image()
+                    return_num_ships()
+                    num_of_ships = 0
+                    do_ship = True
+                    player_comp_field = create_field()
+                    first_move = False
+                    can_go = True
 
                 # player arranges ships
                 if do_ship:
-<<<<<<< HEAD
-                    if (92 <= x <= 932) and (222 <= y <= 369):
-=======
                     if RandomShipGen or ((92 <= x <= 932) and (222 <= y <= 369)):
->>>>>>> 23060fd99ed3cd116de677efb15795b0b8b78ba2
                         return_num_ships()
                         player_field = Field(108, 474)
                         player_comp_field = create_field()
@@ -165,10 +158,7 @@ def game():
                             
                             while bot_move:
                                 sleep(0.125)
-<<<<<<< HEAD
-=======
                                 
->>>>>>> 23060fd99ed3cd116de677efb15795b0b8b78ba2
                                 # the bot chooses the place where it goes
                                 bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
                                 y, x = coords
