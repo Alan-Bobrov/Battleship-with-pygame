@@ -146,11 +146,10 @@ def game():
                         first_move = True
                         bot_field.pr_all(screen, print_ships=ShowEnemyShips)
 
-                        # print user field for comp
                         if PrintCompCompField:
-                            print("Bot Field")
+                            print("Comp Field")
                             print_field(bot_comp_field)
-                            print("------------------------------------")
+                            print("--------------------------")
 
                         if InfinityYourMoves:
                             players_attack_result = (True,)
