@@ -11,12 +11,15 @@ class Field:
     def pr_all(self, screen, print_ships=False):
         tuple_ships_images = (OneDeckShipImg, ShipContinueImg, ShipEndImg, ShipStartImg, TransformShipContinueImg, TransformShipEndImg, TransformShipStartImg)
 
-        for i in self.field:
-            for j in i:
-                for image in j.images:
-                    if print_ships:
+        if print_ships:
+            for i in self.field:
+                for j in i:
+                    for image in j.images:
                         screen.blit(image, (j.X, j.Y))
-                    else:
+        else:
+            for i in self.field:
+                for j in i:
+                    for image in j.images:
                         if image in tuple_ships_images:
                             continue    
                         else:
@@ -63,8 +66,8 @@ class Field:
                     else:
                         self.field[i][j].images[0] = OneDeckShipImg
             
-    def synchronize(self, x, y, field=None):
-        if field == None:
+    def synchronize(self, x, y, comp_field=None):
+        if comp_field == None:
             if self.field[y][x].status == "free_place":
                 self.field[y][x].status = "skip"
                 self.field[y][x].images.append(SkipImg)
@@ -74,13 +77,9 @@ class Field:
         else:
             for i in range(10):
                 for j in range(10):
-                    if field[i][j] == "*":
+                    if comp_field[i][j] == "*" and self.field[i][j].status != "skip":
                         self.field[i][j].status = "skip"
                         self.field[i][j].images.append(SkipImg)
-                    elif field[i][j] == "*":
-                        self.field[i][j].status = "hit"
-                        self.field[i][j].images.append(HitImg)
-
 
 class Ship:
     def __init__(self) -> None:
