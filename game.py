@@ -114,11 +114,7 @@ def game():
 
                 # player arranges ships
                 if do_ship:
-<<<<<<< HEAD
-                    if (92 <= x <= 932) and (222 <= y <= 369):
-=======
-                    if RandomShipGen or ((92 <= x <= 932) and (222 <= y <= 369)):
->>>>>>> 23060fd99ed3cd116de677efb15795b0b8b78ba2
+                    if (92 <= x <= 932) and (222 <= y <= 369) or RandomShipGen:
                         return_num_ships()
                         player_field = Field(108, 474)
                         player_comp_field = create_field()
@@ -165,10 +161,6 @@ def game():
                             
                             while bot_move:
                                 sleep(0.125)
-<<<<<<< HEAD
-=======
-                                
->>>>>>> 23060fd99ed3cd116de677efb15795b0b8b78ba2
                                 # the bot chooses the place where it goes
                                 bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
                                 y, x = coords
