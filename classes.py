@@ -1,4 +1,3 @@
-import pygame as pg
 from random import randint
 from functions import *
 from images import *
@@ -98,63 +97,75 @@ class Ship:
     
         string, column = coords
 
-        # check coords 
-        if isinstance(string, int) and isinstance(column, int):
-            if (string <= -1 or string >= 10) and (column <= -1 or column >= 10) or comp_field[string][column] != "-":
+        # is valid coords 
+        if isinstance(string, int) and isinstance(column, int): # is it nums (not string and other)
+
+            # is coords inside field and coords cell is free
+            if (string <= -1 or string >= 10) or (column <= -1 or column >= 10) or comp_field[string][column] != "-":
                 return False, None
         else:
             return False, None
         
         # check corners of ship
-        for i in (1, -1): 
-            for j in (1, -1):
-                try:
-                    if (0 <= string + i <= 9) and (0 <= column + j <= 9):
-                        if isinstance(comp_field[string + i][column + j], Ship):
-                            return False, None
-                except IndexError:
-                    continue
+        for str_chng in (1, -1): 
+            for col_chng in (1, -1):
+                if (0 <= string + str_chng <= 9) and (0 <= column + col_chng <= 9):
+                    if isinstance(comp_field[string + str_chng][column + col_chng], Ship):
+                        return False, None
 
         num_of_ships_around = 0
 
         # check num of ships around coords
+        '''
+                *
+              * o *
+                *
+        o - coords
+        * -checking
+        '''
         for i in (1, -1):
             
             # check cells sround ship
             try:
+                if column + i <= -1:
+                    raise IndexError
                 column_cell = comp_field[string][column + i] # there are change only column
             except:
-                if column + i >= 10:
-                    column_cell = comp_field[string][column]
+                column_cell = comp_field[string][column]
 
             try:
+                if string + i <= -1:
+                    raise IndexError
                 string_cell = comp_field[string + i][column] # there are change only string
             except:
-                if string + i >= 10:
-                    string_cell = comp_field[string][column]
+                string_cell = comp_field[string][column]
 
             # check column cell and srtring cell
             if isinstance(column_cell, Ship):
-                if column + i >= 0:
-                    num_of_ships_around += 1
-
+                num_of_ships_around += 1
 
             if isinstance(string_cell, Ship):
-                if string + i >= 0:
-                    num_of_ships_around += 1
+                num_of_ships_around += 1
 
         # create new ship
         if num_of_ships_around == 0:
             comp_field[string][column] = self
+
             with open("num_of_ships.json", "r", encoding="utf-8") as file:
                 num_of_ships = json.load(file)
+
+                # if one-deck ships is over
                 if num_of_ships["1"] <= 0:
                     comp_field[string][column] = "-"
                     return False, None
+                
                 num_of_ships["1"] -= 1
                 self.start_coords = coords
+
+                # update num_of_ships.json
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
                     json.dump(num_of_ships, file1, indent=4)
+
             return True, "new"
 
         # continue ship
@@ -165,16 +176,18 @@ class Ship:
 
                 # we will check cells around coords
                 try:
+                    if column + i <= -1:
+                        raise IndexError
                     column_cell = comp_field[string][column + i] # there are change only column
-                except IndexError:
-                    if (column + i >= 10) or (column + i <= -1):
-                        column_cell = comp_field[string][column]
+                except:
+                    column_cell = comp_field[string][column]
 
                 try:
+                    if string + i <= -1:
+                        raise IndexError
                     string_cell = comp_field[string + i][column] # there are change only string
-                except IndexError:
-                    if (string + i >= 10) or (string + i <= -1):
-                        string_cell = comp_field[string][column]
+                except:
+                    string_cell = comp_field[string][column]
 
                 
                 # if horizontal ship
@@ -184,47 +197,58 @@ class Ship:
                     if (column_cell.length + 1 == comp_field[string].count(column_cell)) and (column_cell.length + 1 <= 4):
                         column_cell.length += 1
                         column_cell.hp += 1
+
+                        # is ships with such len is accepted
                         if not update_num_of_ships(column_cell):
                             column_cell.length -= 1
                             column_cell.hp -= 1
                             comp_field[string][column] = "-"
                             return False, None
+                        
                         column_cell.direction = (0, 1)
+
                         if (column < column_cell.start_coords[1]):
                             column_cell.start_coords = (string, column)
+
                     else:
                         comp_field[string][column] = "-"
                         return False, None
+                    
                     return True, None
 
                 # if vertical ship
-                if isinstance(string_cell, Ship):
+                elif isinstance(string_cell, Ship):
+
+                    # list with all values in column
                     column_values = list()
                     for _ in range(10):
                         column_values.append(comp_field[_][column])
                     
                     comp_field[string][column] = string_cell
+
                     if (string_cell.length == column_values.count(string_cell)) and (string_cell.length + 1 <= 4):
+
                         string_cell.length += 1
                         string_cell.hp += 1
+
+                        # is ships with such len is accepted
                         if not update_num_of_ships(string_cell):
                             string_cell.length -= 1
                             string_cell.hp -= 1
                             comp_field[string][column] = "-"
+
                         string_cell.direction = (1, 0)
+
                         if (string < string_cell.start_coords[0]):
                             string_cell.start_coords = (string, column)
+
                     else:
                         comp_field[string][column] = "-"
                         return False, None
+                    
                     return True, None
 
         return False, None
-
-    def create_ship(comp_field, coords) -> tuple: # put ship on the field (only 1 segment)
-        ship = Ship()
-        result = ship.put_ship(comp_field, coords)
-        return result
     
     def death(self, comp_field, coords):
         string, col = coords
@@ -338,8 +362,10 @@ class Ship:
                     comp_field = create_field()
                     num_of_ships = 0
                     return_num_ships()
+                
+                string, col = (randint(0, 9), randint(0, 9))
+                result = Ship.create_ship(comp_field, (string, col))
 
-                result = Ship.create_ship(comp_field, (randint(0, 9), randint(0, 9)))
                 if not result[0]:
                     num_of_errors += 1
 
