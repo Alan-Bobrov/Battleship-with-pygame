@@ -355,7 +355,6 @@ class Ship:
                 if num_of_errors >= 300:
                     num_of_errors = 0
                     num_of_ships = 0
-                    field = create_field()
                     return_num_ships()
                 
                 ship = Ship()
