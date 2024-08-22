@@ -2,5 +2,8 @@
     "Show Enemy Ships": true,
     "Show Your Ships": true,
     "Infinity Your Moves": false,
-    "Infinity Enemy Moves": false
+    "Infinity Enemy Moves": false,
+    "Random Ship Generation": true,
+    "Print User Comp Field": true,
+    "Print Comp Comp Field": true
 }
