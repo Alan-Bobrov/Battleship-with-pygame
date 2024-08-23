@@ -348,7 +348,7 @@ class Ship:
         '''
         if bot:
             num_of_errors = 0
-            while num_of_ships < 10:
+            while num_of_ships <= 10:
 
                 if num_of_errors >= 300:
                     num_of_errors = 0
@@ -369,9 +369,11 @@ class Ship:
 
 
         else:
-            result = Ship.create_ship(comp_field, coords)
+            S = Ship()
+            result = S.put_ship(comp_field, coords)
             if result[1] == "new":
-                num_of_ships += 1        
+                num_of_ships += 1   
+
         return num_of_ships
 
 class Place:
