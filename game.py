@@ -50,7 +50,7 @@ def game():
     can_go = True
     bot_ob = Bot()
     bot_move = False
-    
+
     while is_game:
 
         # field print
@@ -92,6 +92,7 @@ def game():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 is_game = False
+                return_num_ships()
                 break
             
             elif (event.type == pg.MOUSEBUTTONDOWN) and (pg.mouse.get_pressed(num_buttons=3)[0]):
