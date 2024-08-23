@@ -125,10 +125,10 @@ def game():
                     else:
                         changed, x, y = change_coords(x, y, 108, 474)
                         if changed:
-                            num_of_ships = player_field.do_ships((y, x), num_of_ships, False, player_comp_field)
+                            num_of_ships, ships_segments = player_field.do_ships((y, x), num_of_ships, False, player_comp_field)
                             player_field.normal_ships_image()
 
-                        if num_of_ships == 10:
+                        if num_of_ships == 10 and ships_segments == 20:
                             # the player completes the placement of ships
                             return_num_ships()
                             do_ship = False
