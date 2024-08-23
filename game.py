@@ -157,7 +157,7 @@ def game():
                             bot_move = True
                             
                             while bot_move:
-                                sleep(0.125)
+                                sleep(0.5)
                                 # the bot chooses the place where it goes
                                 bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
                                 y, x = coords
