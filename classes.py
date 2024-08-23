@@ -342,29 +342,36 @@ class Ship:
 
         return False, None
     
-    def ship_gen(self, comp_field, num_of_ships):
+    def ship_gen(self, comp_field, num_of_ships, bot, coords):
         '''
-        function randomly put ships on the field
+        function randomly (for comp) put ships on the field OR put ship on the coords (for user)
         '''
-        # num_of_ships = 0
-        num_of_errors = 0
-        while num_of_ships <= 10:
+        if bot:
+            num_of_errors = 0
+            while num_of_ships < 10:
 
-            if num_of_errors >= 300:
-                num_of_errors = 0
-                num_of_ships = 0
-                comp_field = create_field()
-                return_num_ships()
+                if num_of_errors >= 300:
+                    num_of_errors = 0
+                    num_of_ships = 0
+                    comp_field = create_field()
+                    return_num_ships()
                 
-            ship = Ship()
-            result = ship.put_ship(comp_field, (randint(0, 9), randint(0, 9)))
+                ship = Ship()
+                result = ship.put_ship(comp_field, (randint(0, 9), randint(0, 9)))
 
-            if not result[0]:
-                num_of_errors += 1
+                if not result[0]:
+                    num_of_errors += 1
                 
+                if result[1] == "new":
+                    num_of_ships += 1
+
+            return num_of_ships
+
+
+        else:
+            result = Ship.create_ship(comp_field, coords)
             if result[1] == "new":
-                num_of_ships += 1
-
+                num_of_ships += 1        
         return num_of_ships
 
 class Place:
