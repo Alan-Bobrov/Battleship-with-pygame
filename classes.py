@@ -28,14 +28,14 @@ class Field:
     def do_ships(self, coords, num_of_ships, bot, comp_field): 
         if bot:
             return_num_ships()
-        num_of_ships = Ship.ship_gen(Ship, comp_field, 0, bot, coords)
+        num_of_ships, ships_segments = Ship.ship_gen(Ship, comp_field, num_of_ships, bot, coords)
         for i in range(len(comp_field)):
             for j in range(len(comp_field[0])):
                 if type(comp_field[i][j]) == Ship and self.field[i][j].status != "part_ship":
                     self.field[i][j].status = "part_ship"
                     self.field[i][j].images.append(ShipContinueImg)
         
-        return num_of_ships
+        return num_of_ships, ships_segments
 
     def normal_ships_image(self):
         for i in range(len(self.field)):
@@ -342,30 +342,56 @@ class Ship:
 
         return False, None
     
-    def ship_gen(self, comp_field, num_of_ships):
+    def ship_gen(self, comp_field, num_of_ships, bot, coords):
         '''
         function randomly put ships on the field
         '''
-        # num_of_ships = 0
+
         num_of_errors = 0
-        while num_of_ships <= 10:
+        ships_segments = 0
 
-            if num_of_errors >= 300:
-                num_of_errors = 0
-                num_of_ships = 0
-                comp_field = create_field()
-                return_num_ships()
-                
+        if bot:
+            
+            while num_of_ships <= 10:
+
+                if num_of_ships == 10:
+                    for i in range(len(comp_field)):
+                        for j in range(len(comp_field)):
+                            if isinstance(comp_field[i][j], Ship):
+                                ships_segments += 1
+
+                    if ships_segments == 20:
+                        break 
+
+                if num_of_errors >= 300:
+                    return_num_ships()
+                    num_of_errors = 0
+                    num_of_ships = 0
+                    comp_field = create_field()
+                     
+                ship = Ship()
+                result = ship.put_ship(comp_field, (randint(0, 9), randint(0, 9)))
+
+                if not result[0]:
+                    num_of_errors += 1
+                    
+                if result[1] == "new":
+                    num_of_ships += 1
+        else:
+
             ship = Ship()
-            result = ship.put_ship(comp_field, (randint(0, 9), randint(0, 9)))
+            result = ship.put_ship(comp_field, coords)
 
-            if not result[0]:
-                num_of_errors += 1
-                
             if result[1] == "new":
                 num_of_ships += 1
+                
+            if num_of_ships == 10:
+                for i in range(len(comp_field)):
+                    for j in range(len(comp_field)):
+                        if isinstance(comp_field[i][j], Ship):
+                            ships_segments += 1
 
-        return num_of_ships
+        return num_of_ships, ships_segments
 
 class Place:
     def __init__(self, X, Y) -> None:
