@@ -50,6 +50,7 @@ def game():
     can_go = True
     bot_ob = Bot()
     bot_move = False
+    
     while is_game:
 
         # field print
@@ -144,7 +145,6 @@ def game():
                             bot_field.synchronize(x, y)
                             bot_field.synchronize(x, y, bot_comp_field)
                             first_move = True
-                            bot_field.pr_all(screen, print_ships=ShowEnemyShips)
 
                             if PrintCompCompField:
                                 print("Comp Field")
