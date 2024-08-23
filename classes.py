@@ -346,9 +346,21 @@ class Ship:
         '''
         function randomly (for comp) put ships on the field OR put ship on the coords (for user)
         '''
+<<<<<<< HEAD
         if bot:
             num_of_errors = 0
             while num_of_ships < 10:
+=======
+<<<<<<< HEAD
+        if bot:
+            num_of_errors = 0
+            while num_of_ships <= 10:
+=======
+        # num_of_ships = 0
+        num_of_errors = 0
+        while num_of_ships <= 10:
+>>>>>>> a740cc1b57e8d484dc512f004441b837e52141dc
+>>>>>>> ca3659eaf70735cfee412ad084f42f48c4d60ce8
 
                 if num_of_errors >= 300:
                     num_of_errors = 0
@@ -362,6 +374,10 @@ class Ship:
                 if not result[0]:
                     num_of_errors += 1
                 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> ca3659eaf70735cfee412ad084f42f48c4d60ce8
                 if result[1] == "new":
                     num_of_ships += 1
 
@@ -369,9 +385,21 @@ class Ship:
 
 
         else:
+<<<<<<< HEAD
             result = Ship.create_ship(comp_field, coords)
             if result[1] == "new":
                 num_of_ships += 1        
+=======
+            S = Ship()
+            result = S.put_ship(comp_field, coords)
+            if result[1] == "new":
+                num_of_ships += 1   
+=======
+            if result[1] == "new":
+                num_of_ships += 1
+>>>>>>> a740cc1b57e8d484dc512f004441b837e52141dc
+
+>>>>>>> ca3659eaf70735cfee412ad084f42f48c4d60ce8
         return num_of_ships
 
 class Place:
