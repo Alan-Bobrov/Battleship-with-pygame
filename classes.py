@@ -299,7 +299,7 @@ class Ship:
 
         if bot:
             num_of_errors = 0
-            while num_of_ships < 10:
+            while num_of_ships <= 10:
 
                 if num_of_errors >= 300:
                     num_of_errors = 0
