@@ -28,7 +28,7 @@ class Field:
     def do_ships(self, coords, num_of_ships, bot, comp_field): 
         if bot:
             return_num_ships()
-        num_of_ships = Ship.ship_gen(Ship, comp_field, num_of_ships, bot, coords)
+        num_of_ships = Ship.ship_gen(Ship, comp_field, 0, bot, coords)
         for i in range(len(comp_field)):
             for j in range(len(comp_field[0])):
                 if type(comp_field[i][j]) == Ship and self.field[i][j].status != "part_ship":
@@ -120,7 +120,7 @@ class Ship:
               * o *
                 *
         o - coords
-        * -checking
+        * - checking
         '''
         for i in (1, -1):
             
@@ -235,6 +235,7 @@ class Ship:
                             string_cell.length -= 1
                             string_cell.hp -= 1
                             comp_field[string][column] = "-"
+                            return False, None
 
                         string_cell.direction = (1, 0)
 
@@ -267,17 +268,17 @@ class Ship:
              
             return None
 
-        start_string = fired_cell.start_coords[0] # 6
-        start_col = fired_cell.start_coords[1] # 0
+        start_string = fired_cell.start_coords[0]
+        start_col = fired_cell.start_coords[1]
 
-        str_dire = fired_cell.direction[0] # 1
-        col_dire = fired_cell.direction[1] # 0
+        str_dire = fired_cell.direction[0]
+        col_dire = fired_cell.direction[1]
 
         # vertical ship death
         if str_dire:
 
             # sides of ship 
-            for i in range(fired_cell.length): # 0, 1, 2
+            for i in range(fired_cell.length): # 0, 1
                 if start_col + 1 <= 9:
                     comp_field[start_string + i][start_col + 1] = "*"
 
@@ -285,8 +286,8 @@ class Ship:
                     comp_field[start_string + i][start_col - 1] = "*"
             
             # top and end of ship
-            if 0 <= start_string - str_dire <= 9:
-                comp_field[start_string - str_dire][start_col] = "*"
+            if 0 <= start_string - 1 <= 9:
+                comp_field[start_string - 1][start_col] = "*"
 
             if 0 <= start_string + fired_cell.length <= 9:
                 comp_field[start_string + fired_cell.length][start_col] = "*"
@@ -297,21 +298,20 @@ class Ship:
                     if (0 <= (start_string + i) <= 9) and (0 <= (start_col + j) <= 9):
                         comp_field[start_string + i][start_col + j] = "*"
 
-            
         # horizontal ship death
         elif col_dire:
 
             # sides of ship
-            for i in range(fired_cell.length):
-                if string + 1 <= 9:
+            for i in range(fired_cell.length): # 0, 1
+                if start_string + 1 <= 9:
                     comp_field[start_string + 1][start_col + i] = "*"
                 
-                if string - 1 >= 0:
+                if start_string - 1 >= 0:
                     comp_field[start_string - 1][start_col + i] = "*"
 
             # top and end of ship
-            if 0 <= start_col - col_dire <= 9:
-                comp_field[start_string][start_col - col_dire] = "*"
+            if 0 <= start_col - 1 <= 9:
+                comp_field[start_string][start_col - 1] = "*"
             
             if 0 <= start_col + fired_cell.length <= 9:
                 comp_field[start_string][start_col + fired_cell.length] = "*"
@@ -323,7 +323,7 @@ class Ship:
                         comp_field[start_string + j][start_col + i] = "*"  
 
     def fire(self, comp_field, coords) -> tuple: # tuple - (is hit, Death/Hit/None)
-        string, col = coords
+        string, col = coords # 4 9
         fired_cell = comp_field[string][col]
 
         if isinstance(fired_cell, Ship):
