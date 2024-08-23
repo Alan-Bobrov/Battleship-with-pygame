@@ -188,7 +188,6 @@ class Ship:
                 except:
                     string_cell = comp_field[string][column]
 
-                
                 # if horizontal ship
                 if isinstance(column_cell, Ship):
                     comp_field[string][column] = column_cell
@@ -384,7 +383,7 @@ class Ship:
 
             if result[1] == "new":
                 num_of_ships += 1
-                
+
             if num_of_ships == 10:
                 for i in range(len(comp_field)):
                     for j in range(len(comp_field)):
