@@ -319,7 +319,8 @@ class Ship:
             return num_of_ships
 
         else:
-            result = Ship.create_ship(comp_field, coords)
+            S = Ship()
+            result = S.put_ship(comp_field, coords)
             if result[1] == "new":
                 num_of_ships += 1        
         return num_of_ships
