@@ -28,7 +28,7 @@ class Field:
     def do_ships(self, coords, num_of_ships, bot, comp_field): 
         if bot:
             return_num_ships()
-        num_of_ships = Ship.ship_gen(comp_field, num_of_ships, bot, coords)
+        num_of_ships = Ship.ship_gen(Ship, comp_field, num_of_ships, bot, coords)
         for i in range(len(comp_field)):
             for j in range(len(comp_field[0])):
                 if type(comp_field[i][j]) == Ship and self.field[i][j].status != "part_ship":
@@ -343,7 +343,7 @@ class Ship:
 
         return False, None
     
-    def ship_gen(comp_field, num_of_ships, bot, coords):
+    def ship_gen(self, comp_field, num_of_ships, bot, coords):
         '''
         function randomly (for comp) put ships on the field OR put ship on the coords (for user)
         '''
