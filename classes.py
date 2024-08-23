@@ -344,8 +344,9 @@ class Ship:
     
     def ship_gen(self, comp_field, num_of_ships):
         '''
-        function randomly (for comp) put ships on the field OR put ship on the coords (for user)
+        function randomly put ships on the field
         '''
+        # num_of_ships = 0
         num_of_errors = 0
         while num_of_ships < 10:
 
