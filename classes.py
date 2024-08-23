@@ -159,7 +159,7 @@ class Ship:
                     return False, None
                 
                 num_of_ships["1"] -= 1
-                self.start_coords = list(coords)
+                self.start_coords = coords
 
                 # update num_of_ships.json
                 with open("num_of_ships.json", "w", encoding="utf-8") as file1:
@@ -207,7 +207,7 @@ class Ship:
                         column_cell.direction = (0, 1)
 
                         if (column < column_cell.start_coords[1]):
-                            column_cell.start_coords[1] = column
+                            column_cell.start_coords = (string, column)
 
                     else:
                         comp_field[string][column] = "-"
@@ -239,7 +239,7 @@ class Ship:
                         string_cell.direction = (1, 0)
 
                         if (string < string_cell.start_coords[0]):
-                            string_cell.start_coords[0] = string
+                            string_cell.start_coords = (string, column)
 
                     else:
                         comp_field[string][column] = "-"
@@ -267,17 +267,17 @@ class Ship:
              
             return None
 
-        start_string = fired_cell.start_coords[0]
-        start_col = fired_cell.start_coords[1]
+        start_string = fired_cell.start_coords[0] # 6
+        start_col = fired_cell.start_coords[1] # 0
 
-        str_dire = fired_cell.direction[0]
-        col_dire = fired_cell.direction[1]
+        str_dire = fired_cell.direction[0] # 1
+        col_dire = fired_cell.direction[1] # 0
 
         # vertical ship death
         if str_dire:
 
             # sides of ship 
-            for i in range(fired_cell.length):
+            for i in range(fired_cell.length): # 0, 1, 2
                 if start_col + 1 <= 9:
                     comp_field[start_string + i][start_col + 1] = "*"
 
@@ -285,7 +285,6 @@ class Ship:
                     comp_field[start_string + i][start_col - 1] = "*"
             
             # top and end of ship
-            # idk why '+' -------\/
             if 0 <= start_string - str_dire <= 9:
                 comp_field[start_string - str_dire][start_col] = "*"
 
@@ -354,6 +353,7 @@ class Ship:
                 if num_of_errors >= 300:
                     num_of_errors = 0
                     num_of_ships = 0
+                    comp_field = create_field()
                     return_num_ships()
                 
                 ship = Ship()
