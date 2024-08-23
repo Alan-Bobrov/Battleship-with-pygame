@@ -346,9 +346,15 @@ class Ship:
         '''
         function randomly put ships on the field
         '''
+<<<<<<< Updated upstream
         if bot:
             num_of_errors = 0
             while num_of_ships <= 10:
+=======
+        # num_of_ships = 0
+        num_of_errors = 0
+        while num_of_ships <= 10:
+>>>>>>> Stashed changes
 
                 if num_of_errors >= 300:
                     num_of_errors = 0
@@ -362,6 +368,7 @@ class Ship:
                 if not result[0]:
                     num_of_errors += 1
                 
+<<<<<<< Updated upstream
                     if result[1] == "new":
                         num_of_ships += 1
 
@@ -373,6 +380,10 @@ class Ship:
             result = S.put_ship(comp_field, coords)
             if result[1] == "new":
                 num_of_ships += 1   
+=======
+            if result[1] == "new":
+                num_of_ships += 1
+>>>>>>> Stashed changes
 
         return num_of_ships
 
