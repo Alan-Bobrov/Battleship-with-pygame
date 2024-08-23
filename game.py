@@ -20,7 +20,6 @@ def game():
     bot_field = Field(596, 474)
 
     # bot arranges ships
-    return_num_ships()
     bot_comp_field = create_field()
     bot_field.do_ships(None, 0, True, bot_comp_field)
     bot_field.normal_ships_image()
@@ -28,6 +27,7 @@ def game():
 
     screen = pg.display.set_mode((1024, 900))
     screen.fill((255, 255, 255))
+
     # import values of settings
     with open("settings.json", "r", encoding="utf-8") as settings:
         settings = json.load(settings)
