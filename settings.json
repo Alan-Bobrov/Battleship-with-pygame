@@ -3,7 +3,7 @@
     "Show Your Ships": true,
     "Infinity Your Moves": false,
     "Infinity Enemy Moves": false,
-    "Random Ship Generation": true,
+    "Random Ship Generation": false,
     "Print User Comp Field": true,
     "Print Comp Comp Field": true
 }
