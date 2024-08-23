@@ -136,9 +136,7 @@ def game():
                 elif can_go:
                     changed, x, y = change_coords(x, y, 598, 476)
                     if changed and bot_move == False: 
-                        if bot_field.field[y][x].status not in ("free_place", "part_ship"):
-                            continue
-                        else:
+                        if bot_field.field[y][x].status in ("free_place", "part_ship"):
                             s = Ship()
 
                             # the player makes a move
