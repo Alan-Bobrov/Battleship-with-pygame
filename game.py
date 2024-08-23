@@ -49,6 +49,7 @@ def game():
     first_move = False
     can_go = True
     bot_ob = Bot()
+    bot_move = False
     while is_game:
 
         # field print
@@ -132,56 +133,55 @@ def game():
 
                 elif can_go:
                     changed, x, y = change_coords(x, y, 598, 476)
-                    if changed and bot_field.field[y][x].status in ("free_place", "part_ship"):
+                    if changed and bot_move == False: 
+                        if bot_field.field[y][x].status not in ("free_place", "part_ship"):
+                            continue
+                        else:
+                            s = Ship()
 
-                        s = Ship()
+                            # the player makes a move
+                            players_attack_result = s.fire(bot_comp_field, (y, x))
+                            bot_field.synchronize(x, y)
+                            bot_field.synchronize(x, y, bot_comp_field)
+                            first_move = True
+                            bot_field.pr_all(screen, print_ships=ShowEnemyShips)
 
-                        # the player makes a move
-                        players_attack_result = s.fire(bot_comp_field, (y, x))
-                        bot_field.synchronize(x, y)
-                        bot_field.synchronize(x, y, bot_comp_field)
-                        first_move = True
-                        bot_field.pr_all(screen, print_ships=ShowEnemyShips)
+                            if PrintCompCompField:
+                                print("Comp Field")
+                                print_field(bot_comp_field)
+                                print("--------------------------")
 
-                        if PrintCompCompField:
-                            print("Comp Field")
-                            print_field(bot_comp_field)
-                            print("--------------------------")
+                            if InfinityYourMoves:
+                                players_attack_result = (True,)
 
 
-                        if InfinityYourMoves:
-                            players_attack_result = (True,)
+                    # if the player misses, then the bot's turn begins
+                    if changed and players_attack_result[0] == False:
+                        sleep(0.125)
+                        # the bot chooses the place where it goes
+                        bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
+                        y, x = coords
 
-                        # if the player misses, then the bot's turn begins
-                        if players_attack_result[0] == False:
-                            bot_move = True
-                            
-                            while bot_move:
-                                sleep(0.125)
-                                # the bot chooses the place where it goes
-                                bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
-                                y, x = coords
+                        # the bot makes a move on the place that he has chosen in advance
+                        player_field.synchronize(x, y)
+                        player_field.synchronize(x, y, player_comp_field)
 
-                                # the bot makes a move on the place that he has chosen in advance
-                                player_field.synchronize(x, y)
-                                player_field.synchronize(x, y, player_comp_field)
-
-                                # print bot field for comp
-                                if PrintUserCompField:
-                                    print("User Field")
-                                    print_field(player_comp_field)
-                                    print("-----------------------------------------")
+                        # print bot field for comp
+                        if PrintUserCompField:
+                            print("User Field")
+                            print_field(player_comp_field)
+                            print("-----------------------------------------")
                                 
-                                player_ship_count = 0
-                                for i in player_field.field:
-                                    for j in i:
-                                        if j.status == "part_ship":
-                                            player_ship_count += 1
+                        player_ship_count = 0
+                        for i in player_field.field:
+                            for j in i:
+                                if j.status == "part_ship":
+                                    player_ship_count += 1
 
-                                if InfinityEnemyMoves == "snfsss":
-                                    if player_ship_count == 0:
-                                        bot_move = False
-                                        break   
-                                    bot_move = True
+                        if InfinityEnemyMoves == "snfsss":
+                            if player_ship_count == 0:
+                                bot_move = False
+                                break   
+                            bot_move = True
 
         pg.display.flip()
