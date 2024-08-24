@@ -184,3 +184,7 @@ def game():
                             bot_move = True
 
         pg.display.flip()
+
+#код для фоновой музыки
+#pg.mixer.music.load("путь к фоновой музыке")
+#pg.mixer.music.play(loops=-1)
