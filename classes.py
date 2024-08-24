@@ -351,7 +351,6 @@ class Ship:
         count_trash = 0
 
         if bot:
-            print("----------------------------")
             while num_of_ships <= 10:
 
                 if num_of_errors >= 300:
@@ -371,7 +370,6 @@ class Ship:
                     
                 if result[1] == "new":
                     num_of_ships += 1
-                    print(8)
                     
                 if num_of_ships == 10:
                     for i in range(len(comp_field)):
@@ -381,7 +379,6 @@ class Ship:
 
                     if ships_segments == 20:
                         break 
-            print("----------------------------")
             print(count_trash)
             
         else:
