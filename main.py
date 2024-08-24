@@ -1,3 +1,3 @@
-from game import game
+from game import BattleShip
 
-game()
+BattleShip()
