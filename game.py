@@ -9,14 +9,14 @@ import pygame as pg
 # our files
 from classes import *
 from functions import *
-from images import *
-from settings import *
+from loads.images import *
+from loads.settings import *
 
 from time import sleep
 import subprocess
 import sys
 from threading import Thread
-from settings import *
+from loads.settings import *
 
 def BattleShip():
     def game():
