@@ -158,6 +158,9 @@ def BattleShip():
                                         elif players_attack_result[1] == "Death":
                                             PlaySound("Death")
 
+                                    else:
+                                        PlaySound("Skip")
+
                                 if PrintCompCompField:
                                     print("Comp Field")
                                     print_field(bot_comp_field)
@@ -183,7 +186,13 @@ def BattleShip():
                             if Sounds:
                                 if bot_move:
                                     if result_of_fire == "Death":
-                                        PlaySound("AllyDeath")
+                                        PlaySound("Death")
+                                    
+                                    elif result_of_fire == "Hit":
+                                        PlaySound("Hit")
+                                        
+                                else:
+                                    PlaySound("Skip")
 
                             # print bot field for comp
                             if PrintUserCompField:
