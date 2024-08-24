@@ -42,6 +42,13 @@ def PlaySound(SoundName: str):
     pg.mixer.music.load(full_name)
     pg.mixer.music.play(loops=1)
 
+def PlayMusic(MusicName: str):
+    MusicName = MusicName.strip()
+    full_name = "music/" + MusicName + ".mp3"
+    pg.mixer.music.load(full_name)
+    pg.mixer.music.set_volume(0.2)
+    pg.mixer.music.play(loops=1, fade_ms=500)
+
 def change_coords(x, y, first_x, first_y): # 889 577
     count = 0
     new_x, new_y = 0, 0
