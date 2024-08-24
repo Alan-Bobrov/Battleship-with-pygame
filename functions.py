@@ -1,5 +1,5 @@
 import pygame as pg
-from images import *
+from loads.images import *
 import json
 
 def return_num_ships():
