@@ -36,6 +36,12 @@ def update_num_of_ships(cell):
             
     return True
 
+def PlaySound(SoundName: str):
+    SoundName = SoundName.strip()
+    full_name = "sounds/" + SoundName + ".wav"
+    pg.mixer.music.load(full_name)
+    pg.mixer.music.play(loops=1)
+
 def change_coords(x, y, first_x, first_y): # 889 577
     count = 0
     new_x, new_y = 0, 0
