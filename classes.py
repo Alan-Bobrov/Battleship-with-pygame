@@ -1,6 +1,6 @@
 from random import randint
 from functions import *
-from images import *
+from loads.images import *
 import json
 
 class Field:
