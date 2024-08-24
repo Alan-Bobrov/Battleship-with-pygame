@@ -121,6 +121,8 @@ def game():
                         player_field.do_ships(None, 0, True, player_comp_field)
                         player_field.normal_ships_image()
                         do_ship = False
+                        pg.mixer.music.load("sounds/GameStart.wav")
+                        pg.mixer.music.play(loops=1)
 
                     else:
                         changed, x, y = change_coords(x, y, 108, 474)
@@ -132,6 +134,8 @@ def game():
                             # the player completes the placement of ships
                             return_num_ships()
                             do_ship = False
+                            pg.mixer.music.load("sounds/GameStart.wav")
+                            pg.mixer.music.play(loops=1)
 
                 elif can_go:
                     changed, x, y = change_coords(x, y, 598, 476)
