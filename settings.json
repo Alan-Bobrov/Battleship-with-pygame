@@ -5,5 +5,7 @@
     "Infinity Enemy Moves": false,
     "Random Ship Generation": false,
     "Print User Comp Field": false,
-    "Print Comp Comp Field": false
+    "Print Comp Comp Field": false,
+    "Sounds": false,
+    "Music": false
 }
