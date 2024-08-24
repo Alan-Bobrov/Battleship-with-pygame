@@ -6,6 +6,6 @@
     "Random Ship Generation": true,
     "Print User Comp Field": true,
     "Print Comp Comp Field": true,
-    "Sounds": false,
-    "Music": false
+    "Sounds": true,
+    "Music": true
 }
