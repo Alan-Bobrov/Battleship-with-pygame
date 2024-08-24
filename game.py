@@ -20,6 +20,7 @@ from settings import *
 
 def BattleShip():
     def game():
+        pg.mixer.pre_init(44100, -16, 1, 512)
         pg.init()
 
         player_field = Field(108, 474)
@@ -215,9 +216,3 @@ def BattleShip():
 
     else:
         game()
-    
-BattleShip()
-
-#код для музыки
-#pg.mixer.music.load("путь к фоновой музыке")
-#pg.mixer.music.play(loops=-1) если мы ставим в loops=-1, то звук будет воспроизводиться вечно, если ставим loops=1, то звук будет воиспродиться 1 раз, если 2, то 2 раза и т.д.
