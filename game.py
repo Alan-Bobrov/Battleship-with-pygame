@@ -149,6 +149,14 @@ def game():
                             bot_field.synchronize(x, y, bot_comp_field)
                             first_move = True
 
+                            if players_attack_result[0]:
+                                if players_attack_result[1] == "Hit":
+                                    pg.mixer.music.load("sounds/Hit.wav")
+                                    pg.mixer.music.play(loops=1)
+                                elif players_attack_result[1] == "Death":
+                                    pg.mixer.music.load("sounds/Death.wav")
+                                    pg.mixer.music.play(loops=1)
+
                             if PrintCompCompField:
                                 print("Comp Field")
                                 print_field(bot_comp_field)
