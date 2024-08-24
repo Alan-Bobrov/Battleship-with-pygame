@@ -121,6 +121,8 @@ def game():
                         player_field.do_ships(None, 0, True, player_comp_field)
                         player_field.normal_ships_image()
                         do_ship = False
+                        pg.mixer.music.load("sounds/GameStart.wav")
+                        pg.mixer.music.play(loops=1)
 
                     else:
                         changed, x, y = change_coords(x, y, 108, 474)
@@ -132,6 +134,8 @@ def game():
                             # the player completes the placement of ships
                             return_num_ships()
                             do_ship = False
+                            pg.mixer.music.load("sounds/GameStart.wav")
+                            pg.mixer.music.play(loops=1)
 
                 elif can_go:
                     changed, x, y = change_coords(x, y, 598, 476)
@@ -145,6 +149,14 @@ def game():
                             bot_field.synchronize(x, y, bot_comp_field)
                             first_move = True
 
+                            if players_attack_result[0]:
+                                if players_attack_result[1] == "Hit":
+                                    pg.mixer.music.load("sounds/Hit.wav")
+                                    pg.mixer.music.play(loops=1)
+                                elif players_attack_result[1] == "Death":
+                                    pg.mixer.music.load("sounds/Death.wav")
+                                    pg.mixer.music.play(loops=1)
+
                             if PrintCompCompField:
                                 print("Comp Field")
                                 print_field(bot_comp_field)
@@ -152,6 +164,8 @@ def game():
 
                             if InfinityYourMoves:
                                 players_attack_result = (True,)
+                        else:
+                            players_attack_result = (True,)
 
 
                     # if the player misses, then the bot's turn begins
@@ -185,6 +199,6 @@ def game():
 
         pg.display.flip()
 
-#код для фоновой музыки
+#код для музыки
 #pg.mixer.music.load("путь к фоновой музыке")
-#pg.mixer.music.play(loops=-1)
+#pg.mixer.music.play(loops=-1) если мы ставим в loops=-1, то звук будет воспроизводиться вечно, если ставим loops=1, то звук будет воиспродиться 1 раз, если 2, то 2 раза и т.д.
