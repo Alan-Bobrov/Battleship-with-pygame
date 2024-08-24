@@ -39,6 +39,8 @@ def game():
         RandomShipGen = settings["Random Ship Generation"]
         PrintUserCompField = settings["Print User Comp Field"]
         PrintCompCompField = settings["Print Comp Comp Field"]
+        Sounds = settings["Sounds"]
+        Music = settings["Music"]
     
 
 
@@ -76,13 +78,17 @@ def game():
             # the message "You lose!" appears here
             screen.blit(YouLoseImg, (0, 0))
             can_go = False
-            PlaySound("Lose")
+
+            if Sounds:
+                PlaySound("Lose")
 
         if  bot_ship_count == 0 and first_move:
             # the message "You win!" appears here
             screen.blit(YouWinImg, (0, 0))
             can_go = False
-            PlaySound("Win")
+
+            if Sounds:
+                PlaySound("Win")
 
         if can_go and not do_ship:
             screen.blit(GameStart, (0, 0))
@@ -125,7 +131,9 @@ def game():
                         player_field.do_ships(None, 0, True, player_comp_field)
                         player_field.normal_ships_image()
                         do_ship = False
-                        PlaySound("GameStart")
+
+                        if Sounds:
+                            PlaySound("GameStart")
 
                     else:
                         changed, x, y = change_coords(x, y, 108, 474)
@@ -137,7 +145,9 @@ def game():
                             # the player completes the placement of ships
                             return_num_ships()
                             do_ship = False
-                            PlaySound("GameStart")
+
+                            if Sounds:
+                                PlaySound("GameStart")
 
                 elif can_go:
                     changed, x, y = change_coords(x, y, 598, 476)
@@ -151,11 +161,12 @@ def game():
                             bot_field.synchronize(x, y, bot_comp_field)
                             first_move = True
 
-                            if players_attack_result[0]:
-                                if players_attack_result[1] == "Hit":
-                                    PlaySound("Hit")
-                                elif players_attack_result[1] == "Death":
-                                    PlaySound("Death")
+                            if Sounds:
+                                if players_attack_result[0]:
+                                    if players_attack_result[1] == "Hit":
+                                        PlaySound("Hit")
+                                    elif players_attack_result[1] == "Death":
+                                        PlaySound("Death")
 
                             if PrintCompCompField:
                                 print("Comp Field")
@@ -179,9 +190,10 @@ def game():
                         player_field.synchronize(x, y)
                         player_field.synchronize(x, y, player_comp_field)
                         
-                        if bot_move:
-                            if result_of_fire == "Death":
-                                PlaySound("AllyDeath")
+                        if Sounds:
+                            if bot_move:
+                                if result_of_fire == "Death":
+                                    PlaySound("AllyDeath")
 
                         # print bot field for comp
                         if PrintUserCompField:
