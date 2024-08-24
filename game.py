@@ -5,16 +5,21 @@ except:
     pass
 
 import pygame as pg
+
+# our files
 from classes import *
 from functions import *
 from images import *
+from settings import *
+
 from time import sleep
 import subprocess
 import sys
-import asyncio
+from threading import Thread
+from settings import *
 
 def BattleShip():
-    async def game():
+    def game():
         pg.init()
 
         player_field = Field(108, 474)
@@ -28,22 +33,6 @@ def BattleShip():
 
         screen = pg.display.set_mode((1024, 900))
         screen.fill((255, 255, 255))
-
-        # import values of settings
-        with open("settings.json", "r", encoding="utf-8") as settings:
-            settings = json.load(settings)
-
-            ShowEnemyShips = settings["Show Enemy Ships"]
-            ShowYourShips = settings["Show Your Ships"]
-            InfinityYourMoves = settings["Infinity Your Moves"]
-            InfinityEnemyMoves = settings["Infinity Enemy Moves"]
-            RandomShipGen = settings["Random Ship Generation"]
-            PrintUserCompField = settings["Print User Comp Field"]
-            PrintCompCompField = settings["Print Comp Comp Field"]
-            Sounds = settings["Sounds"]
-            Music = settings["Music"]
-        
-
 
         is_game = True
         num_of_ships = 0 # number of ships the player has placed
@@ -215,23 +204,18 @@ def BattleShip():
                                 bot_move = True
 
             pg.display.flip()
+
+    if IsMusic:
+        def Music():
+            pg.init()
+            PlayMusic("Base")
         
-        try:
-            game()
-        except:
-            pass
-    
-    async def Music():
-        pass
-    
-    try:
-        asyncio.run(game())
-        asyncio.run(Music())
-    except:
-        pass
+        Thread(target=game).start()
+        Thread(target=Music).start()
 
+    else:
+        game()
     
-
 BattleShip()
 
 #код для музыки
