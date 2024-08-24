@@ -39,8 +39,8 @@ def update_num_of_ships(cell):
 def PlaySound(SoundName: str):
     SoundName = SoundName.strip()
     full_name = "sounds/" + SoundName + ".wav"
-    pg.mixer.music.load(full_name)
-    pg.mixer.music.play(loops=1)
+    sound = pg.mixer.Sound(full_name)
+    sound.play()
 
 def PlayMusic(MusicName: str):
     MusicName = MusicName.strip()
