@@ -20,7 +20,6 @@ from settings import *
 
 def BattleShip():
     def game():
-        pg.mixer.pre_init(44100, -16, 1, 512)
         pg.init()
 
         player_field = Field(108, 474)
