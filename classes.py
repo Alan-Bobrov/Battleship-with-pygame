@@ -348,24 +348,19 @@ class Ship:
 
         num_of_errors = 0
         ships_segments = 0
+        count_trash = 0
 
         if bot:
-            
+            print("----------------------------")
             while num_of_ships <= 10:
 
-                if num_of_ships == 10:
-                    for i in range(len(comp_field)):
-                        for j in range(len(comp_field)):
-                            if isinstance(comp_field[i][j], Ship):
-                                ships_segments += 1
-
-                    if ships_segments == 20:
-                        break 
-
                 if num_of_errors >= 300:
+                    print(0)
+                    count_trash += 1
                     return_num_ships()
                     num_of_errors = 0
                     num_of_ships = 0
+                    ships_segments = 0
                     comp_field = create_field()
                      
                 ship = Ship()
@@ -377,6 +372,18 @@ class Ship:
                 if result[1] == "new":
                     num_of_ships += 1
                     print(8)
+                    
+                if num_of_ships == 10:
+                    for i in range(len(comp_field)):
+                        for j in range(len(comp_field)):
+                            if isinstance(comp_field[i][j], Ship):
+                                ships_segments += 1
+
+                    if ships_segments == 20:
+                        break 
+            print("----------------------------")
+            print(count_trash)
+            
         else:
 
             ship = Ship()
