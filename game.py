@@ -39,6 +39,8 @@ def game():
         RandomShipGen = settings["Random Ship Generation"]
         PrintUserCompField = settings["Print User Comp Field"]
         PrintCompCompField = settings["Print Comp Comp Field"]
+    
+
 
     is_game = True
     num_of_ships = 0 # number of ships the player has placed
@@ -74,11 +76,13 @@ def game():
             # the message "You lose!" appears here
             screen.blit(YouLoseImg, (0, 0))
             can_go = False
+            PlaySound("Lose")
 
-        if  bot_ship_count == 0  and first_move:
+        if  bot_ship_count == 0 and first_move:
             # the message "You win!" appears here
             screen.blit(YouWinImg, (0, 0))
             can_go = False
+            PlaySound("Win")
 
         if can_go and not do_ship:
             screen.blit(GameStart, (0, 0))
@@ -121,8 +125,7 @@ def game():
                         player_field.do_ships(None, 0, True, player_comp_field)
                         player_field.normal_ships_image()
                         do_ship = False
-                        pg.mixer.music.load("sounds/GameStart.wav")
-                        pg.mixer.music.play(loops=1)
+                        PlaySound("GameStart")
 
                     else:
                         changed, x, y = change_coords(x, y, 108, 474)
@@ -134,8 +137,7 @@ def game():
                             # the player completes the placement of ships
                             return_num_ships()
                             do_ship = False
-                            pg.mixer.music.load("sounds/GameStart.wav")
-                            pg.mixer.music.play(loops=1)
+                            PlaySound("GameStart")
 
                 elif can_go:
                     changed, x, y = change_coords(x, y, 598, 476)
@@ -151,11 +153,9 @@ def game():
 
                             if players_attack_result[0]:
                                 if players_attack_result[1] == "Hit":
-                                    pg.mixer.music.load("sounds/Hit.wav")
-                                    pg.mixer.music.play(loops=1)
+                                    PlaySound("Hit")
                                 elif players_attack_result[1] == "Death":
-                                    pg.mixer.music.load("sounds/Death.wav")
-                                    pg.mixer.music.play(loops=1)
+                                    PlaySound("Death")
 
                             if PrintCompCompField:
                                 print("Comp Field")
@@ -172,12 +172,16 @@ def game():
                     if changed and players_attack_result[0] == False:
                         sleep(0.125)
                         # the bot chooses the place where it goes
-                        bot_move, coords = bot_ob.cell_selection(player_comp_field) # y x
+                        bot_move, coords, result_of_fire = bot_ob.cell_selection(player_comp_field) # y x
                         y, x = coords
 
                         # the bot makes a move on the place that he has chosen in advance
                         player_field.synchronize(x, y)
                         player_field.synchronize(x, y, player_comp_field)
+                        
+                        if bot_move:
+                            if result_of_fire == "Death":
+                                PlaySound("AllyDeath")
 
                         # print bot field for comp
                         if PrintUserCompField:
