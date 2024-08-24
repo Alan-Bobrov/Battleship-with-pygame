@@ -376,6 +376,7 @@ class Ship:
                     
                 if result[1] == "new":
                     num_of_ships += 1
+                    print(8)
         else:
 
             ship = Ship()
@@ -487,7 +488,7 @@ class Bot:
             if result_of_fire == "Death":
                 self.last_hits = list()
                 self.changes = tuple()
-                return is_hit, coords
+                return is_hit, coords, result_of_fire
             
             self.last_hits.insert(0, (coords, result_of_fire))
             self.last_hits.sort()
@@ -499,4 +500,4 @@ class Bot:
 
                 self.changes = (abs(first_str - second_str), abs(first_col - second_col))
 
-        return is_hit, coords
+        return is_hit, coords, result_of_fire
