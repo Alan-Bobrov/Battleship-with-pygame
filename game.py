@@ -164,6 +164,8 @@ def game():
 
                             if InfinityYourMoves:
                                 players_attack_result = (True,)
+                        else:
+                            players_attack_result = (True,)
 
 
                     # if the player misses, then the bot's turn begins
