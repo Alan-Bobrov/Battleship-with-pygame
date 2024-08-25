@@ -41,12 +41,12 @@ def PlaySound(SoundName: str):
     SoundName = SoundName.strip()
 
     if IsClasic:
-        full_name = f"loads/{Language}/Classic/{SoundName}.wav"
+        full_name = f"sounds/{Language}/Classic/{SoundName}.wav"
     else:
         if IsSwears:
-            full_name = f"loads/{Language}/Funny/Swears/{SoundName}.wav"
+            full_name = f"sounds/{Language}/Funny/Swears/{SoundName}.wav"
         else:
-            full_name = f"loads/{Language}/Funny/Default/{SoundName}.wav"
+            full_name = f"sounds/{Language}/Funny/Default/{SoundName}.wav"
 
     sound = pg.mixer.Sound(full_name)
     sound.play()
