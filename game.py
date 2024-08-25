@@ -156,9 +156,9 @@ def BattleShip():
                                 if IsSounds:
                                     if players_attack_result[0]:
                                         if players_attack_result[1] == "Hit":
-                                            PlaySound("Hit")
+                                            PlaySound("YouHit")
                                         elif players_attack_result[1] == "Death":
-                                            PlaySound("Death")
+                                            PlaySound("YouDeath")
 
                                     else:
                                         PlaySound("Skip")
@@ -188,10 +188,10 @@ def BattleShip():
                             if IsSounds:
                                 if bot_move:
                                     if result_of_fire == "Death":
-                                        PlaySound("Death")
+                                        PlaySound("EnemyDeath")
                                     
                                     elif result_of_fire == "Hit":
-                                        PlaySound("Hit")
+                                        PlaySound("EnemyHit")
                                         
                                 else:
                                     PlaySound("Skip")
