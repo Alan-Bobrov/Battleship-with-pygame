@@ -64,21 +64,23 @@ def BattleShip():
                     if j.status == "part_ship":
                         bot_ship_count += 1
 
-            if  player_ship_count == 0 and first_move:
+            if player_ship_count == 0 and first_move:
                 # the message "You lose!" appears here
                 screen.blit(YouLoseImg, (0, 0))
-                can_go = False
 
-                if IsSounds:
+                if IsSounds and can_go:
                     PlaySound("Lose")
 
-            if  bot_ship_count == 0 and first_move:
-                # the message "You win!" appears here
-                screen.blit(YouWinImg, (0, 0))
                 can_go = False
 
-                if IsSounds:
+            if bot_ship_count == 0 and first_move:
+                # the message "You win!" appears here
+                screen.blit(YouWinImg, (0, 0))
+
+                if IsSounds and can_go:
                     PlaySound("Win")
+                
+                can_go = False
 
             if can_go and not do_ship:
                 screen.blit(GameStart, (0, 0))
