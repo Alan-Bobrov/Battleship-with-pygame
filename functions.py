@@ -17,9 +17,18 @@ def create_field(space_symbol="-"):
     field = [[space_symbol for _ in range(10)] for i in range(10)]
     return field
 
-def print_field(field):
-    for i in range(len(field)):
-        print(*field[i])
+def print_field(field, is_change=False):
+    if is_change:
+        for i in field:
+            for j in i:
+                if not isinstance(j, str):
+                    print("o", end="")
+                else:
+                    print(j, end="")
+            print()
+    else:
+        for i in range(len(field)):
+            print(*field[i])
 
 def update_num_of_ships(cell):
     with open("num_of_ships.json", "r", encoding="utf-8") as num_of_ships:
