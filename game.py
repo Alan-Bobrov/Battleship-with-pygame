@@ -208,7 +208,7 @@ def BattleShip():
                                     if j.status == "part_ship":
                                         player_ship_count += 1
 
-                            if InfinityEnemyMoves == "snfsss":
+                            if InfinityEnemyMoves:
                                 if player_ship_count == 0:
                                     bot_move = False
                                     break   
