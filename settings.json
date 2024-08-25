@@ -6,6 +6,15 @@
     "Random Ship Generation": true,
     "Print User Comp Field": true,
     "Print Comp Comp Field": true,
-    "Sounds": true,
+
+    "Sounds": {
+        "Is Sounds": true,
+        "Language": "ru",
+        "Voice": {
+            "Is Classic": true,
+            "Is Swears": false
+                }
+            },
+
     "Music": true
 }
