@@ -8,7 +8,7 @@
     "Print Comp Comp Field": true,
 
     "Sounds": {
-        "Is Sounds": true,
+        "Is Sounds": false,
         "Language": "ru",
         "Voice": {
             "Is Classic": true,
