@@ -351,7 +351,16 @@ class Ship:
         count_trash = 0
 
         if bot:
-            while num_of_ships <= 10:
+            while ships_segments < 20:
+                     
+                ship = Ship()
+                result = ship.put_ship(comp_field, (randint(0, 9), randint(0, 9)))
+
+                if not result[0]:
+                    num_of_errors += 1
+                    
+                else:
+                    ships_segments += 1
 
                 if num_of_errors >= 300:
                     print(0)
@@ -361,25 +370,6 @@ class Ship:
                     num_of_ships = 0
                     ships_segments = 0
                     comp_field = create_field()
-                     
-                ship = Ship()
-                result = ship.put_ship(comp_field, (randint(0, 9), randint(0, 9)))
-
-                if not result[0]:
-                    num_of_errors += 1
-                    
-                if result[1] == "new":
-                    num_of_ships += 1
-                    
-                if num_of_ships == 10:
-                    for i in range(len(comp_field)):
-                        for j in range(len(comp_field)):
-                            if isinstance(comp_field[i][j], Ship):
-                                ships_segments += 1
-
-                    if ships_segments == 20:
-                        break 
-            print(count_trash)
             
         else:
 
