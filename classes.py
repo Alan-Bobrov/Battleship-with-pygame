@@ -351,6 +351,7 @@ class Ship:
         count_trash = 0
 
         if bot:
+            # field = comp_field
             while True:
                      
                 ship = Ship()
@@ -364,14 +365,20 @@ class Ship:
                         count_trash += 1
                         return_num_ships()
                         num_of_errors = 0
+                        ships_segments = 0
                         comp_field = create_field()
-                        continue
                     
                 else:
                     ships_segments = sum(isinstance(comp_field[i][j], Ship) for i in range(10) for j in range(10))
                     if ships_segments == 20:
+                        print(90)
+                        print_field(comp_field, True)
+                        print(90)
                         break
-            
+            print("----------------")
+            print(ships_segments)
+            print("-------------------------")
+            return num_of_ships, ships_segments, comp_field
         else:
 
             ship = Ship()
@@ -386,7 +393,7 @@ class Ship:
                         if isinstance(comp_field[i][j], Ship):
                             ships_segments += 1
 
-        return num_of_ships, ships_segments
+        return num_of_ships, ships_segments, comp_field
 
 class Place:
     def __init__(self, X, Y) -> None:
