@@ -1,5 +1,6 @@
 import pygame as pg
 from loads.images import *
+from loads.settings import *
 import json
 
 def return_num_ships():
@@ -38,7 +39,15 @@ def update_num_of_ships(cell):
 
 def PlaySound(SoundName: str):
     SoundName = SoundName.strip()
-    full_name = "sounds/" + SoundName + ".wav"
+
+    if IsClasic:
+        full_name = f"loads/{Language}/Classic/{SoundName}.wav"
+    else:
+        if IsSwears:
+            full_name = f"loads/{Language}/Funny/Swears/{SoundName}.wav"
+        else:
+            full_name = f"loads/{Language}/Funny/Default/{SoundName}.wav"
+
     sound = pg.mixer.Sound(full_name)
     sound.play()
 
