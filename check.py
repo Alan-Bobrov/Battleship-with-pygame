@@ -1,5 +1,5 @@
 from classes import *
 from functions import *
 from time import sleep
-
-print("   iiivdui   ".strip())
+a = 1
+print(a.strip())
