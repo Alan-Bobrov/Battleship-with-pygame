@@ -69,7 +69,7 @@ def BattleShip():
                 screen.blit(YouLoseImg, (0, 0))
                 can_go = False
 
-                if Sounds:
+                if IsSounds:
                     PlaySound("Lose")
 
             if  bot_ship_count == 0 and first_move:
@@ -77,7 +77,7 @@ def BattleShip():
                 screen.blit(YouWinImg, (0, 0))
                 can_go = False
 
-                if Sounds:
+                if IsSounds:
                     PlaySound("Win")
 
             if can_go and not do_ship:
@@ -122,7 +122,7 @@ def BattleShip():
                             player_field.normal_ships_image()
                             do_ship = False
 
-                            if Sounds:
+                            if IsSounds:
                                 PlaySound("GameStart")
 
                         else:
@@ -136,7 +136,7 @@ def BattleShip():
                                 return_num_ships()
                                 do_ship = False
 
-                                if Sounds:
+                                if IsSounds:
                                     PlaySound("GameStart")
 
                     elif can_go:
@@ -151,7 +151,7 @@ def BattleShip():
                                 bot_field.synchronize(x, y, bot_comp_field)
                                 first_move = True
 
-                                if Sounds:
+                                if IsSounds:
                                     if players_attack_result[0]:
                                         if players_attack_result[1] == "Hit":
                                             PlaySound("Hit")
@@ -183,7 +183,7 @@ def BattleShip():
                             player_field.synchronize(x, y)
                             player_field.synchronize(x, y, player_comp_field)
                             
-                            if Sounds:
+                            if IsSounds:
                                 if bot_move:
                                     if result_of_fire == "Death":
                                         PlaySound("Death")
