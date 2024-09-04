@@ -1,10 +1,11 @@
+
 # automaticly pip install pygame
 try:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "pygame"])
+    import pygame as pg
 except:
-    pass
-
-import pygame as pg
+    from subprocess import check_call
+    from sys import executable
+    check_call([executable, "-m", "pip", "install", "pygame"])
 
 # our files
 from classes import *
@@ -13,8 +14,6 @@ from loads.images import *
 from loads.settings import *
 
 from time import sleep
-import subprocess
-import sys
 from threading import Thread
 from loads.settings import *
 
