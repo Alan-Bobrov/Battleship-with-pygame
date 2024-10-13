@@ -348,7 +348,6 @@ class Ship:
 
         num_of_errors = 0
         ships_segments = 0
-        count_trash = 0
 
         if bot:
             # field = comp_field
@@ -361,8 +360,6 @@ class Ship:
                     num_of_errors += 1
 
                     if num_of_errors >= 300:
-                        print(0)
-                        count_trash += 1
                         return_num_ships()
                         num_of_errors = 0
                         ships_segments = 0
@@ -371,13 +368,8 @@ class Ship:
                 else:
                     ships_segments = sum(isinstance(comp_field[i][j], Ship) for i in range(10) for j in range(10))
                     if ships_segments == 20:
-                        print(90)
-                        print_field(comp_field, True)
-                        print(90)
                         break
-            print("----------------")
-            print(ships_segments)
-            print("-------------------------")
+
             return num_of_ships, ships_segments, comp_field
         else:
 
