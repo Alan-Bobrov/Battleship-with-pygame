@@ -1,11 +1,12 @@
 {
-    "Show Enemy Ships": true,
+    "Show Enemy Ships": false,
     "Show Your Ships": true,
     "Infinity Your Moves": false,
     "Infinity Enemy Moves": false,
-    "Random Ship Generation": true,
+    "Random Ship Generation": false,
     "Print User Comp Field": true,
     "Print Comp Comp Field": true,
+    "Delay Between Moves": 0.5,
 
     "Sounds": {
         "Is Sounds": false,
