@@ -94,7 +94,7 @@ def BattleShip():
 
             if bot_move:
                 pg.display.flip()
-                sleep(0.5)
+                sleep(DelayBetweenMoves)
                 # the bot chooses the place where it goes
                 bot_move, coords, result_of_fire = bot_ob.cell_selection(player_comp_field) # y x
                 y, x = coords
