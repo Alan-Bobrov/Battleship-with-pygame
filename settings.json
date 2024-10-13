@@ -6,7 +6,7 @@
     "Random Ship Generation": false,
     "Print User Comp Field": true,
     "Print Comp Comp Field": true,
-    "Delay Between Moves": 0.5,
+    "Delay Between Moves": 0.1,
 
     "Sounds": {
         "Is Sounds": false,
