@@ -6,6 +6,7 @@ except:
     from subprocess import check_call
     from sys import executable
     check_call([executable, "-m", "pip", "install", "pygame"])
+    import pygame as pg
 
 # our files
 from classes import *
