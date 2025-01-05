@@ -12,6 +12,7 @@ with open("settings.json", "r", encoding="utf-8") as settings:
     PrintUserCompField = settings["Print User Comp Field"]
     PrintCompCompField = settings["Print Comp Comp Field"]
     DelayBetweenMoves = settings["Delay Between Moves"]
+    ChangeShipsSymbol = settings["Change Ships Symbol"]
 
     # sounds settings
     Sounds = settings["Sounds"] # dict
