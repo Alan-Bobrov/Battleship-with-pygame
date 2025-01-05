@@ -12,6 +12,8 @@ with open("settings.json", "r", encoding="utf-8") as settings:
     PrintUserCompField = settings["Print User Comp Field"]
     PrintCompCompField = settings["Print Comp Comp Field"]
     DelayBetweenMoves = settings["Delay Between Moves"]
+    if DelayBetweenMoves < 0.1:
+        DelayBetweenMoves = 0.1
     ChangeShipsSymbol = settings["Change Ships Symbol"]
 
     # sounds settings
