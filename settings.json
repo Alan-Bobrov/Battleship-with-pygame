@@ -4,12 +4,12 @@
     "Infinity Your Moves": false,
     "Infinity Enemy Moves": false,
     "Random Ship Generation": false,
-    "Print User Comp Field": false,
-    "Print Comp Comp Field": false,
+    "Print User Comp Field": true,
+    "Print Comp Comp Field": true,
     "Delay Between Moves": 1,
 
     "Sounds": {
-        "Is Sounds": true,
+        "Is Sounds": false,
         "Language": "ru",
         "Voice": {
             "Is Classic": true,
@@ -17,5 +17,5 @@
                 }
             },
 
-    "Music": true
+    "Music": false
 }
