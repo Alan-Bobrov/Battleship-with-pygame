@@ -22,9 +22,9 @@ def print_field(field, is_change=False):
         for i in field:
             for j in i:
                 if not isinstance(j, str):
-                    print("o", end="")
+                    print("S", end=" ")
                 else:
-                    print(j, end="")
+                    print(j, end=" ")
             print()
     else:
         for i in range(len(field)):
