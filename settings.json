@@ -4,10 +4,22 @@
     "Infinity Your Moves": false,
     "Infinity Enemy Moves": false,
     "Random Ship Generation": false,
+<<<<<<< HEAD
     "Print User Comp Field": true,
     "Print Comp Comp Field": true,
     "Change Ships Symbol": true,
     "Delay Between Moves": 0,
+=======
+<<<<<<< HEAD
+    "Print User Comp Field": true,
+    "Print Comp Comp Field": true,
+=======
+    "Print User Comp Field": false,
+    "Print Comp Comp Field": false,
+    "Change Ships Symbol": true,
+>>>>>>> f40b2b08369c67695a272e599d504ac9684f057d
+    "Delay Between Moves": 1,
+>>>>>>> b114c8bdb9f55046c449c1244569dc0365a166a3
 
     "Sounds": {
         "Is Sounds": false,
