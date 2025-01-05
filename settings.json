@@ -9,7 +9,7 @@
     "Delay Between Moves": 1,
 
     "Sounds": {
-        "Is Sounds": false,
+        "Is Sounds": true,
         "Language": "ru",
         "Voice": {
             "Is Classic": true,
@@ -17,5 +17,5 @@
                 }
             },
 
-    "Music": false
+    "Music": true
 }
