@@ -6,6 +6,7 @@
     "Random Ship Generation": false,
     "Print User Comp Field": false,
     "Print Comp Comp Field": false,
+    "Change Ships Symbol": true,
     "Delay Between Moves": 1,
 
     "Sounds": {
