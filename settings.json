@@ -7,7 +7,7 @@
     "Print User Comp Field": true,
     "Print Comp Comp Field": true,
     "Change Ships Symbol": true,
-    "Delay Between Moves": 0,
+    "Delay Between Moves": 1,
 
     "Sounds": {
         "Is Sounds": false,
