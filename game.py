@@ -118,7 +118,7 @@ def BattleShip():
                 # print bot field for comp
                 if PrintUserCompField:
                     print("User Field")
-                    print_field(player_comp_field)
+                    print_field(player_comp_field, ChangeShipsSymbol)
                     print("-----------------------------------------")
                                     
                 player_ship_count = 0
@@ -210,7 +210,7 @@ def BattleShip():
 
                                     if PrintCompCompField:
                                         print("Comp Field")
-                                        print_field(bot_comp_field)
+                                        print_field(bot_comp_field, ChangeShipsSymbol)
                                         print("--------------------------")
 
                                     if InfinityYourMoves:
