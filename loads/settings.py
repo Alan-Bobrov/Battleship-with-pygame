@@ -14,6 +14,8 @@ with open("settings.json", "r", encoding="utf-8") as settings:
     DelayBetweenMoves = settings["Delay Between Moves"]
     if DelayBetweenMoves < 0.1:
         DelayBetweenMoves = 0.1
+    elif DelayBetweenMoves > 10:
+        DelayBetweenMoves = 5
     ChangeShipsSymbol = settings["Change Ships Symbol"]
 
     # sounds settings
